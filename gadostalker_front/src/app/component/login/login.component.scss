@@ -1,0 +1,48 @@
+.container-login{
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 2fr 1fr;
+}
+
+.container-form-login{
+  width: 100%;
+
+  .container-title-login{
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    top: 0;
+    background-color: #8DA633;
+  }
+
+  .container-img-login{
+    height: 100%;
+    background-image: url("../../../assets/login.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  h1{
+    color: white;
+    font-size: 40px;
+    margin: 0 auto;
+    font-weight: bold;
+    letter-spacing: 8px;
+  }
+}
+
+
+
+
+ 
+.container-img-login{
+  height: 100%;
+  background-image: url("../../../assets/login.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
