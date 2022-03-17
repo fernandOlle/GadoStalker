@@ -3,12 +3,35 @@
     <div class="container-title-login">
       <h1>Gado Stalker</h1>
     </div>
-    <div>
+    <div class="form-content">
       <form>
-        <mat-form-field>
-          <mat-label>E-mail</mat-label>
-          <input matInput placeholder="pat@example.com" required>
-        </mat-form-field>
+        <img src="../../../assets/logo.png" alt="Logo gadostalker">
+        <div class="field">
+          <mat-form-field>
+            <mat-label>E-mail</mat-label>
+            <input matInput placeholder="pat@example.com" required>
+          </mat-form-field>
+        </div>
+        <div class="field">
+          <mat-form-field>
+            
+            <mat-label>Senha</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'">
+            <!-- 
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>home</mat-icon>
+            </button>-->
+          </mat-form-field>
+        </div>
+        <div class="field">
+          <button mat-raised-button class="btn-entrar">ENTRAR</button>
+        </div>
+        <div class="field">
+          <a href="#"><span>Esqueci minha senha</span></a>
+        </div>
+        <div class="field">
+          <a href="#"><span>Ainda não tem uma conta? Criar Conta</span></a>
+        </div>
       </form>
     </div>
   </div>
