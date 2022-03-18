@@ -7,11 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="gadostalker" />
+        <module name="EJB" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="EJB" target="1.8" />
       <module name="gadostalker" target="1.8" />
+      <module name="Persistence" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
