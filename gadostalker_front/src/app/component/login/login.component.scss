@@ -47,11 +47,24 @@
             width: 250px;
           }
           a{
-            margin: 10px auto 0 auto;
+            margin: 15px auto 0 auto;
             text-decoration: none;
             span{
               color: #46591D;
             }
+            .criar-conta{
+              color: #8DA633;
+            }
+        }
+        a:hover{
+          background-color: hsla(79, 51%, 23%, 0.063);
+          .criar-conta{
+            background-color: hsla(73, 53%, 43%, 0.063);
+          }
+        }
+        mat-icon{
+          width: 24px;
+          height: 24px;
         }
         }
         img{
@@ -61,7 +74,7 @@
         }
         .btn-entrar{
           width: 250px;
-          height: 40px;
+          height: 42px;
           border-radius: 20px;
           background-color: #594A3C;
           color: white;
@@ -80,6 +93,25 @@
     background-size: cover;
   }
 
+}
+
+::ng-deep{
+  .mat-form-field.mat-focused .mat-form-field-label {
+    color: #594A3C ;
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: #594A3C;
+}
+
+.mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
+    background-color: #f44336;
+}
+
+.mat-for
+m-field.mat-form-field-invalid .mat-form-field-label {
+    color: #f44336;
+}
 }
 
 

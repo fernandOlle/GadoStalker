@@ -17,10 +17,9 @@
             
             <mat-label>Senha</mat-label>
             <input matInput [type]="hide ? 'password' : 'text'">
-            <!-- 
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-              <mat-icon>home</mat-icon>
-            </button>-->
+              <mat-icon [svgIcon]="hide ? 'eye' : 'eye-off'"></mat-icon>
+            </button>
           </mat-form-field>
         </div>
         <div class="field">
@@ -30,7 +29,7 @@
           <a href="#"><span>Esqueci minha senha</span></a>
         </div>
         <div class="field">
-          <a href="#"><span>Ainda não tem uma conta? Criar Conta</span></a>
+          <a href="#"><span class="criar-conta">Ainda não tem uma conta? Criar Conta</span></a>
         </div>
       </form>
     </div>
