@@ -10,10 +10,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import{ MatIconModule } from '@angular/material/icon';
+import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    CriarContaComponent
   ],
   imports: [
     BrowserModule,
