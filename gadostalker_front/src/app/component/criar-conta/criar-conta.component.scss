@@ -34,23 +34,28 @@
     background-image: url("../../../assets/criar-conta.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
   }
   .container-form-login{
     width: 100%;
     background-color: #d9d48f9d;
-
+    display: flex;
 
 
     .form-content{
-      margin: 150px auto;
+      margin: auto;
       width: 50%;
-      height: 50%;
+      height: 60%;
       form{
         display: block;
         margin: auto;
         h1{
           text-align: center;
           font-size: 50px;
+        }
+        h2{
+          text-align: center;
+          color: #8DA633;
         }
         .field{
           display: flex;
@@ -69,17 +74,25 @@
             .criar-conta{
               color: #8DA633;
             }
-        }
-        a:hover{
-          background-color: hsla(79, 51%, 23%, 0.063);
-          .criar-conta{
-            background-color: hsla(73, 53%, 43%, 0.063);
           }
-        }
+          a:hover{
+            background-color: hsla(79, 51%, 23%, 0.063);
+            .criar-conta{
+              background-color: hsla(73, 53%, 43%, 0.063);
+          }
+          }
         mat-icon{
           width: 24px;
           height: 24px;
         }
+        .type-user{
+          mat-radio-button{
+          margin-right: 10px;
+          mat-radio-label-content{
+            margin-left: 5px;
+          }
+          }
+          }
         }
         img{
           width: 200px;
@@ -93,6 +106,26 @@
           background-color: #594A3C;
           color: white;
         }
+        .btn-proximo{
+          background-color: #594A3C;
+          color: white;
+          width: 115px;
+        }
+        .btn-voltar{
+          background-color: white;
+          color: #594A3C;
+          margin-right: 20px;
+          display: flex;
+          justify-self: right;
+          width: 115px;
+        }
+
+        .left{
+         justify-content: left; 
+         width: 250px;
+         margin:auto;
+        }
+        
       }
 
     }
@@ -104,23 +137,47 @@
 
 }
 
-::ng-deep{
+::ng-deep {
+  .mat-radio-inner-circle{
+      background-color: #594A3C !important;
+  }
+
+  .mat-radio-outer-circle{
+      border-color: #594A3C !important;
+  }
+
   .mat-form-field.mat-focused .mat-form-field-label {
-    color: #594A3C ;
-}
+      color: #594A3C !important;
+  }
 
-.mat-form-field.mat-focused .mat-form-field-ripple {
-    background-color: #594A3C;
-}
+  .mat-form-field.mat-focused .mat-form-field-ripple {
+      background-color: #594A3C !important;
+  }
 
-.mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
-    background-color: #f44336;
-}
+  .mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
+      background-color: #f44336 !important;
+  }
 
-.mat-for
-m-field.mat-form-field-invalid .mat-form-field-label {
-    color: #f44336;
-}
+  .mat-for
+  m-field.mat-form-field-invalid .mat-form-field-label {
+      color: #f44336 !important;
+  }
+
+ .mat-checkbox-checked .mat-checkbox-background{
+      background-color: #594A3C !important;
+  }
+
+  .mat-ink-bar{
+      background-color: #594A3C !important;
+  }
+
+  .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+      color: #594A3C !important;
+  }
+  .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+      color: #594A3C !important;
+  }
+  
 }
 
 

@@ -11,28 +11,111 @@
             <form>
                 <h1>Criar Conta</h1>
               <img src="../../../assets/logo.png" alt="Logo gadostalker">
-              
-              <div class="field">
-                <mat-form-field>
-                  <mat-label>E-mail</mat-label>
-                  <input matInput placeholder="pat@example.com" required>
-                </mat-form-field>
+
+              <div *ngIf="step[0]">
+                <div class="field">
+                  <mat-form-field>
+                    <mat-label>Nome completo</mat-label>
+                    <input matInput required>
+                  </mat-form-field>
+                </div>
+
+                <div class="field">
+                  <mat-form-field>
+                    <mat-label>E-mail</mat-label>
+                    <input matInput required>
+                  </mat-form-field>
+                </div>
+
+                <div class="field">
+                  <mat-form-field>
+                    <mat-label>Whatsapp</mat-label>
+                    <input matInput required>
+                  </mat-form-field>
+                </div>
+                
+                <div class="field left">
+                  <button mat-raised-button class="btn-step" (click)="proximo()">Próximo <mat-icon [svgIcon]="'arrow-right'"></mat-icon></button>
+                </div>
               </div>
-              <div class="field">
-                <mat-form-field>
-                  
-                  <mat-label>Senha</mat-label>
-                  <input matInput [type]="'password'">
-                </mat-form-field>
+
+              <div *ngIf="step[1]">
+                <div class="field">
+                  <mat-form-field>
+                    <mat-label>Senha</mat-label>
+                    <input matInput [type]="'password'">
+                  </mat-form-field>
+                </div>
+
+                <div class="field">
+                  <mat-form-field>
+                    <mat-label>Repita a senha</mat-label>
+                    <input matInput [type]="'password'">
+                  </mat-form-field>
+                </div>
+
+                <div class="field">
+                  <mat-form-field>
+                    <mat-label>Pergunta de segurança</mat-label>
+                    <input matInput [type]="'text'">
+                  </mat-form-field>
+                </div>
+
+                <div class="field">
+                  <mat-form-field>
+                    <mat-label>Resposta</mat-label>
+                    <input matInput [type]="'text'">
+                  </mat-form-field>
+                </div>
+                
+                <div class="field left">
+                  <button mat-raised-button class="btn-voltar" (click)="anterior()"><mat-icon [svgIcon]="'arrow-left'"></mat-icon> Voltar</button>
+                  <button mat-raised-button class="btn-proximo" (click)="proximo()">Próximo <mat-icon [svgIcon]="'arrow-right'"></mat-icon></button>
+                </div>
               </div>
-              <div class="field">
-                <button mat-raised-button class="btn-entrar">ENTRAR</button>
-              </div>
-              <div class="field">
-                <a href="#"><span>Esqueci minha senha</span></a>
-              </div>
-              <div class="field">
-                <a routerLink="/criar-conta"><span class="criar-conta">Ainda não tem uma conta? Criar Conta</span></a>
+
+              <div *ngIf="step[2]">
+                <h2>Dados da Fazenda</h2>
+
+                <div class="field">
+                    <mat-radio-group class="type-user">
+                      <mat-radio-button value="1">Fazendeiro</mat-radio-button>
+                      <mat-radio-button value="2">Usuário Comum</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+                <div class="field">
+                  <mat-form-field>
+                    <mat-label>CNPJ</mat-label>
+                    <input matInput required>
+                  </mat-form-field>
+                </div>
+
+                <div class="field">
+                  <mat-form-field>
+                    <mat-label>Nome Fantasia</mat-label>
+                    <input matInput required>
+                  </mat-form-field>
+                </div>
+
+                <div class="field">
+                  <mat-form-field>
+                    <mat-label>E-mail</mat-label>
+                    <input matInput required>
+                  </mat-form-field>
+                </div>
+
+                <div class="field">
+                  <mat-form-field>
+                    <mat-label>Telefone</mat-label>
+                    <input matInput required>
+                  </mat-form-field>
+                </div>
+                
+                <div class="field left">
+                  <button mat-raised-button class="btn-voltar" (click)="anterior()"><mat-icon [svgIcon]="'arrow-left'"></mat-icon> Voltar</button>
+                  <button mat-raised-button class="btn-proximo" (click)="criarConta()">Criar Conta <mat-icon [svgIcon]="'check'"></mat-icon></button>
+                </div>
               </div>
             </form>
           </div>

@@ -32,11 +32,11 @@
   .container-form-login{
     width: 100%;
     background-color: #d9d48f9d;
-
+    display: flex;
 
 
     .form-content{
-      margin: 150px auto;
+      margin: auto;
       width: 50%;
       height: 50%;
       form{

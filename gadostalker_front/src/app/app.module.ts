@@ -9,7 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import{ MatIconModule } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
+import { MatRadioModule } from '@angular/material/radio';
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { CriarContaComponent } from './component/criar-conta/criar-conta.compone
     MatIconModule,
     ReactiveFormsModule,
     FormsModule,
+    MatRadioModule,
 
   ],
   providers: [],
