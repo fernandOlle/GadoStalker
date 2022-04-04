@@ -177,7 +177,10 @@
   .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
       color: #594A3C !important;
   }
-  
+  .mat-button-disabled{
+    background-color: rgba(0, 0, 0, 0.12) !important;
+    color: rgba(0, 0, 0, 0.26) !important;
+  }
 }
 
 

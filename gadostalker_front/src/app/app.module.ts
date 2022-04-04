@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CriarContaComponent } from './component/criar-conta/criar-conta.compone
     ReactiveFormsModule,
     FormsModule,
     MatRadioModule,
+    MatSelectModule,
 
   ],
   providers: [],
