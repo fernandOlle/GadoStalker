@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
+import { UtilsService } from '../../services/utils.service'
 
 interface Question {
   value: number;
@@ -39,11 +40,14 @@ export class RecuperarSenhaComponent implements OnInit {
     private formBuilder: FormBuilder,
     iconRegistry: MatIconRegistry, 
     sanitizer: DomSanitizer,
+    private utilsService: UtilsService,
   ) { 
+    let senha = new FormControl('',[Validators.required, Validators.minLength(6)]);
+    let confirmaSenha = new FormControl('', [Validators.required, Validators.minLength(6), utilsService.validaRepitaSenha(senha)]);
     this.formRecuperarSenha = this.formBuilder.group({
-      email: new FormControl('', Validators.required),
-      senha: new FormControl('', Validators.required),
-      confirmaSenha: new FormControl('', Validators.required),
+      email: new FormControl('',[Validators.required, Validators.email]),
+      senha,
+      confirmaSenha,
       perguntaSeguranca: new FormControl('', Validators.required),
       respostaSeguranca: new FormControl('', Validators.required),
     });

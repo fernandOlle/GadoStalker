@@ -17,6 +17,7 @@
                 <mat-label>E-mail</mat-label>
                 <input matInput required formControlName="email">
                 <mat-error *ngIf="formRecuperarSenha.get('email').hasError('required')">Insira o e-mail!</mat-error>
+                <mat-error *ngIf="formRecuperarSenha.get('email').hasError('email')">E-mail inválido!</mat-error>
               </mat-form-field>
             </div>
   
@@ -28,6 +29,7 @@
                     <mat-icon [svgIcon]="hide ? 'eye' : 'eye-off'"></mat-icon>
                 </button>
                 <mat-error *ngIf="formRecuperarSenha.get('senha').hasError('required')">Insira a nova senha!</mat-error>
+                <mat-error *ngIf="formRecuperarSenha.get('senha').hasError('minlength')">A senha deve ter mais que 6 caracteres</mat-error>
               </mat-form-field>
             </div>
   
@@ -36,6 +38,7 @@
                 <mat-label>Repita a senha</mat-label>
                 <input matInput required [type]="hide ? 'password' : 'text'"  formControlName="confirmaSenha">
                 <mat-error *ngIf="formRecuperarSenha.get('confirmaSenha').hasError('required')">Repita a senha!</mat-error>
+                <mat-error *ngIf="formRecuperarSenha.get('confirmaSenha').hasError('validaRepeteSenha')">Senhas não coincidem!</mat-error>
               </mat-form-field>
             </div>
 
