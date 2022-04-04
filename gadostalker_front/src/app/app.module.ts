@@ -13,11 +13,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
+import { RecuperarSenhaComponent } from './component/recuperar-senha/recuperar-senha.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    CriarContaComponent
+    CriarContaComponent,
+    RecuperarSenhaComponent
   ],
   imports: [
     BrowserModule,
