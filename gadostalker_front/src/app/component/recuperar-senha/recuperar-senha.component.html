@@ -1,0 +1,72 @@
+<div class="container-title-login">
+    <h1>Gado Stalker</h1>
+  </div>
+  <div class="container-login">
+    <div class="container-img-login">
+  
+    </div>
+    <div class="container-form-login">
+  
+      <div class="form-content">
+        <form [formGroup]="formRecuperarSenha">
+          <h1>Recuperar senha</h1>
+          <img src="../../../assets/logo.png" alt="Logo gadostalker">
+  
+            <div class="field">
+              <mat-form-field>
+                <mat-label>E-mail</mat-label>
+                <input matInput required formControlName="email">
+                <mat-error *ngIf="formRecuperarSenha.get('email').hasError('required')">Insira o e-mail!</mat-error>
+                <mat-error *ngIf="formRecuperarSenha.get('email').hasError('email')">E-mail inválido!</mat-error>
+              </mat-form-field>
+            </div>
+  
+            <div class="field">
+              <mat-form-field>
+                <mat-label>Nova Senha</mat-label>
+                <input matInput required [type]="hide ? 'password' : 'text'" formControlName="senha">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon [svgIcon]="hide ? 'eye' : 'eye-off'"></mat-icon>
+                </button>
+                <mat-error *ngIf="formRecuperarSenha.get('senha').hasError('required')">Insira a nova senha!</mat-error>
+                <mat-error *ngIf="formRecuperarSenha.get('senha').hasError('minlength')">A senha deve ter mais que 6 caracteres</mat-error>
+              </mat-form-field>
+            </div>
+  
+            <div class="field">
+              <mat-form-field>
+                <mat-label>Repita a senha</mat-label>
+                <input matInput required [type]="hide ? 'password' : 'text'"  formControlName="confirmaSenha">
+                <mat-error *ngIf="formRecuperarSenha.get('confirmaSenha').hasError('required')">Repita a senha!</mat-error>
+                <mat-error *ngIf="formRecuperarSenha.get('confirmaSenha').hasError('validaRepeteSenha')">Senhas não coincidem!</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="field">
+                <mat-form-field>
+                  <mat-label>Pergunta de Segurança</mat-label>
+                  <mat-select formControlName="perguntaSeguranca" name="question">
+                    <mat-option *ngFor="let question of questions" [value]="question.value">
+                      {{question.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="formRecuperarSenha.get('perguntaSeguranca').hasError('required')">Selecione uma pergunta!</mat-error>
+                </mat-form-field>
+              </div>
+    
+              <div class="field">
+                <mat-form-field>
+                  <mat-label>Resposta</mat-label>
+                  <input matInput [type]="'text'" formControlName="respostaSeguranca">
+                  <mat-error *ngIf="formRecuperarSenha.get('respostaSeguranca').hasError('required')">Insira uma resposta!</mat-error>
+                </mat-form-field>
+              </div>
+  
+              <div class="field">
+                <button mat-raised-button class="btn-entrar" (click)="recuperarSenha()" [disabled]="formRecuperarSenha.invalid">REDEFINIR SENHA</button>
+              </div>
+  
+        </form>
+      </div>
+    </div>
+  </div>
