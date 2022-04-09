@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/gadostalker.iml" filepath="$PROJECT_DIR$/gadostalker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/GadoStalker.iml" filepath="$PROJECT_DIR$/.idea/GadoStalker.iml" />
     </modules>
   </component>
 </project>
