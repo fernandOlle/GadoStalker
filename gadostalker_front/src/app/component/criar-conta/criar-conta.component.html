@@ -1,0 +1,166 @@
+<div class="container-title-login">
+  <h1>Gado Stalker</h1>
+</div>
+<div class="container-login">
+  <div class="container-img-login">
+
+  </div>
+  <div class="container-form-login">
+
+    <div class="form-content">
+      <form [formGroup]="formUsuario">
+        <h1>Criar Conta</h1>
+        <img src="../../../assets/logo.png" alt="Logo gadostalker">
+
+        <div *ngIf="step[0]">
+
+          <div class="field">
+            <mat-radio-group class="type-user" formControlName="cargo">
+              <mat-radio-button value="0">Fazendeiro</mat-radio-button>
+              <mat-radio-button value="2">Usuário Comum</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="field">
+            <mat-form-field>
+              <mat-label>CPF</mat-label>
+              <input matInput required formControlName="cpf" mask="000.000.000-00" [dropSpecialCharacters]="false">
+              <mat-error *ngIf="formUsuario.get('cpf').hasError('required')">Insira o CPF!</mat-error>
+              <mat-error *ngIf="formUsuario.get('cpf').hasError('validaCpfCpnj') && !formUsuario.get('cpf').hasError('required')">CPF inválido!</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="field">
+            <mat-form-field>
+              <mat-label>Nome completo</mat-label>
+              <input matInput required formControlName="nome" class="capitalize">
+              <mat-error *ngIf="formUsuario.get('nome').hasError('required')">Insira o nome!</mat-error>
+              <mat-error *ngIf="formUsuario.get('nome').hasError('minLength') || formUsuario.get('nome').hasError('maxLength') || formUsuario.get('nome').hasError('pattern')">Nome inválido!</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="field">
+            <mat-form-field>
+              <mat-label>E-mail</mat-label>
+              <input matInput required formControlName="email">
+              <mat-error *ngIf="formUsuario.get('email').hasError('required')">Insira o e-mail!</mat-error>
+              <mat-error *ngIf="formUsuario.get('email').hasError('email')">E-mail inválido!</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="field">
+            <mat-form-field>
+              <mat-label>Telefone</mat-label>
+              <input matInput required formControlName="telefone" mask="(00) 00000-0000">
+              <mat-error *ngIf="formUsuario.get('telefone').hasError('required')">Insira o telefone!</mat-error>
+              <mat-error *ngIf="formUsuario.get('telefone').hasError('pattern')">Telefone inválido!</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="field left">
+            <button mat-raised-button class="btn-step" (click)="proximo()">Próximo <mat-icon [svgIcon]="'arrow-right'">
+              </mat-icon></button>
+          </div>
+        </div>
+
+        <div *ngIf="step[1]">
+          <div class="field">
+            <mat-form-field>
+              <mat-label>Senha</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha" (blur)="criarConta()">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon [svgIcon]="hide ? 'eye' : 'eye-off'"></mat-icon>
+              </button>
+              <mat-error *ngIf="formUsuario.get('senha').hasError('required')">Insira a senha!</mat-error>
+              <mat-error *ngIf="formUsuario.get('senha').hasError('minlength')">A senha deve ter mais que 6 caracteres</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="field">
+            <mat-form-field>
+              <mat-label>Repita a senha</mat-label>
+              <input matInput matInput [type]="hide ? 'password' : 'text'" formControlName="confirmaSenha">
+              <mat-error *ngIf="formUsuario.get('confirmaSenha').hasError('required')">Repita a senha!</mat-error>
+              <mat-error *ngIf="formUsuario.get('confirmaSenha').hasError('validaRepeteSenha')">Senhas não coincidem!</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="field">
+            <mat-form-field>
+              <mat-label>Pergunta de Segurança</mat-label>
+              <mat-select formControlName="perguntaSeguranca" name="question">
+                <mat-option *ngFor="let question of questions" [value]="question.value">
+                  {{question.viewValue}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="formUsuario.get('perguntaSeguranca').hasError('required')">Selecione uma pergunta!</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="field">
+            <mat-form-field>
+              <mat-label>Resposta</mat-label>
+              <input matInput [type]="'text'" formControlName="respostaSeguranca">
+              <mat-error *ngIf="formUsuario.get('respostaSeguranca').hasError('required')">Insira uma resposta!</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="field left">
+            <button mat-raised-button class="btn-voltar" (click)="anterior()">
+              <mat-icon [svgIcon]="'arrow-left'"></mat-icon> Voltar
+            </button>
+            <button mat-raised-button class="btn-proximo" (click)="proximo()"
+              *ngIf="formUsuario.controls.cargo.value == 0" [disabled]="formUsuario.invalid">Próximo <mat-icon [svgIcon]="'arrow-right'"></mat-icon>
+            </button>
+            <button mat-raised-button class="btn-proximo" (click)="criarConta()"
+              *ngIf="formUsuario.controls.cargo.value == 2" [disabled]="formUsuario.invalid">Criar Conta <mat-icon [svgIcon]="'check'"></mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+      <form [formGroup]="formFazenda">
+        <div *ngIf="step[2]">
+          <h2>Dados da Fazenda</h2>
+          <div class="field">
+            <mat-form-field>
+              <mat-label>SNCR</mat-label>
+              <input matInput required formControlName="sncr" mask="00.000.000.000-0">
+              <mat-error *ngIf="formFazenda.get('sncr').hasError('required')">Insira o SNCR!</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="field">
+            <mat-form-field>
+              <mat-label>Nome do Imóvel Rural</mat-label>
+              <input matInput required formControlName="nomeImovelRural">
+              <mat-error *ngIf="formFazenda.get('nomeImovelRural').hasError('required')">Insira o nome do imóvel rural!</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="field">
+            <mat-form-field>
+              <mat-label>E-mail</mat-label>
+              <input matInput required formControlName="email">
+              <mat-error *ngIf="formFazenda.get('email').hasError('required')">Insira o e-mail!</mat-error>
+              <mat-error *ngIf="formUsuario.get('email').hasError('email')">E-mail inválido!</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="field">
+            <mat-form-field>
+              <mat-label>Telefone</mat-label>
+              <input matInput required formControlName="telefone" mask="(00) 00000-0000"> 
+              <mat-error *ngIf="formFazenda.get('telefone').hasError('required')">Insira o telefone!</mat-error>
+              <mat-error *ngIf="formFazenda.get('telefone').hasError('pattern')">Telefone inválido!</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="field left">
+            <button mat-raised-button class="btn-voltar" (click)="anterior()">
+              <mat-icon [svgIcon]="'arrow-left'"></mat-icon> Voltar
+            </button>
+            <button mat-raised-button class="btn-proximo" (click)="criarConta()"  [disabled]="formFazenda.invalid">Criar Conta <mat-icon
+                [svgIcon]="'check'"></mat-icon></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
