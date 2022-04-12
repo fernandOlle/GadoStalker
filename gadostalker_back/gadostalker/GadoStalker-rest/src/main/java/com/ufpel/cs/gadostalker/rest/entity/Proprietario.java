@@ -29,14 +29,6 @@ public class Proprietario extends Usuario implements Serializable {
     public Proprietario() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public List<Fazenda> getFazendas() {
         return fazendas;
     }
