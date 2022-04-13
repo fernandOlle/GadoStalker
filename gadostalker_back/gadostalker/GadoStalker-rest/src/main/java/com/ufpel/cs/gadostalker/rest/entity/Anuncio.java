@@ -3,6 +3,7 @@ package com.ufpel.cs.gadostalker.rest.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,16 +41,16 @@ public class Anuncio implements Serializable {
     
     @Column
     @Temporal(TemporalType.DATE)
-    private LocalDate dataInicial;
+    private Date dataInicial;
     
     @Column
     @Temporal(TemporalType.DATE)
-    private LocalDate dataFinal;
+    private Date dataFinal;
 
     public Anuncio() {
     }
 
-    public Anuncio(Long id, String titulo, String descricao, BigDecimal preco, String desconto, LocalDate dataInicial, LocalDate dataFinal) {
+    public Anuncio(Long id, String titulo, String descricao, BigDecimal preco, String desconto, Date dataInicial, Date dataFinal) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -95,19 +96,19 @@ public class Anuncio implements Serializable {
         this.desconto = desconto;
     }
 
-    public LocalDate getDataInicial() {
+    public Date getDataInicial() {
         return dataInicial;
     }
 
-    public void setDataInicial(LocalDate dataInicial) {
+    public void setDataInicial(Date dataInicial) {
         this.dataInicial = dataInicial;
     }
 
-    public LocalDate getDataFinal() {
+    public Date getDataFinal() {
         return dataFinal;
     }
 
-    public void setDataFinal(LocalDate dataFinal) {
+    public void setDataFinal(Date dataFinal) {
         this.dataFinal = dataFinal;
     }
 
