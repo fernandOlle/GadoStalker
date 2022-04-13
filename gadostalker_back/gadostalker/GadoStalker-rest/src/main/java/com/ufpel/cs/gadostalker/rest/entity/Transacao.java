@@ -34,7 +34,7 @@ public class Transacao implements Serializable {
     
     @Column
     @Temporal(TemporalType.DATE)
-    private LocalDate data;
+    private LocalDate dataTransacao;
     
     @Column
     private BigDecimal preco;
@@ -49,7 +49,7 @@ public class Transacao implements Serializable {
 
     public Transacao(Long id, LocalDate data, BigDecimal preco, int quantidade) {
         this.id = id;
-        this.data = data;
+        this.dataTransacao = data;
         this.preco = preco;
         this.quantidade = quantidade;
     }
@@ -58,12 +58,12 @@ public class Transacao implements Serializable {
         return id;
     }
 
-    public LocalDate getData() {
-        return data;
+    public LocalDate getDataTransacao() {
+        return dataTransacao;
     }
 
-    public void setData(LocalDate data) {
-        this.data = data;
+    public void setDataTransacao(LocalDate dataTransacao) {
+        this.dataTransacao = dataTransacao;
     }
 
     public BigDecimal getPreco() {
