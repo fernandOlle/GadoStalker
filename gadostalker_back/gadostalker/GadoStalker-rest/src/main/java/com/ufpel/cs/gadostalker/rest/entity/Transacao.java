@@ -7,7 +7,7 @@ package com.ufpel.cs.gadostalker.rest.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +34,7 @@ public class Transacao implements Serializable {
     
     @Column
     @Temporal(TemporalType.DATE)
-    private Date data;
+    private LocalDate data;
     
     @Column
     private BigDecimal preco;
@@ -47,7 +47,7 @@ public class Transacao implements Serializable {
     public Transacao() {
     }
 
-    public Transacao(Long id, Date data, BigDecimal preco, int quantidade) {
+    public Transacao(Long id, LocalDate data, BigDecimal preco, int quantidade) {
         this.id = id;
         this.data = data;
         this.preco = preco;
@@ -58,11 +58,11 @@ public class Transacao implements Serializable {
         return id;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 
