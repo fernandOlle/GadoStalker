@@ -1,6 +1,6 @@
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,16 +38,16 @@ public class Anuncio implements Serializable {
     
     @Column
     @Temporal(TemporalType.DATE)
-    private Date dataInicial;
+    private LocalDate dataInicial;
     
     @Column
     @Temporal(TemporalType.DATE)
-    private Date dataFinal;
+    private LocalDate dataFinal;
 
     public Anuncio() {
     }
 
-    public Anuncio(Long id, String titulo, String descricao, BigDecimal preco, String desconto, Date dataInicial, Date dataFinal) {
+    public Anuncio(Long id, String titulo, String descricao, BigDecimal preco, String desconto, LocalDate dataInicial, LocalDate dataFinal) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -93,19 +93,19 @@ public class Anuncio implements Serializable {
         this.desconto = desconto;
     }
 
-    public Date getDataInicial() {
+    public LocalDate getDataInicial() {
         return dataInicial;
     }
 
-    public void setDataInicial(Date dataInicial) {
+    public void setDataInicial(LocalDate dataInicial) {
         this.dataInicial = dataInicial;
     }
 
-    public Date getDataFinal() {
+    public LocalDate getDataFinal() {
         return dataFinal;
     }
 
-    public void setDataFinal(Date dataFinal) {
+    public void setDataFinal(LocalDate dataFinal) {
         this.dataFinal = dataFinal;
     }
 
