@@ -44,14 +44,18 @@ public class Fazenda implements Serializable {
     
     @Column
     private String telefone;
-    
-    @Column
-    private Proprietario proprietario;
-    
-    //produtos
-    @Column
-    private List<Funcionario> funcionarios;
 
+    public Fazenda() {
+    }
+
+    public Fazenda(Long id, String SNCR, String nome, String email, String telefone) {
+        this.id = id;
+        this.SNCR = SNCR;
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+    }
+    
     public Long getId() {
         return id;
     }
