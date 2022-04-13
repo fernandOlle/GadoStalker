@@ -23,7 +23,7 @@ public class Proprietario extends Usuario implements Serializable {
     @Id
     private Long id;
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FAZENDAID", referencedColumnName="ID", nullable = true)
+    @JoinColumn(name = "FAZENDAID", referencedColumnName = "ID", nullable = true)
     private List<Fazenda> fazendas;
 
     public Proprietario() {
