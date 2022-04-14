@@ -39,6 +39,9 @@ public class Anuncio implements Serializable {
     private String desconto;
     
     @Column
+    private Produto produto;
+    
+    @Column
     @Temporal(TemporalType.DATE)
     private Date dataInicial;
     
@@ -49,12 +52,13 @@ public class Anuncio implements Serializable {
     public Anuncio() {
     }
 
-    public Anuncio(Long id, String titulo, String descricao, BigDecimal preco, String desconto, Date dataInicial, Date dataFinal) {
+    public Anuncio(Long id, String titulo, String descricao, BigDecimal preco, String desconto, Produto produto, Date dataInicial, Date dataFinal) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
         this.preco = preco;
         this.desconto = desconto;
+        this.produto = produto;
         this.dataInicial = dataInicial;
         this.dataFinal = dataFinal;
     }
@@ -93,6 +97,14 @@ public class Anuncio implements Serializable {
 
     public void setDesconto(String desconto) {
         this.desconto = desconto;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
     public Date getDataInicial() {
