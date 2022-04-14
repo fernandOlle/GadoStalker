@@ -39,7 +39,8 @@ public class Transacao implements Serializable {
     @Column
     private BigDecimal preco;
     
-    //TODO adicionar referencia a Produto
+    @Column
+    private Produto produto;
     
     @Column
     private int quantidade;
