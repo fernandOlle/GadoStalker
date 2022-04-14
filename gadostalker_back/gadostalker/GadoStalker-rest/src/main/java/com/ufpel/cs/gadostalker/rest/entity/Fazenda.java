@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -39,6 +41,10 @@ public class Fazenda implements Serializable {
 
     @Column
     private String telefone;
+    
+    @ManyToOne
+    @JoinColumn(name = "PROPRIETARIOID", nullable = false, referencedColumnName = "id")
+    private Proprietario proprietario;
 
     public Fazenda() {
     }
@@ -85,6 +91,14 @@ public class Fazenda implements Serializable {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public Proprietario getProprietario() {
+        return proprietario;
+    }
+
+    public void setProprietario(Proprietario proprietario) {
+        this.proprietario = proprietario;
     }
 
     @Override
