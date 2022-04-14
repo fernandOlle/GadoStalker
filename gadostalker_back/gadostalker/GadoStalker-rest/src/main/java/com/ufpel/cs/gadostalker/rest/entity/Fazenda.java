@@ -23,19 +23,20 @@ import javax.persistence.Table;
 @Table(name = "fazenda")
 @SequenceGenerator(name = "seqFazenda", sequenceName = "SEQFAZENDA", allocationSize = 1)
 public class Fazenda implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqFazenda")
     private Long id;
-    
+
     @Column
     private String SNCR;
-    
+
     @Column
     private String nome;
-    
+
     @Column
     private String email;
-    
+
     @Column
     private String telefone;
 
@@ -49,7 +50,7 @@ public class Fazenda implements Serializable {
         this.email = email;
         this.telefone = telefone;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -119,5 +120,5 @@ public class Fazenda implements Serializable {
     public String toString() {
         return "com.ufpel.cs.gadostalker.rest.entity.Fazenda[ id=" + id + " ]";
     }
-    
+
 }
