@@ -42,7 +42,6 @@ public class Transacao implements Serializable {
     @Column
     private BigDecimal preco;
     
-    @Column
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUTOID", nullable = true, referencedColumnName = "id")
     private Produto produto;
