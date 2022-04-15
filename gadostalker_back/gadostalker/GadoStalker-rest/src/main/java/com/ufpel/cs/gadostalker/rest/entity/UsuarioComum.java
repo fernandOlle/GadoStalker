@@ -19,15 +19,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "usuarioComum")
-@SequenceGenerator(name = "seqUsuarioComum", sequenceName = "SEQUSUARIOCOMUM", allocationSize = 1)
 public class UsuarioComum extends Usuario implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqUsuarioComum")
-    private Long id;
-
-    public Long getId() {
-        return id;
+    
+    public UsuarioComum() {
     }
 
     @Override

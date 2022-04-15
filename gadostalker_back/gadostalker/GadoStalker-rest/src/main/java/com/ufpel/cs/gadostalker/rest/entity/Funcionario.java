@@ -16,11 +16,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "funcionario")
-@SequenceGenerator(name = "seqFuncionario", sequenceName = "SEQFUNCIONARIO", allocationSize = 1)
 public class Funcionario extends Usuario implements Serializable {
 
-    @Id
-    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FAZENDAID", nullable = true, referencedColumnName = "id")
     private Fazenda fazenda;

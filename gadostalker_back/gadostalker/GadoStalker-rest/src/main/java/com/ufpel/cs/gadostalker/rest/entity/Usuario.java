@@ -39,7 +39,7 @@ public class Usuario implements Serializable {
     };
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqUsuario")
-    private Long id;
+    protected Long id;
     @Column
     private String nome;
     @Column
