@@ -20,6 +20,7 @@ public class JakartaEE8Resource {
     @Transactional
     public Response ping(){
    
+        //teste
         Proprietario p = propTeste.TestPropDB("12312312332");
         
         return Response
