@@ -3,6 +3,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
 import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApiService } from '../../services/api.service';
 const EYE_ICON =
   `
   <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
     sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
     private router: Router,
+    private api: ApiService,
     ) {
     iconRegistry.addSvgIconLiteral('eye', sanitizer.bypassSecurityTrustHtml(EYE_ICON));
     iconRegistry.addSvgIconLiteral('eye-off', sanitizer.bypassSecurityTrustHtml(EYE_OFF_ICON));
@@ -42,6 +44,7 @@ export class LoginComponent implements OnInit {
   }
 
   logar(){
+    this.api.testeApi();
     this.router.navigate(['/home']);
   }
 
