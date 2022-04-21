@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
-
+import { Validators, FormBuilder, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ApiService } from '../../services/api.service';
 const EYE_ICON =
   `
   <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -22,15 +24,28 @@ const EYE_OFF_ICON =
 })
 export class LoginComponent implements OnInit {
   hide = true;
+  formLogin: any;
   constructor(
     iconRegistry: MatIconRegistry, 
-    sanitizer: DomSanitizer
+    sanitizer: DomSanitizer,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private api: ApiService,
     ) {
     iconRegistry.addSvgIconLiteral('eye', sanitizer.bypassSecurityTrustHtml(EYE_ICON));
     iconRegistry.addSvgIconLiteral('eye-off', sanitizer.bypassSecurityTrustHtml(EYE_OFF_ICON));
+    this.formLogin = this.formBuilder.group({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      senha: new FormControl('',[Validators.required, Validators.minLength(6)])
+    });
    }
 
   ngOnInit(): void {
+  }
+
+  logar(){
+    this.api.testeApi();
+    this.router.navigate(['/home']);
   }
 
 }

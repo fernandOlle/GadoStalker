@@ -3,7 +3,6 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { UtilsService } from '../../services/utils.service'
-
 const ARROW_RIGHT_ICON =
   `
   <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -79,7 +78,7 @@ export class CriarContaComponent implements OnInit {
       cpf: new FormControl('', [Validators.required, Validators.pattern('[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}|\\d{2}.\\d{3}.\\d{3}\\/\\d{4}\\-\\d{2}'), utilsService.formBuilderCpfCnpj()]),
       nome: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(60), Validators.pattern('[A-Za-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ.\-\/&_-]+\\s+[A-Za-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ.\-\/&\\s]{3,}')]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      telefone: new FormControl('', [Validators.required, Validators.pattern('\\([0-9]{2}\\)\\s[0-9]{4,5}-[0-9]{4}')]),
+      telefone: new FormControl('', [Validators.required]),
       senha,
       confirmaSenha,
       perguntaSeguranca: new FormControl('', Validators.required),
@@ -89,7 +88,7 @@ export class CriarContaComponent implements OnInit {
       sncr: new FormControl('', Validators.required),
       nomeImovelRural: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(60), Validators.pattern('[A-Za-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ.\-\/&_-]+\\s+[A-Za-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ.\-\/&\\s]{3,}')]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      telefone: new FormControl('', [Validators.required, Validators.pattern('\\([0-9]{2}\\)\\s[0-9]{4}-[0-9]{4,6}')]),
+      telefone: new FormControl('', [Validators.required]),
     });
 }
 
