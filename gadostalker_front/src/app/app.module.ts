@@ -14,6 +14,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 import { RecuperarSenhaComponent } from './component/recuperar-senha/recuperar-senha.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { HomeComponent } from './component/home/home.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -24,7 +26,8 @@ const maskConfig: Partial<IConfig> = {
     AppComponent,
     LoginComponent,
     CriarContaComponent,
-    RecuperarSenhaComponent
+    RecuperarSenhaComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ const maskConfig: Partial<IConfig> = {
     FormsModule,
     MatRadioModule,
     MatSelectModule,
+    HttpClientModule,
     NgxMaskModule.forRoot(maskConfig),
   ],
   providers: [],
