@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.ufpel.cs.gadostalker.rest.entity;
 
 import java.io.Serializable;
@@ -7,19 +11,19 @@ import javax.persistence.Table;
 
 /**
  *
- * @author gustavo
+ * @author thomazio
  */
 @Entity
-@Table(name = "proprietario")
-public class Proprietario extends Usuario implements Serializable {
-
-    public Proprietario() {
-    }
+@Table(name = "usuarioComum")
+public class UsuarioComum extends Usuario implements Serializable {
     
+    public UsuarioComum() {
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 83 * hash + Objects.hashCode(this.id);
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -34,8 +38,7 @@ public class Proprietario extends Usuario implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Proprietario other = (Proprietario) obj;
+        final UsuarioComum other = (UsuarioComum) obj;
         return Objects.equals(this.id, other.id);
     }
-
 }

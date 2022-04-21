@@ -2,23 +2,23 @@ package com.ufpel.cs.gadostalker.rest.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
- * @author fernandOlle
+ * @author fernandOlle 
  */
 @Entity
 @Table(name = "produto")
@@ -51,31 +51,22 @@ public class Produto implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private TipoProdutoEnum tipo;
     
-    @Column
-    private Fazenda fazenda;    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FAZENDAID", nullable = true, referencedColumnName = "id")
+    private Fazenda fazenda;
 
     @Column
     private BigDecimal quantidade;
 
-    @Column
-    @Temporal(TemporalType.DATE)
-    private Date dataInicial;
-    
-    @Column
-    @Temporal(TemporalType.DATE)
-    private Date dataFinal;
-
     public Produto() {
     }
 
-    public Produto(Long id, String nome, TipoProdutoEnum tipo, Fazenda fazenda, BigDecimal quantidade, Date dataInicial, Date dataFinal) {
+    public Produto(Long id, String nome, TipoProdutoEnum tipo, Fazenda fazenda, BigDecimal quantidade) {
         this.id = id;
         this.nome = nome;
         this.tipo = tipo;
         this.fazenda = fazenda;
         this.quantidade = quantidade;
-        this.dataInicial = dataInicial;
-        this.dataFinal = dataFinal;
     }
 
     public Long getId() {
@@ -114,22 +105,6 @@ public class Produto implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public Date getDataInicial() {
-        return dataInicial;
-    }
-
-    public void setDataInicial(Date dataInicial) {
-        this.dataInicial = dataInicial;
-    }
-
-    public Date getDataFinal() {
-        return dataFinal;
-    }
-
-    public void setDataFinal(Date dataFinal) {
-        this.dataFinal = dataFinal;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -157,7 +132,7 @@ public class Produto implements Serializable {
 
     @Override
     public String toString() {
-        return "Produto{" + "id=" + id + ", nome=" + nome + ", tipo=" + tipo + ", fazenda=" + fazenda + ", quantidade=" + quantidade + ", dataInicial=" + dataInicial + ", dataFinal=" + dataFinal + '}';
+        return "Produto{" + "id=" + id + ", nome=" + nome + ", tipo=" + tipo + ", fazenda=" + fazenda + ", quantidade=" + quantidade + ", dataInicial=" + '}';
     }
 
     
