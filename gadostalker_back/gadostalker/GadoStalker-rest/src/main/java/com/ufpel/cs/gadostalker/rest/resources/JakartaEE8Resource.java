@@ -25,6 +25,8 @@ public class JakartaEE8Resource {
         
         return Response
                 .ok(p)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                 .build();
     }
 }
