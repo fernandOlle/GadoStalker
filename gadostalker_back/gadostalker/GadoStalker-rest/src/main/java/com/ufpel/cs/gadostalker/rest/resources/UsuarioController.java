@@ -75,7 +75,9 @@ public class UsuarioController {
         
         try
         {
-            usuarioNovo = new Usuario();
+            usuarioNovo = new Usuario(/* todos os params (exceto id) */);
+            //ou usar abaixo
+            //
 //            usuarioNovo.setCpf(/* param */);
 //            usuarioNovo.setNome(/* param */);
 //            usuarioNovo.setPergunta(/* param */);

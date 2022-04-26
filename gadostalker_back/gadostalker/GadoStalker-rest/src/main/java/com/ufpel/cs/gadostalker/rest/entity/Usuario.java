@@ -38,22 +38,6 @@ public class Usuario implements Serializable {
         public String getPergunta() {
             return pergunta;
         }
-        
-        
-//        Usuario.PerguntaSegurancaEnum tipo = Usuario.PerguntaSegurancaEnum.PROFESSORA;
-//        
-//        switch(tipo)
-//        {
-//            case AMIGO:
-//                break;
-//            case ANIMAL:
-//                break;
-//            case COMIDA:
-//                break;
-//            case PROFESSORA:
-//                break;
-//        }
-        
     };
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqUsuario")
