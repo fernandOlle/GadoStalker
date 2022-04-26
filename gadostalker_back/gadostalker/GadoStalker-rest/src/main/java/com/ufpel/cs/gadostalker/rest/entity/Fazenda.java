@@ -30,7 +30,7 @@ public class Fazenda implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqFazenda")
     private Long id;
 
-    @Column
+    @Column(unique=true)
     private String SNCR;
 
     @Column
@@ -49,8 +49,7 @@ public class Fazenda implements Serializable {
     public Fazenda() {
     }
 
-    public Fazenda(Long id, String SNCR, String nome, String email, String telefone) {
-        this.id = id;
+    public Fazenda(String SNCR, String nome, String email, String telefone) {
         this.SNCR = SNCR;
         this.nome = nome;
         this.email = email;

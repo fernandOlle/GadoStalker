@@ -61,8 +61,7 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Long id, String nome, TipoProdutoEnum tipo, Fazenda fazenda, BigDecimal quantidade) {
-        this.id = id;
+    public Produto(String nome, TipoProdutoEnum tipo, Fazenda fazenda, BigDecimal quantidade) {
         this.nome = nome;
         this.tipo = tipo;
         this.fazenda = fazenda;

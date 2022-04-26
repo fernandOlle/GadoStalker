@@ -57,8 +57,7 @@ public class Anuncio implements Serializable {
     public Anuncio() {
     }
 
-    public Anuncio(Long id, String titulo, String descricao, BigDecimal preco, String desconto, Produto produto, Date dataInicial, Date dataFinal) {
-        this.id = id;
+    public Anuncio(String titulo, String descricao, BigDecimal preco, String desconto, Produto produto, Date dataInicial, Date dataFinal) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.preco = preco;

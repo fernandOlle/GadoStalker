@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -20,6 +21,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "usuario")
 @SequenceGenerator(name = "seqUsuario", sequenceName = "SEQUSUARIO", allocationSize = 1)
+@NamedQuery(name = "Usuario.login", query = "SELECT u FROM Usuario u WHERE u.cpf = :cpf AND u.senha = :senha")
 public class Usuario implements Serializable {
 
     public enum PerguntaSegurancaEnum {
@@ -36,6 +38,22 @@ public class Usuario implements Serializable {
         public String getPergunta() {
             return pergunta;
         }
+        
+        
+//        Usuario.PerguntaSegurancaEnum tipo = Usuario.PerguntaSegurancaEnum.PROFESSORA;
+//        
+//        switch(tipo)
+//        {
+//            case AMIGO:
+//                break;
+//            case ANIMAL:
+//                break;
+//            case COMIDA:
+//                break;
+//            case PROFESSORA:
+//                break;
+//        }
+        
     };
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqUsuario")
@@ -51,11 +69,10 @@ public class Usuario implements Serializable {
     private PerguntaSegurancaEnum pergunta;
     @Column
     private String resposta;
-    @Column
+    @Column(unique=true)
     private String cpf;
 
-    public Usuario(Long id, String nome, String telefone, String senha, PerguntaSegurancaEnum pergunta, String resposta, String cpf) {
-        this.id = id;
+    public Usuario(String nome, String telefone, String senha, PerguntaSegurancaEnum pergunta, String resposta, String cpf) {
         this.nome = nome;
         this.telefone = telefone;
         this.senha = senha;
@@ -69,10 +86,6 @@ public class Usuario implements Serializable {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNome() {

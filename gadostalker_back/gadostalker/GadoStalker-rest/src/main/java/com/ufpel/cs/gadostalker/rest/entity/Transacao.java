@@ -52,8 +52,7 @@ public class Transacao implements Serializable {
     public Transacao() {
     }
 
-    public Transacao(Long id, Date data, BigDecimal preco, int quantidade) {
-        this.id = id;
+    public Transacao(Date data, BigDecimal preco, int quantidade) {
         this.dataTransacao = data;
         this.preco = preco;
         this.quantidade = quantidade;
