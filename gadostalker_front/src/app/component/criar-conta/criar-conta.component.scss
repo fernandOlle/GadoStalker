@@ -23,7 +23,7 @@
   }
 }
 
-.container-login{
+.container-criar-conta{
   display: grid;
   width: 100%;
   height: 100%;
@@ -45,7 +45,7 @@
     .form-content{
       margin: auto;
       width: 50%;
-      height: 60%;
+      height: 100%;
       form{
         display: block;
         margin: auto;
@@ -89,6 +89,7 @@
           height: 24px;
         }
         .type-user{
+          display: flex;
           mat-radio-button{
           margin-right: 10px;
           mat-radio-label-content{
@@ -140,7 +141,11 @@
 
 }
 
-::ng-deep {
+::ng-deep .container-criar-conta {
+
+  .mat-button-wrapper{
+    display: flex !important;
+  }
   .mat-radio-inner-circle{
       background-color: #594A3C !important;
   }
@@ -185,5 +190,3 @@
     color: rgba(0, 0, 0, 0.26) !important;
   }
 }
-
-

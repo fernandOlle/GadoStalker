@@ -11,6 +11,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list'
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 import { RecuperarSenhaComponent } from './component/recuperar-senha/recuperar-senha.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
@@ -41,6 +44,10 @@ const maskConfig: Partial<IConfig> = {
     FormsModule,
     MatRadioModule,
     MatSelectModule,
+    MatListModule,
+    MatCardModule,
+    MatCheckboxModule,
+    
     HttpClientModule,
     NgxMaskModule.forRoot(maskConfig),
   ],
