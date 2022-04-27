@@ -22,6 +22,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
@@ -81,10 +82,10 @@ public class UsuarioController {
     }
 
     @POST
-    @Path("/cadastro")
+    @Path("/cadastro{tipoUsuario}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Transactional
-    public Response cadastro(@Context ContainerRequestContext crc, @Context final HttpServletResponse response, UsuarioComum usuario) {
+    public Response cadastro(@Context ContainerRequestContext crc, @Context final HttpServletResponse response, UsuarioComum usuario, @PathParam("tipoUsuario") String tipoUsuario) {
 
         try {
             em.persist(usuario);
