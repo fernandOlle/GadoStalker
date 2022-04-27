@@ -38,7 +38,9 @@
             </button>
           </div>
     </div>
-
+    <div class="container-title">
+      <h1>Catálogo de Produtos</h1>
+    </div>
     <div class="container-main">
         <div class="container-filters">
             <mat-card class="result">
@@ -60,7 +62,12 @@
               </mat-card>
         </div>
         <div class="container-categorias">
-
+          <div class="grid-categorias">
+                <mat-card class="card-produto" *ngFor="let produto of catalogo">
+                    <img src="../../../assets/{{produto}}.png" alt="" width="200px" height="150px">
+                    <h1>{{produto}}</h1>
+                </mat-card>
+          </div>
         </div>
     </div>
 </div>
