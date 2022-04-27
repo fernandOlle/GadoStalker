@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -21,7 +23,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "usuario")
 @SequenceGenerator(name = "seqUsuario", sequenceName = "SEQUSUARIO", allocationSize = 1)
-@NamedQuery(name = "Usuario.login", query = "SELECT u FROM Usuario u WHERE u.cpf = :cpf AND u.senha = :senha")
+@NamedQuery(name = "Usuario.login", query = "SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha")
+@XmlRootElement
 public class Usuario implements Serializable {
 
     public enum PerguntaSegurancaEnum {
@@ -39,30 +42,41 @@ public class Usuario implements Serializable {
             return pergunta;
         }
     };
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqUsuario")
     protected Long id;
+    
     @Column
-    private String nome;
+    @XmlElement private String nome;
+    
     @Column
-    private String telefone;
+    @XmlElement private String telefone;
+    
     @Column
-    private String senha;
+    @XmlElement private String senha;
+    
     @Column
     @Enumerated(EnumType.ORDINAL)
-    private PerguntaSegurancaEnum pergunta;
+    @XmlElement private PerguntaSegurancaEnum pergunta;
+    
     @Column
-    private String resposta;
-    @Column(unique=true)
-    private String cpf;
+    @XmlElement private String resposta;
+    
+    @Column(unique = true)
+    @XmlElement private String cpf;
+    
+    @Column(unique = true)
+    @XmlElement private String email;
 
-    public Usuario(String nome, String telefone, String senha, PerguntaSegurancaEnum pergunta, String resposta, String cpf) {
+    public Usuario(String nome, String telefone, String senha, PerguntaSegurancaEnum pergunta, String resposta, String cpf, String email) {
         this.nome = nome;
         this.telefone = telefone;
         this.senha = senha;
         this.pergunta = pergunta;
         this.resposta = resposta;
         this.cpf = cpf;
+        this.email = email;
     }
 
     public Usuario() {
@@ -120,6 +134,14 @@ public class Usuario implements Serializable {
         this.cpf = cpf;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;
