@@ -5,6 +5,9 @@
 package com.ufpel.cs.gadostalker.rest.resources;
 
 import com.ufpel.cd.gadostalker.dto.UsuarioDTO;
+import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
+import com.ufpel.cs.gadostalker.rest.entity.Funcionario;
+import com.ufpel.cs.gadostalker.rest.entity.Proprietario;
 import com.ufpel.cs.gadostalker.rest.entity.Usuario;
 import com.ufpel.cs.gadostalker.rest.entity.UsuarioComum;
 import java.util.Arrays;
@@ -14,15 +17,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
-import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -76,20 +77,58 @@ public class UsuarioController {
     }
 
     @POST
-    @Path("/cadastro")
+    @Path("/cadastro?t={tipo}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Transactional
-    public Response cadastro(UsuarioComum usuario) {
-
-        try {
-            em.persist(usuario);
-        } catch (PersistenceException ex) {
-            return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .header("Access-Control-Allow-Origin", "*")
-                    .header("Access-Control-Allow-Methods", "POST")
-                    .build();
+    public Response cadastro(Usuario usuario, Fazenda fazenda, @PathParam("tipo") Integer tipo) {
+        
+        switch (tipo) {
+            
+            //Proprietario
+            case 0:
+                try {
+                    em.persist((Proprietario) usuario);
+                    fazenda.setProprietario((Proprietario) usuario);
+                    em.persist(fazenda);
+                } catch (PersistenceException ex) {
+                    return Response
+                            .status(Response.Status.BAD_REQUEST)
+                            .header("Access-Control-Allow-Origin", "*")
+                            .header("Access-Control-Allow-Methods", "POST")
+                            .build();
+                }
+                break;
+                
+            //Funcionario
+            case 1:
+                try {
+                    em.persist((Funcionario) usuario);
+                } catch (PersistenceException ex) {
+                    return Response
+                            .status(Response.Status.BAD_REQUEST)
+                            .header("Access-Control-Allow-Origin", "*")
+                            .header("Access-Control-Allow-Methods", "POST")
+                            .build();
+                }
+                break;
+                
+            //UsuarioComum
+            case 2:
+                try {
+                    em.persist((UsuarioComum) usuario);
+                } catch (PersistenceException ex) {
+                    return Response
+                            .status(Response.Status.BAD_REQUEST)
+                            .header("Access-Control-Allow-Origin", "*")
+                            .header("Access-Control-Allow-Methods", "POST")
+                            .build();
+                }
+                break;
+                
+            default:
+                //TODO;
         }
+
 
         return Response
                 .status(Response.Status.CREATED)
