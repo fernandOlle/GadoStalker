@@ -11,10 +11,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
-import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -36,10 +34,7 @@ import javax.ws.rs.core.Response;
 @Path("/usuario")
 public class UsuarioController {
 
-    @PersistenceUnit(name = "gadostalker")
-    private EntityManagerFactory emf;
-
-    @PersistenceContext
+    @PersistenceContext(unitName = "gadostalker")
     private EntityManager em;
 
     public UsuarioController() {
@@ -82,10 +77,10 @@ public class UsuarioController {
     }
 
     @POST
-    @Path("/cadastro{tipoUsuario}")
+    @Path("/cadastro")
     @Consumes({MediaType.APPLICATION_JSON})
     @Transactional
-    public Response cadastro(@Context ContainerRequestContext crc, @Context final HttpServletResponse response, UsuarioComum usuario, @PathParam("tipoUsuario") String tipoUsuario) {
+    public Response cadastro(@Context ContainerRequestContext crc, @Context final HttpServletResponse response, UsuarioComum usuario) {
 
         try {
             em.persist(usuario);
