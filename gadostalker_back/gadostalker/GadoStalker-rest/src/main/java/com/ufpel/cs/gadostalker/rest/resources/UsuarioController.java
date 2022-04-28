@@ -44,7 +44,7 @@ public class UsuarioController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     @Transactional
-    public Response login(@Context ContainerRequestContext crc, @Context final HttpServletResponse response, UsuarioDTO usuarioDTO) {
+    public Response login(UsuarioDTO usuarioDTO) {
 
         TypedQuery<Usuario> u = em.createNamedQuery("Usuario.login", Usuario.class);
         u.setParameter("email", usuarioDTO.email);
@@ -79,7 +79,7 @@ public class UsuarioController {
     @Path("/cadastro")
     @Consumes({MediaType.APPLICATION_JSON})
     @Transactional
-    public Response cadastro(@Context ContainerRequestContext crc, @Context final HttpServletResponse response, UsuarioComum usuario) {
+    public Response cadastro(UsuarioComum usuario) {
 
         try {
             em.persist(usuario);
