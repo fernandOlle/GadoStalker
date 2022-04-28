@@ -139,7 +139,7 @@ public class UsuarioController {
         }
 
         if (usuarioRecuperaSenha.pergunta == usuario.getPergunta()) {
-            if (usuarioRecuperaSenha.resposta.equals(usuario.getResposta())) {
+            if (usuarioRecuperaSenha.resposta.toLowerCase().equals(usuario.getResposta().toLowerCase())) {
                 usuario.setSenha(usuarioRecuperaSenha.senha);
 
                 em.merge(usuario);
