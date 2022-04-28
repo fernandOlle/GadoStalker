@@ -2,6 +2,7 @@ package com.ufpel.cs.gadostalker.rest.resources;
 
 import com.ufpel.cs.gadostalker.rest.entity.Proprietario;
 import com.ufpel.cs.gadostalker.transactions.PropTeste;
+import javax.ejb.EJB;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -14,7 +15,8 @@ import javax.ws.rs.core.Response;
 @Path("rest")
 public class JakartaEE8Resource {
   
-    PropTeste propTeste = new PropTeste();
+    @EJB
+    PropTeste propTeste;
     
     @GET
     @Transactional
