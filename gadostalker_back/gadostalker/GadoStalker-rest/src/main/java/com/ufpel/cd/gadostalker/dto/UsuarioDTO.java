@@ -20,6 +20,8 @@ public class UsuarioDTO {
     @XmlElement public String senha;
     @XmlElement public String telefone;
     @XmlElement public String email;
+    @XmlElement public Usuario.PerguntaSegurancaEnum pergunta;
+    @XmlElement public String resposta;
     
     public UsuarioDTO(){
     }
@@ -30,5 +32,7 @@ public class UsuarioDTO {
         senha = u.getSenha();
         telefone = u.getTelefone();
         email = u.getEmail();
+        pergunta = u.getPergunta();
+        resposta = u.getResposta();
     }
 }

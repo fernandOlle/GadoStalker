@@ -20,7 +20,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
@@ -117,6 +116,46 @@ public class UsuarioController {
                 .status(Response.Status.ACCEPTED)
                 .header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Methods", "GET")
+                .build();
+    }
+
+    @Path("/recuperarSenha")
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Transactional
+    public Response recuperarSenha(UsuarioDTO usuarioRecuperaSenha) {
+
+        TypedQuery<Usuario> u = em.createQuery("select u from Usuario u where u.email = :email", Usuario.class)
+                .setParameter("email", usuarioRecuperaSenha.email);
+        Usuario usuario;
+        try {
+            usuario = u.getSingleResult();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .header("Access-Control-Allow-Origin", "*")
+                    .header("Access-Control-Allow-Methods", "POST")
+                    .build();
+        }
+
+        if (usuarioRecuperaSenha.pergunta == usuario.getPergunta()) {
+            if (usuarioRecuperaSenha.resposta.equals(usuario.getResposta())) {
+                usuario.setSenha(usuarioRecuperaSenha.senha);
+
+                em.merge(usuario);
+
+                return Response
+                        .status(Response.Status.ACCEPTED)
+                        .header("Access-Control-Allow-Origin", "*")
+                        .header("Access-Control-Allow-Methods", "POST")
+                        .build();
+            }
+        }
+
+        return Response
+                .status(Response.Status.UNAUTHORIZED)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "POST")
                 .build();
     }
 }
