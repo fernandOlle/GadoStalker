@@ -1,5 +1,7 @@
 package com.ufpel.cs.gadostalker.rest.entity;
 
+import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
+import com.ufpel.cs.gadostalker.rest.mapper.MapperGodClass;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +27,16 @@ public class Proprietario extends Usuario implements Serializable {
 
     public Proprietario() {
     }
+    
+    public Proprietario(UsuarioDTO usuarioDTO) {
+        super(usuarioDTO);
+        this.fazendas.add(MapperGodClass.convertFazendaDtoToEntity(usuarioDTO.fazendas.get(0)));
+    }
 
     public Proprietario(String nome, String telefone, String senha, 
             PerguntaSegurancaEnum pergunta, String resposta, String cpf, 
             String email, List<Fazenda> fazendas) {
-        super(nome, telefone, senha, pergunta, resposta, cpf, email);
+        super(nome, telefone, senha, pergunta, resposta, cpf, email, Usuario.TipoUsuario.PROPRIETARIO);
         this.fazendas = fazendas;
     }
 

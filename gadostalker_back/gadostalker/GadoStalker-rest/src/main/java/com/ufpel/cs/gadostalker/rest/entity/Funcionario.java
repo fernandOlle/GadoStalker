@@ -1,5 +1,6 @@
 package com.ufpel.cs.gadostalker.rest.entity;
 
+import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
  *
  * @author gustavo
  */
-@Entity
+@Entity(name = "funcionario")
 @Table(name = "funcionario")
 public class Funcionario extends Usuario implements Serializable {
 
@@ -21,6 +22,11 @@ public class Funcionario extends Usuario implements Serializable {
     private Fazenda fazenda;
 
     public Funcionario() {
+    }
+    
+    public Funcionario(UsuarioDTO usuarioDTO, Fazenda fazenda) {
+        super(usuarioDTO);
+        this.fazenda = fazenda;
     }
 
     public Fazenda getFazenda() {

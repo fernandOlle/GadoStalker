@@ -82,20 +82,17 @@ public class UsuarioController {
     }
 
     @POST
-    @Path("/cadastro?t={tipo}")
+    @Path("/cadastro/{tipo}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Transactional
-    public Response cadastro(UsuarioDTO usuarioDTO, @PathParam("tipo") Integer tipo) {
-        
-        Usuario usuario = new Usuario(usuarioDTO);
-        
+    public Response cadastro(UsuarioDTO usuarioDTO, @PathParam("tipo") String tipo) {
+                
         switch (tipo) {
             //Proprietario
-            case 0:
+            case "prop":
                 try {
-                    Proprietario proprietario = (Proprietario) usuario;
-                    proprietario.addFazenda(MapperGodClass
-                            .convertFazendaDtoToEntity(usuarioDTO.fazendas.get(0)));
+                    usuarioDTO.setTipoUsuario(Usuario.TipoUsuario.PROPRIETARIO);
+                    Proprietario proprietario = new Proprietario(usuarioDTO);
                     
                     em.persist(proprietario);
                 } catch (PersistenceException ex) {
@@ -109,9 +106,15 @@ public class UsuarioController {
                 break;
                 
             //Funcionario
-            case 1:
+            case "func":
                 try {
-                    em.persist((Funcionario) usuario);
+                    Fazenda fazenda;
+                    TypedQuery<Fazenda> query = em.createQuery("select f from Fazenda f where f.SNCR = :sncr", Fazenda.class)
+                            .setParameter("sncr", usuarioDTO.fazendas.get(0).SNCR);
+                    fazenda = query.getSingleResult();
+                    usuarioDTO.setTipoUsuario(Usuario.TipoUsuario.FUNCIONARIO);
+                    Funcionario funcionario = new Funcionario(usuarioDTO, fazenda);
+                    em.persist(funcionario);
                 } catch (PersistenceException ex) {
                     return Response
                             .status(Response.Status.BAD_REQUEST)
@@ -122,9 +125,11 @@ public class UsuarioController {
                 break;
                 
             //UsuarioComum
-            case 2:
+            case "uc":
                 try {
-                    em.persist((UsuarioComum) usuario);
+                    usuarioDTO.setTipoUsuario(Usuario.TipoUsuario.USUARIO_COMUM);
+                    UsuarioComum uc = new UsuarioComum(usuarioDTO);
+                    em.persist(uc);
                 } catch (PersistenceException ex) {
                     return Response
                             .status(Response.Status.BAD_REQUEST)

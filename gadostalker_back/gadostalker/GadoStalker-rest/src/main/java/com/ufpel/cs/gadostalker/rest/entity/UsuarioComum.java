@@ -4,6 +4,7 @@
  */
 package com.ufpel.cs.gadostalker.rest.entity;
 
+import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -13,11 +14,15 @@ import javax.persistence.Table;
  *
  * @author thomazio
  */
-@Entity
-@Table(name = "usuarioComum")
+@Entity(name = "usuario_comum")
+@Table(name = "usuario_comum")
 public class UsuarioComum extends Usuario implements Serializable {
     
     public UsuarioComum() {
+    }
+    
+    public UsuarioComum(UsuarioDTO usuarioDTO) {
+        super(usuarioDTO);
     }
 
     @Override

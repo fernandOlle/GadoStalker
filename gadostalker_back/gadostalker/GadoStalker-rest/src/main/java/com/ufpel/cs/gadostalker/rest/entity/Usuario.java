@@ -42,6 +42,12 @@ public class Usuario implements Serializable {
             return pergunta;
         }
     };
+    
+    public enum TipoUsuario {
+        PROPRIETARIO,
+        FUNCIONARIO,
+        USUARIO_COMUM
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqUsuario")
@@ -49,34 +55,38 @@ public class Usuario implements Serializable {
 
     @Column
     @XmlElement
-    private String nome;
+    protected String nome;
 
     @Column
     @XmlElement
-    private String telefone;
+    protected String telefone;
 
     @Column
     @XmlElement
-    private String senha;
+    protected String senha;
 
     @Column
     @Enumerated(EnumType.ORDINAL)
     @XmlElement
-    private PerguntaSegurancaEnum pergunta;
+    protected PerguntaSegurancaEnum pergunta;
 
     @Column
     @XmlElement
-    private String resposta;
+    protected String resposta;
 
     @Column(unique = true)
     @XmlElement
-    private String cpf;
+    protected String cpf;
 
     @Column(unique = true)
     @XmlElement
-    private String email;
+    protected String email;
+    
+    @Column
+    @XmlElement
+    protected TipoUsuario tipoUsuario;
 
-    public Usuario(String nome, String telefone, String senha, PerguntaSegurancaEnum pergunta, String resposta, String cpf, String email) {
+    public Usuario(String nome, String telefone, String senha, PerguntaSegurancaEnum pergunta, String resposta, String cpf, String email, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.telefone = telefone;
         this.senha = senha;
@@ -84,8 +94,9 @@ public class Usuario implements Serializable {
         this.resposta = resposta;
         this.cpf = cpf;
         this.email = email;
+        this.tipoUsuario = tipoUsuario;
     }
-
+    
     public Usuario(UsuarioDTO usuarioDTO) {
         this.nome = usuarioDTO.nome;
         this.telefone = usuarioDTO.telefone;
@@ -94,6 +105,7 @@ public class Usuario implements Serializable {
         this.resposta = usuarioDTO.resposta;
         this.cpf = usuarioDTO.cpf;
         this.email = usuarioDTO.email;
+        this.tipoUsuario = usuarioDTO.tipoUsuario;
     }
 
     public Usuario() {
@@ -157,6 +169,14 @@ public class Usuario implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 
     @Override

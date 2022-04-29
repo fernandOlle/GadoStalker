@@ -42,6 +42,8 @@ public class UsuarioDTO {
     public String resposta;
     @XmlElement
     public List<FazendaDTO> fazendas;
+    @XmlElement
+    public Usuario.TipoUsuario tipoUsuario;
     
     public UsuarioDTO addFazendaDTO(FazendaDTO fazenda) {
         fazendas.add(fazenda);
