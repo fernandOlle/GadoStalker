@@ -40,8 +40,6 @@ public class UsuarioController {
     @PersistenceContext(unitName = "gadostalker")
     private EntityManager em;
     
-    private ModelMapper modelMapper = new ModelMapper();
-
     public UsuarioController() {
     }
 
@@ -74,6 +72,7 @@ public class UsuarioController {
                         .nome(usuarioLogado.getNome())
                         .cpf(usuarioLogado.getCpf())
                         .email(usuarioLogado.getEmail())
+                        .tipoUsuario(usuarioLogado.getTipoUsuario())
                         .build())
                 .status(Response.Status.ACCEPTED)
                 .header("Access-Control-Allow-Origin", "*")
