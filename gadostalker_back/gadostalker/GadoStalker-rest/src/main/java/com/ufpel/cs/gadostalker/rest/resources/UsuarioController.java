@@ -4,12 +4,14 @@
  */
 package com.ufpel.cs.gadostalker.rest.resources;
 
-import com.ufpel.cd.gadostalker.dto.UsuarioDTO;
+import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
+import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entity.Funcionario;
 import com.ufpel.cs.gadostalker.rest.entity.Proprietario;
 import com.ufpel.cs.gadostalker.rest.entity.Usuario;
 import com.ufpel.cs.gadostalker.rest.entity.UsuarioComum;
+import com.ufpel.cs.gadostalker.rest.mapper.MapperGodClass;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +28,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.modelmapper.ModelMapper;
 
 /**
  *
@@ -36,6 +39,8 @@ public class UsuarioController {
 
     @PersistenceContext(unitName = "gadostalker")
     private EntityManager em;
+    
+    private ModelMapper modelMapper = new ModelMapper();
 
     public UsuarioController() {
     }
@@ -63,13 +68,13 @@ public class UsuarioController {
                     .build();
         }
 
-        usuarioDTO.telefone = usuarioLogado.getTelefone();
-        usuarioDTO.nome = usuarioLogado.getNome();
-        usuarioDTO.cpf = usuarioLogado.getCpf();
-        usuarioDTO.senha = null;
-
         return Response
-                .ok(usuarioDTO)
+                .ok(UsuarioDTO.builder()
+                        .telefone(usuarioLogado.getTelefone())
+                        .nome(usuarioLogado.getNome())
+                        .cpf(usuarioLogado.getCpf())
+                        .email(usuarioLogado.getEmail())
+                        .build())
                 .status(Response.Status.ACCEPTED)
                 .header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Methods", "POST")
@@ -80,18 +85,22 @@ public class UsuarioController {
     @Path("/cadastro?t={tipo}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Transactional
-    public Response cadastro(Usuario usuario, Fazenda fazenda, @PathParam("tipo") Integer tipo) {
+    public Response cadastro(UsuarioDTO usuarioDTO, @PathParam("tipo") Integer tipo) {
+        
+        Usuario usuario = new Usuario(usuarioDTO);
         
         switch (tipo) {
-            
             //Proprietario
             case 0:
                 try {
-                    em.persist((Proprietario) usuario);
-                    fazenda.setProprietario((Proprietario) usuario);
-                    em.persist(fazenda);
+                    Proprietario proprietario = (Proprietario) usuario;
+                    proprietario.addFazenda(MapperGodClass
+                            .convertFazendaDtoToEntity(usuarioDTO.fazendas.get(0)));
+                    
+                    em.persist(proprietario);
                 } catch (PersistenceException ex) {
                     return Response
+                            .ok()
                             .status(Response.Status.BAD_REQUEST)
                             .header("Access-Control-Allow-Origin", "*")
                             .header("Access-Control-Allow-Methods", "POST")

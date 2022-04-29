@@ -1,5 +1,6 @@
 package com.ufpel.cs.gadostalker.rest.entity;
 
+import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -19,7 +20,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author kevin
  */
-
 @Entity
 @Table(name = "usuario")
 @SequenceGenerator(name = "seqUsuario", sequenceName = "SEQUSUARIO", allocationSize = 1)
@@ -42,32 +42,39 @@ public class Usuario implements Serializable {
             return pergunta;
         }
     };
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqUsuario")
     protected Long id;
-    
+
     @Column
-    @XmlElement private String nome;
-    
+    @XmlElement
+    private String nome;
+
     @Column
-    @XmlElement private String telefone;
-    
+    @XmlElement
+    private String telefone;
+
     @Column
-    @XmlElement private String senha;
-    
+    @XmlElement
+    private String senha;
+
     @Column
     @Enumerated(EnumType.ORDINAL)
-    @XmlElement private PerguntaSegurancaEnum pergunta;
-    
+    @XmlElement
+    private PerguntaSegurancaEnum pergunta;
+
     @Column
-    @XmlElement private String resposta;
-    
+    @XmlElement
+    private String resposta;
+
     @Column(unique = true)
-    @XmlElement private String cpf;
-    
+    @XmlElement
+    private String cpf;
+
     @Column(unique = true)
-    @XmlElement private String email;
+    @XmlElement
+    private String email;
 
     public Usuario(String nome, String telefone, String senha, PerguntaSegurancaEnum pergunta, String resposta, String cpf, String email) {
         this.nome = nome;
@@ -77,6 +84,16 @@ public class Usuario implements Serializable {
         this.resposta = resposta;
         this.cpf = cpf;
         this.email = email;
+    }
+
+    public Usuario(UsuarioDTO usuarioDTO) {
+        this.nome = usuarioDTO.nome;
+        this.telefone = usuarioDTO.telefone;
+        this.senha = usuarioDTO.senha;
+        this.pergunta = usuarioDTO.pergunta;
+        this.resposta = usuarioDTO.resposta;
+        this.cpf = usuarioDTO.cpf;
+        this.email = usuarioDTO.email;
     }
 
     public Usuario() {
@@ -141,7 +158,7 @@ public class Usuario implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -168,5 +185,4 @@ public class Usuario implements Serializable {
         return Objects.equals(this.id, other.id);
     }
 
-    
 }

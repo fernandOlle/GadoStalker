@@ -7,8 +7,10 @@ package com.ufpel.cs.gadostalker.rest.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -24,6 +27,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "fazenda")
 @SequenceGenerator(name = "seqFazenda", sequenceName = "SEQFAZENDA", allocationSize = 1)
+@XmlRootElement
 public class Fazenda implements Serializable {
 
     @Id
@@ -42,8 +46,7 @@ public class Fazenda implements Serializable {
     @Column
     private String telefone;
     
-    @ManyToOne
-    @JoinColumn(name = "PROPRIETARIOID", nullable = false, referencedColumnName = "id")
+    @ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private Proprietario proprietario;
 
     public Fazenda() {
