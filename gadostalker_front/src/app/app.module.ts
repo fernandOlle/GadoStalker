@@ -19,6 +19,7 @@ import { RecuperarSenhaComponent } from './component/recuperar-senha/recuperar-s
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { HomeComponent } from './component/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AnunciosComponent } from './component/anuncios/anuncios.component';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -30,7 +31,8 @@ const maskConfig: Partial<IConfig> = {
     LoginComponent,
     CriarContaComponent,
     RecuperarSenhaComponent,
-    HomeComponent
+    HomeComponent,
+    AnunciosComponent
   ],
   imports: [
     BrowserModule,
