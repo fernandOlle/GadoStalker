@@ -4,14 +4,12 @@
  */
 package com.ufpel.cs.gadostalker.rest.resources;
 
-import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entity.Funcionario;
 import com.ufpel.cs.gadostalker.rest.entity.Proprietario;
 import com.ufpel.cs.gadostalker.rest.entity.Usuario;
 import com.ufpel.cs.gadostalker.rest.entity.UsuarioComum;
-import com.ufpel.cs.gadostalker.rest.mapper.MapperGodClass;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +26,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.modelmapper.ModelMapper;
 
 /**
  *
