@@ -15,11 +15,11 @@ import javax.persistence.Table;
  *
  * @author gustavo
  */
-@Entity
+@Entity(name = "proprietario")
 @Table(name = "proprietario")
 public class Proprietario extends Usuario implements Serializable {
     
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "proprietario", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name="proprietarioid")
     private List<Fazenda> fazendas = new ArrayList<>();
 
