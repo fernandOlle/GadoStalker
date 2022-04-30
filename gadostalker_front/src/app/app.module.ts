@@ -13,13 +13,15 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list'
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 import { RecuperarSenhaComponent } from './component/recuperar-senha/recuperar-senha.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { HomeComponent } from './component/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AnunciosComponent } from './component/anuncios/anuncios.component';
+import { AnuncioComponent } from './component/anuncio/anuncio.component';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -32,7 +34,8 @@ const maskConfig: Partial<IConfig> = {
     CriarContaComponent,
     RecuperarSenhaComponent,
     HomeComponent,
-    AnunciosComponent
+    AnunciosComponent,
+    AnuncioComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,7 @@ const maskConfig: Partial<IConfig> = {
     MatListModule,
     MatCardModule,
     MatCheckboxModule,
-    
+    MatExpansionModule,
     HttpClientModule,
     NgxMaskModule.forRoot(maskConfig),
   ],
