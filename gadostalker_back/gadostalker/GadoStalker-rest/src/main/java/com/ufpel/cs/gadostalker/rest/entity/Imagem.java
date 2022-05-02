@@ -57,7 +57,7 @@ public class Imagem implements Serializable {
     
     @OneToOne
     @MapsId
-    @JoinColumn(name = "anuncio_id")
+    @JoinColumn(name = "ANUNCIO_ID")
     private Anuncio Anuncio;
     
     @Column
