@@ -1,0 +1,35 @@
+<div class="container-area-produtor">
+    <div class="container-header">
+        <div class="container-icon">
+            <mat-icon [svgIcon]="'menu'" class="menu-icon">
+            </mat-icon>
+        </div>
+        <div class="logo-container">
+            <a href="">GADO STALKER</a>
+        </div>
+        <div class="title-container">
+            <h1>Dashboard</h1>
+        </div>
+        <div class="fazendeiro-container">
+            <button mat-raised-button class="btn-produtor">Página Inicial</button>
+        </div>
+    </div>
+    <div class="container-main">
+        <div class="container-menu-list">
+            <mat-selection-list #options [multiple]="false">
+                <mat-list-option *ngFor="let option of Options" [value]="option">
+                    <div>
+                        <mat-icon
+                            [svgIcon]="option"
+                            class="menu-list-icon">
+                        </mat-icon>
+                        <span>{{option}}</span>
+                    </div>
+                </mat-list-option>
+            </mat-selection-list>
+        </div>
+        <div class="container-component">
+            <app-dashboard></app-dashboard>
+        </div>
+    </div>
+</div>

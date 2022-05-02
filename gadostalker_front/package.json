@@ -20,6 +20,8 @@
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
+    "@types/c3": "^0.7.8",
+    "c3": "^0.7.20",
     "ngx-mask": "^13.1.6",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

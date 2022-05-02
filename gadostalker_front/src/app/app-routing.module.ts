@@ -6,6 +6,8 @@ import { RecuperarSenhaComponent } from '../app/component/recuperar-senha/recupe
 import { HomeComponent } from '../app/component/home/home.component';
 import { AnunciosComponent } from '../app/component/anuncios/anuncios.component';
 import { AnuncioComponent } from '../app/component/anuncio/anuncio.component';
+import { AreaProdutorComponent } from '../app/component/area-produtor/area-produtor.component';
+
 const routes: Routes = [
   { path: '', component: LoginComponent, pathMatch:'full' },
   { path: 'login', component: LoginComponent },
@@ -14,6 +16,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'anuncios', component: AnunciosComponent },
   { path: 'anuncio', component: AnuncioComponent },
+  { path: 'area-produtor', component: AreaProdutorComponent }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

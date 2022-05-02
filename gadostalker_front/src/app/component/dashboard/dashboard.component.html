@@ -1,0 +1,86 @@
+<div class="container-dashboard">
+    <div class="cards-info">
+        <mat-card class="card">
+            <div class="title">
+                <h3>Total de anúncios</h3>
+                <h4>ativos</h4>
+            </div>
+            <div class="information">
+                14
+            </div>
+        </mat-card>
+        <mat-card class="card">
+            <div class="title">
+                <h3>Total de vendas</h3>
+                <h4>mensais</h4>
+            </div>
+            <div class="information">
+                22
+            </div>
+        </mat-card>
+        <mat-card class="card">
+            <div class="title">
+                <h3>Total de funcionários</h3>
+                <h4>em sedes</h4>
+            </div>
+            <div class="information">
+                11
+            </div>
+        </mat-card>
+        <mat-card class="card">
+            <div class="title">
+                <h3>Total de produtos</h3>
+                <h4>no catálogo</h4>
+            </div>
+            <div class="information">
+                4
+            </div>
+        </mat-card>
+    </div>
+    <div class="linha__cards-3">
+        <mat-card class="card link-video cardNegociosFechados">
+            <div class="header">
+                <mat-card-title>Lucros com Vendas</mat-card-title>
+                    <div class="actionsNF">
+                        <button mat-icon-button>
+                            <mat-icon [svgIcon]="'arrow-left'"></mat-icon>
+                        </button>
+                        <a class="fontHelvetica16 title">
+                            1º Sem./2022
+                        </a>
+                        <button mat-icon-button>
+                            <mat-icon [svgIcon]="'arrow-right'"></mat-icon>
+                        </button>
+                    </div>
+            </div>
+            <div id="chart_negociosF"></div>
+        </mat-card>
+
+        <mat-card class="card card-lucro-geral">
+            <div class="header">
+                <mat-card-title>Lucro geral</mat-card-title>
+            </div>
+            <div id="chart_lucroGeral"></div>
+        </mat-card>
+    </div>
+    <div class="linha__cards-3">
+
+        <mat-card class="card link-video cardNegociosFechados">
+            <div class="header">
+                <mat-card-title>Quantidade de vendas</mat-card-title>
+                    <div class="actionsNF">
+                        <button mat-icon-button>
+                            <mat-icon [svgIcon]="'arrow-left'"></mat-icon>
+                        </button>
+                        <a class="fontHelvetica16 title">
+                            1º Sem./2022
+                        </a>
+                        <button mat-icon-button>
+                            <mat-icon [svgIcon]="'arrow-right'"></mat-icon>
+                        </button>
+                    </div>
+            </div>
+            <div id="chart_quantidadeVendas"></div>
+        </mat-card>
+    </div>
+</div>

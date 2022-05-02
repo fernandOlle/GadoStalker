@@ -15,6 +15,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 import { RecuperarSenhaComponent } from './component/recuperar-senha/recuperar-senha.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
@@ -22,7 +24,8 @@ import { HomeComponent } from './component/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AnunciosComponent } from './component/anuncios/anuncios.component';
 import { AnuncioComponent } from './component/anuncio/anuncio.component';
-
+import { AreaProdutorComponent } from './component/area-produtor/area-produtor.component';
+import { DashboardComponent } from './component/dashboard/dashboard.component';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -35,7 +38,9 @@ const maskConfig: Partial<IConfig> = {
     RecuperarSenhaComponent,
     HomeComponent,
     AnunciosComponent,
-    AnuncioComponent
+    AnuncioComponent,
+    AreaProdutorComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +58,8 @@ const maskConfig: Partial<IConfig> = {
     MatCardModule,
     MatCheckboxModule,
     MatExpansionModule,
+    MatToolbarModule,
+    MatButtonToggleModule,
     HttpClientModule,
     NgxMaskModule.forRoot(maskConfig),
   ],

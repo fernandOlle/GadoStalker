@@ -1,0 +1,86 @@
+*{
+    font-family: 'Viga', sans-serif !important;
+  }
+.container-area-produtor {
+    .container-header {
+        width: 100%;
+        height: 100px;
+        margin: auto;
+        background-color: #594A3C;
+        display: grid;
+        grid-template-columns: 48px 240px 2.4fr 1fr;
+
+        .container-icon{  
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .menu-icon{
+                color: white;
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            a {
+                font-size: 32px;
+                text-decoration: none;
+                color: white;
+                letter-spacing: 1px;
+                font-weight: 700;
+            }
+        }
+
+        .title-container{
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            h1{
+                font-size: 26px;
+                text-decoration: none;
+                color: white;
+                letter-spacing: 1px;
+                margin: 0 0 0 15px;
+            }
+        }
+
+        .fazendeiro-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .btn-produtor {
+                width: 180px;
+                height: 40px;
+                border-radius: 20px;
+                background-color: #8DA633;
+                color: white;
+            }
+        }
+    }
+    .container-main{
+        display: grid;
+        grid-template-columns: 290px 1fr;
+        min-height: 836px;
+        .container-menu-list{
+            .mat-list-single-selected-option{
+                color: #8DA633;
+                background-color: white;
+            }
+            mat-list-option{
+                font-size: 20.9px;
+            }
+            .menu-list-icon{
+                margin-right: 10px;
+                width: 28px;
+                height: 28px;
+            }
+        }
+        .container-component{
+            background-color: rgba(0, 0, 0, 0.12);
+        }
+    }
+}
