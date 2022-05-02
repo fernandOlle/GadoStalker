@@ -3,7 +3,9 @@ package com.ufpel.cs.gadostalker.rest.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +13,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,9 +47,10 @@ public class Anuncio implements Serializable {
     @Column
     private String desconto;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    //@ManyToOne(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "PRODUTOID", nullable = true, referencedColumnName = "id")
-    private Produto produto;
+    private List<Produto> produto;
     
     @Column
     @Temporal(TemporalType.DATE)
@@ -53,11 +59,16 @@ public class Anuncio implements Serializable {
     @Column
     @Temporal(TemporalType.DATE)
     private Date dataFinal;
+    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "Anuncio")
+    @JoinColumn(name = "imagem_id")
+    @PrimaryKeyJoinColumn
+    private Imagem imagem;
 
     public Anuncio() {
     }
 
-    public Anuncio(String titulo, String descricao, BigDecimal preco, String desconto, Produto produto, Date dataInicial, Date dataFinal) {
+    public Anuncio(String titulo, String descricao, BigDecimal preco, String desconto, List<Produto> produto, Date dataInicial, Date dataFinal) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.preco = preco;
@@ -103,11 +114,11 @@ public class Anuncio implements Serializable {
         this.desconto = desconto;
     }
 
-    public Produto getProduto() {
+    public List<Produto> getProduto() {
         return produto;
     }
 
-    public void setProduto(Produto produto) {
+    public void setProduto(List<Produto> produto) {
         this.produto = produto;
     }
 
@@ -125,6 +136,14 @@ public class Anuncio implements Serializable {
 
     public void setDataFinal(Date dataFinal) {
         this.dataFinal = dataFinal;
+    }
+
+    public Imagem getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(Imagem imagem) {
+        this.imagem = imagem;
     }
 
     @Override
