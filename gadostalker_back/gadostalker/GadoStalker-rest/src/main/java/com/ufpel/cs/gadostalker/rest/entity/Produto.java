@@ -52,7 +52,7 @@ public class Produto implements Serializable {
     private TipoProdutoEnum tipo;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FAZENDAID", nullable = true, referencedColumnName = "id")
+    @JoinColumn(name = "FAZENDA_SNCR", nullable = true, referencedColumnName = "SNCR")
     private Fazenda fazenda;
 
     @Column
