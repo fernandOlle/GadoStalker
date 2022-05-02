@@ -14,7 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
@@ -29,6 +29,8 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "anuncio")
 @SequenceGenerator(name = "seqAnuncio", sequenceName = "SEQANUNCIO", allocationSize = 1)
+@NamedQuery(name = "Anuncio.getAllAnunciosQueContemProduto", query = "SELECT a FROM Anuncio a INNER JOIN a.produtos p "
+        + "WHERE EXISTS (SELECT p2 FROM Produto p2 WHERE p2.tipo = :tipo)")
 public class Anuncio implements Serializable {
 
     @Id
@@ -50,7 +52,7 @@ public class Anuncio implements Serializable {
     //@ManyToOne(fetch = FetchType.LAZY)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "PRODUTOID", nullable = true, referencedColumnName = "id")
-    private List<Produto> produto;
+    private List<Produto> produtos;
     
     @Column
     @Temporal(TemporalType.DATE)
@@ -73,7 +75,7 @@ public class Anuncio implements Serializable {
         this.descricao = descricao;
         this.preco = preco;
         this.desconto = desconto;
-        this.produto = produto;
+        this.produtos = produto;
         this.dataInicial = dataInicial;
         this.dataFinal = dataFinal;
     }
@@ -114,12 +116,16 @@ public class Anuncio implements Serializable {
         this.desconto = desconto;
     }
 
-    public List<Produto> getProduto() {
-        return produto;
+    public List<Produto> getProdutos() {
+        return produtos;
     }
 
-    public void setProduto(List<Produto> produto) {
-        this.produto = produto;
+    public void addProduto(Produto produto) {
+        produtos.add(produto);
+    }
+    
+    public void removeProdto(Produto produto) {
+        produtos.remove(produto);
     }
 
     public Date getDataInicial() {
