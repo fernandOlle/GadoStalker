@@ -53,11 +53,27 @@
             align-items: center;
 
             .btn-produtor {
-                width: 180px;
-                height: 40px;
+                width: 195px;
+                height: 45px;
+                border-radius: 20px;
+                background-color: #46591D;
+                color: white;
+                margin-right: 10px;
+                font-size: 18px;
+            }
+            
+            .btn-relatorios {
+                width: 195px;
+                height: 45px;
                 border-radius: 20px;
                 background-color: #8DA633;
                 color: white;
+                font-size: 18px;
+                .menu-icon{
+                    color: white;
+                    width: 36px;
+                    height: 36px;
+                }
             }
         }
     }

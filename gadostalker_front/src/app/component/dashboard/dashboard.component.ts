@@ -50,6 +50,8 @@ arrayQtd = [
   ngOnInit(): void {
     this.montaGraficoNF(this.sem1, this.arrayNf);
     this.montaGraficoQuantidadeVendas(this.sem1, this.arrayQtd);
+    this.montaGraficoLucroGeral();
+    this.montaGraficoVendasPorProduto();
     
   }
   montaGraficoNF(col_x: any, arrayNF: any) {
@@ -128,31 +130,77 @@ arrayQtd = [
     });
   }
 
-  montaGraficoLucroGeral(col_x: any, arrayNF: any) {
+  montaGraficoLucroGeral() {
     let tickPC =
     {
       tick: {
-        format: (y: any) => {
-          return y
+        format: (y: { toLocaleString: (arg0: string, arg1: { style: string; currency: string; }) => any; }) => {
+          return y.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
       }
     };
 
     var chart = c3.generate({
+      bindto: '#chart_lucroGeral',
+      size: {
+        height: 250,
+      },
       data: {
           columns: [
-              ['data1', 5870.55],
+              ['', 5870.55],
           ],
           type: 'bar'
       },
       bar: {
           width: {
-              ratio: 0.5 // this makes bar width 50% of length between ticks
+              ratio: 0.1 // this makes bar width 50% of length between ticks
           }
           // or
           //width: 100 // this makes bar width 100px
+      },
+      legend: {
+        hide: true
+      },
+      color: {
+        pattern: ['#D9D48F']
+      },
+      axis: {
+        x: {
+          type: 'category',
+          tick: {},
+        },
+        y: tickPC,
       }
   });
+  }
+
+  montaGraficoVendasPorProduto() {
+    let tickPC =
+    {
+      tick: {
+        format: (y: { toLocaleString: (arg0: string, arg1: { style: string; currency: string; }) => any; }) => {
+          return y.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+      },
+      
+    };
+
+    
+var chart = c3.generate({
+  bindto: '#chart_vendasProduto',
+  size: {
+    height: 250,
+  },
+  data: {
+      // iris data from R
+      columns: [
+          ['Feijão', 30],
+          ['Milho', 120],
+          ['Arroz', 120],
+      ],
+      type : 'pie',
+  },
+});
   }
 
 }
