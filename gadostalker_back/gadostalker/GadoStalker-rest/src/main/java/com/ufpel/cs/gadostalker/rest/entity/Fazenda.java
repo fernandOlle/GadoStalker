@@ -30,9 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Fazenda implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqFazenda")
-    private Long id;
-
     @Column(unique=true)
     private String SNCR;
 
@@ -56,10 +53,6 @@ public class Fazenda implements Serializable {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getSNCR() {
@@ -105,7 +98,6 @@ public class Fazenda implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.id);
         hash = 71 * hash + Objects.hashCode(this.SNCR);
         return hash;
     }
@@ -125,15 +117,11 @@ public class Fazenda implements Serializable {
         if (!Objects.equals(this.SNCR, other.SNCR)) {
             return false;
         }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "com.ufpel.cs.gadostalker.rest.entity.Fazenda[ id=" + id + " ]";
+        return "com.ufpel.cs.gadostalker.rest.entity.Fazenda[ SNCR=" + SNCR + " ]";
     }
-
 }

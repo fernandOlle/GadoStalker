@@ -32,7 +32,7 @@ public class UsuarioComum extends Usuario implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.cpf);
         return hash;
     }
 
@@ -48,6 +48,6 @@ public class UsuarioComum extends Usuario implements Serializable {
             return false;
         }
         final UsuarioComum other = (UsuarioComum) obj;
-        return Objects.equals(this.id, other.id);
+        return Objects.equals(this.cpf, other.cpf);
     }
 }

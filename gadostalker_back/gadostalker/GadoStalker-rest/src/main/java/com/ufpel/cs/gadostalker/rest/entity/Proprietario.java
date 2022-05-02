@@ -67,7 +67,7 @@ public class Proprietario extends Usuario implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.cpf);
         return hash;
     }
 
@@ -83,7 +83,7 @@ public class Proprietario extends Usuario implements Serializable {
             return false;
         }
         final Proprietario other = (Proprietario) obj;
-        return Objects.equals(this.id, other.id);
+        return Objects.equals(this.cpf, other.cpf);
     }
 
 }

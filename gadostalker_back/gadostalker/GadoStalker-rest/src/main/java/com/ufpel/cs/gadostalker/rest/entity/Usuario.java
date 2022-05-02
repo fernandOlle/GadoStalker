@@ -80,8 +80,9 @@ public class Usuario implements Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqUsuario")
-    protected Long id;
+    @Column(unique = true)
+    @XmlElement
+    protected String cpf;
 
     @Column
     @XmlElement
@@ -103,10 +104,6 @@ public class Usuario implements Serializable {
     @Column
     @XmlElement
     protected String resposta;
-
-    @Column(unique = true)
-    @XmlElement
-    protected String cpf;
 
     @Column(unique = true)
     @XmlElement
@@ -141,10 +138,6 @@ public class Usuario implements Serializable {
     }
 
     public Usuario() {
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getNome() {
@@ -214,7 +207,7 @@ public class Usuario implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 41 * hash + Objects.hashCode(this.id);
+        hash = 41 * hash + Objects.hashCode(this.cpf);
         hash = 41 * hash + Objects.hashCode(this.cpf);
         return hash;
     }
@@ -231,10 +224,6 @@ public class Usuario implements Serializable {
             return false;
         }
         final Usuario other = (Usuario) obj;
-        if (!Objects.equals(this.cpf, other.cpf)) {
-            return false;
-        }
-        return Objects.equals(this.id, other.id);
+        return Objects.equals(this.cpf, other.cpf);
     }
-
 }

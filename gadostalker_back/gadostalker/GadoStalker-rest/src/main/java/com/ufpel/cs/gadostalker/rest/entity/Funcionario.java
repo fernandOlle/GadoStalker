@@ -22,7 +22,7 @@ import javax.persistence.Table;
 public class Funcionario extends Usuario implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FAZENDAID", nullable = true, referencedColumnName = "id")
+    @JoinColumn(name = "FAZENDA_SNCR", nullable = true, referencedColumnName = "SNCR")
     private Fazenda fazenda;
 
     public Funcionario() {
@@ -44,7 +44,7 @@ public class Funcionario extends Usuario implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.cpf);
         return hash;
     }
 
@@ -60,7 +60,7 @@ public class Funcionario extends Usuario implements Serializable {
             return false;
         }
         final Funcionario other = (Funcionario) obj;
-        return Objects.equals(this.id, other.id);
+        return Objects.equals(this.cpf, other.cpf);
     }
 
 }
