@@ -66,10 +66,20 @@ public class Imagem implements Serializable {
     
     @Transient
     private byte[] encodedContent;
+
+    public Imagem() {
+    }
     
     @PostLoad
     private void encodeAfterFetch() {
         encodedContent = Base64.getEncoder().encode(content);
+    }
+    
+    public Imagem(String fileName, byte[] content) {
+        String[] file = fileName.split("\\.");
+        this.fileName = file[0];
+        fileExtension = FileFormat.valueOf("." + file[1]);
+        this.content = Base64.getDecoder().decode(content);
     }
     
     public byte[] toBase64() {
