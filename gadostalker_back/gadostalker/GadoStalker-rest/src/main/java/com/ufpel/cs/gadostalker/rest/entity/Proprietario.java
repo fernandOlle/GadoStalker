@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -19,6 +20,9 @@ import javax.persistence.Table;
  */
 @Entity(name = "proprietario")
 @Table(name = "proprietario")
+
+// define o DTYPE da classe Proprietario como PROPRIETARIO
+@DiscriminatorValue(value = Usuario.TipoUsuario.Tipo.PROPRIETARIO)
 public class Proprietario extends Usuario implements Serializable {
     
     @OneToMany(mappedBy = "proprietario", cascade=CascadeType.ALL, fetch=FetchType.LAZY)

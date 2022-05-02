@@ -7,6 +7,7 @@ package com.ufpel.cs.gadostalker.rest.entity;
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -16,6 +17,9 @@ import javax.persistence.Table;
  */
 @Entity(name = "usuario_comum")
 @Table(name = "usuario_comum")
+
+// define o DTYPE da classe UsuarioComum como USUARIO_COMUM
+@DiscriminatorValue(value = Usuario.TipoUsuario.Tipo.USUARIO_COMUM)
 public class UsuarioComum extends Usuario implements Serializable {
     
     public UsuarioComum() {

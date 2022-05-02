@@ -4,12 +4,16 @@ import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -25,6 +29,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @SequenceGenerator(name = "seqUsuario", sequenceName = "SEQUSUARIO", allocationSize = 1)
 @NamedQuery(name = "Usuario.login", query = "SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha")
 @XmlRootElement
+
+// DiscriminatorColumn -> permite fazer a juncao da coluna DTYPE gerada pelo JPA com o enum de tipo de usuario
+// a annotation nao permite enum como tipo, entao precisa fazer uns esqueminhas
+// o uso dessa annotation nao muda em nada o uso dos endpoints, todos os endpoints criados ate entao continuam funcionando igualmente
+@DiscriminatorColumn(name = "TIPO_USUARIO", discriminatorType = DiscriminatorType.STRING)
+
+// Inheritance -> descomentar essa linha vai fazer com que cada entidade tenha sua propria tabela,
+// porem sem duplicar as colunas da entidade usuario,
+// parte das informacoes de uma subclasse estarao na classe usuario, parte fica na tabela propria da subclasse
+//@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario implements Serializable {
 
     public enum PerguntaSegurancaEnum {
@@ -42,11 +56,27 @@ public class Usuario implements Serializable {
             return pergunta;
         }
     };
-    
+
+    // pra conseguir fazer a juncao da tabela DTYPE com o enum de tipo é necessario criar constantes,
+    // ja que apenas constantes sao permitidas como DTYPE
+    // a classe Tipo dentro do enum encapsula essas constantes
     public enum TipoUsuario {
-        PROPRIETARIO,
-        FUNCIONARIO,
-        USUARIO_COMUM
+        PROPRIETARIO(Tipo.PROPRIETARIO),
+        FUNCIONARIO(Tipo.FUNCIONARIO),
+        USUARIO_COMUM(Tipo.USUARIO_COMUM);
+
+        private TipoUsuario(String val) {
+            if (!this.name().equals(val)) {
+                throw new IllegalArgumentException("Valor do Enum deve ser igual ao da constante");
+            }
+        }
+
+        public static class Tipo {
+
+            public static final String PROPRIETARIO = "PROPRIETARIO";
+            public static final String FUNCIONARIO = "FUNCIONARIO";
+            public static final String USUARIO_COMUM = "USUARIO_COMUM";
+        }
     }
 
     @Id
@@ -81,8 +111,10 @@ public class Usuario implements Serializable {
     @Column(unique = true)
     @XmlElement
     protected String email;
-    
-    @Column
+
+    // tipo do enum precisa ser string
+    @Column(name = "tipo_usuario", nullable = false, insertable = false, updatable = false)
+    @Enumerated(EnumType.STRING)
     @XmlElement
     protected TipoUsuario tipoUsuario;
 
@@ -96,7 +128,7 @@ public class Usuario implements Serializable {
         this.email = email;
         this.tipoUsuario = tipoUsuario;
     }
-    
+
     public Usuario(UsuarioDTO usuarioDTO) {
         this.nome = usuarioDTO.nome;
         this.telefone = usuarioDTO.telefone;
