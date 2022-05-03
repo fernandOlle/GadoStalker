@@ -3,6 +3,7 @@ package com.ufpel.cs.gadostalker.rest.entity;
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -15,10 +16,13 @@ import javax.persistence.Table;
  */
 @Entity(name = "funcionario")
 @Table(name = "funcionario")
+
+// define o DTYPE da classe Funcionario como FUNCIONARIO
+@DiscriminatorValue(value = Usuario.TipoUsuario.Tipo.FUNCIONARIO)
 public class Funcionario extends Usuario implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FAZENDAID", nullable = true, referencedColumnName = "id")
+    @JoinColumn(name = "FAZENDA_SNCR", nullable = true, referencedColumnName = "SNCR")
     private Fazenda fazenda;
 
     public Funcionario() {
@@ -40,7 +44,7 @@ public class Funcionario extends Usuario implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.cpf);
         return hash;
     }
 
@@ -56,7 +60,7 @@ public class Funcionario extends Usuario implements Serializable {
             return false;
         }
         final Funcionario other = (Funcionario) obj;
-        return Objects.equals(this.id, other.id);
+        return Objects.equals(this.cpf, other.cpf);
     }
 
 }

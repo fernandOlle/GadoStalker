@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -22,7 +23,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "produto")
-@SequenceGenerator(name = "seqAnuncio", sequenceName = "SEQANUNCIO", allocationSize = 1)
+@SequenceGenerator(name = "seqProduto", sequenceName = "SEQPRODUTO", allocationSize = 1)
+@NamedQuery(name = "Produto.getAllProdutosByTipo", query = "SELECT p FROM Produto p WHERE p.tipo = :tipo")
 public class Produto implements Serializable {
 
     
@@ -41,7 +43,7 @@ public class Produto implements Serializable {
     };
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqAnuncio")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqProduto")
     private Long id;
 
     @Column
@@ -52,7 +54,7 @@ public class Produto implements Serializable {
     private TipoProdutoEnum tipo;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FAZENDAID", nullable = true, referencedColumnName = "id")
+    @JoinColumn(name = "FAZENDA_SNCR", nullable = true, referencedColumnName = "SNCR")
     private Fazenda fazenda;
 
     @Column

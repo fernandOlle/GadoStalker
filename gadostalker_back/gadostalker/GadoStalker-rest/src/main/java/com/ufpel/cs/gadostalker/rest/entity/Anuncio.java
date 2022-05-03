@@ -3,7 +3,9 @@ package com.ufpel.cs.gadostalker.rest.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +13,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -24,6 +29,8 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "anuncio")
 @SequenceGenerator(name = "seqAnuncio", sequenceName = "SEQANUNCIO", allocationSize = 1)
+@NamedQuery(name = "Anuncio.getAllAnunciosQueContemProduto", query = "SELECT a FROM Anuncio a INNER JOIN a.produtos p "
+        + "WHERE EXISTS (SELECT p2 FROM Produto p2 WHERE p2.tipo = :tipo)")
 public class Anuncio implements Serializable {
 
     @Id
@@ -42,9 +49,10 @@ public class Anuncio implements Serializable {
     @Column
     private String desconto;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    //@ManyToOne(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "PRODUTOID", nullable = true, referencedColumnName = "id")
-    private Produto produto;
+    private List<Produto> produtos;
     
     @Column
     @Temporal(TemporalType.DATE)
@@ -53,16 +61,21 @@ public class Anuncio implements Serializable {
     @Column
     @Temporal(TemporalType.DATE)
     private Date dataFinal;
+    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "Anuncio")
+    @JoinColumn(name = "imagem_id")
+    @PrimaryKeyJoinColumn
+    private Imagem imagem;
 
     public Anuncio() {
     }
 
-    public Anuncio(String titulo, String descricao, BigDecimal preco, String desconto, Produto produto, Date dataInicial, Date dataFinal) {
+    public Anuncio(String titulo, String descricao, BigDecimal preco, String desconto, List<Produto> produto, Date dataInicial, Date dataFinal) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.preco = preco;
         this.desconto = desconto;
-        this.produto = produto;
+        this.produtos = produto;
         this.dataInicial = dataInicial;
         this.dataFinal = dataFinal;
     }
@@ -103,12 +116,16 @@ public class Anuncio implements Serializable {
         this.desconto = desconto;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public List<Produto> getProdutos() {
+        return produtos;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void addProduto(Produto produto) {
+        produtos.add(produto);
+    }
+    
+    public void removeProdto(Produto produto) {
+        produtos.remove(produto);
     }
 
     public Date getDataInicial() {
@@ -125,6 +142,14 @@ public class Anuncio implements Serializable {
 
     public void setDataFinal(Date dataFinal) {
         this.dataFinal = dataFinal;
+    }
+
+    public Imagem getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(Imagem imagem) {
+        this.imagem = imagem;
     }
 
     @Override
