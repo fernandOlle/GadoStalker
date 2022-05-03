@@ -26,9 +26,7 @@ import { AnunciosComponent } from './component/anuncios/anuncios.component';
 import { AnuncioComponent } from './component/anuncio/anuncio.component';
 import { AreaProdutorComponent } from './component/area-produtor/area-produtor.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
-import { CatalogoComponent } from './component/catalogo/catalogo.component';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
+import { FuncionariosComponent } from './component/funcionarios/funcionarios.component';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -44,10 +42,9 @@ const maskConfig: Partial<IConfig> = {
     AnuncioComponent,
     AreaProdutorComponent,
     DashboardComponent,
-    CatalogoComponent,
+    FuncionariosComponent
   ],
   imports: [
-    MatSlideToggleModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -69,6 +66,6 @@ const maskConfig: Partial<IConfig> = {
     NgxMaskModule.forRoot(maskConfig),
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
