@@ -26,6 +26,7 @@ import { AnunciosComponent } from './component/anuncios/anuncios.component';
 import { AnuncioComponent } from './component/anuncio/anuncio.component';
 import { AreaProdutorComponent } from './component/area-produtor/area-produtor.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
+import { FuncionariosComponent } from './component/funcionarios/funcionarios.component';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -40,7 +41,8 @@ const maskConfig: Partial<IConfig> = {
     AnunciosComponent,
     AnuncioComponent,
     AreaProdutorComponent,
-    DashboardComponent
+    DashboardComponent,
+    FuncionariosComponent
   ],
   imports: [
     BrowserModule,

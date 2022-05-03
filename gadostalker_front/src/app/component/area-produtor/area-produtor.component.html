@@ -8,11 +8,11 @@
             <a href="">GADO STALKER</a>
         </div>
         <div class="title-container">
-            <h1>Dashboard</h1>
+            <h1>Funcionários</h1>
         </div>
         <div class="fazendeiro-container">
             <button mat-raised-button class="btn-produtor">Página Inicial</button>
-            <button mat-raised-button class="btn-relatorios"><div>
+            <button mat-raised-button class="btn-relatorios" *ngIf="false"><div>
                 <span>Baixar relatórios</span>
                     <mat-icon
                     [svgIcon]="'download'"
@@ -36,7 +36,7 @@
             </mat-selection-list>
         </div>
         <div class="container-component">
-            <app-dashboard></app-dashboard>
+            <app-funcionarios></app-funcionarios>
         </div>
     </div>
 </div>
