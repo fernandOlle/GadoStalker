@@ -27,10 +27,16 @@ import javax.persistence.Table;
 @NamedQuery(name = "Produto.getAllProdutosByTipo", query = "SELECT p FROM Produto p WHERE p.tipo = :tipo")
 public class Produto implements Serializable {
 
-    
     public enum TipoProdutoEnum {
         MEL("Mel"),
-        OVO("Ovo");
+        OVO("Ovo"),
+        ALFACE("Alface"),
+        FEIJAO("Feijao"),
+        LEITE("Leite"),
+        MILHO("Milho"),
+        SOJA("Soja"),
+        TOMATE("Tomate"),
+        VAGEM("Vagem");
         private final String tipo;
 
         private TipoProdutoEnum(String tipo) {
