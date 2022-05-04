@@ -1,0 +1,25 @@
+<div class="header-modal">
+    <h2 mat-dialog-title>
+        Cadastrar novo funcionário
+    </h2>
+    <div>
+        <button mat-icon-button (click)="closeModal()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<hr>
+<div class="content-modal" mat-dialog-container>
+    <form>
+        <mat-form-field class="inputs-form fonts-sizes col-xl-12">
+            <mat-label>CEP Informado</mat-label>
+            <input 
+                matInput>
+        </mat-form-field>
+    </form>
+</div>
+<hr>
+<div class="btns-modal-cep">
+    <button mat-raised-button class="btn-cancelar" (click)="closeModal()">CANCELAR</button>
+    <button mat-raised-button class="btn-salvar" (click)="closeModal()">SALVAR</button>
+</div>

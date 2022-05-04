@@ -20,6 +20,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 import { RecuperarSenhaComponent } from './component/recuperar-senha/recuperar-senha.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { MatDialogModule } from '@angular/material/dialog';
 import { HomeComponent } from './component/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AnunciosComponent } from './component/anuncios/anuncios.component';
@@ -27,6 +28,7 @@ import { AnuncioComponent } from './component/anuncio/anuncio.component';
 import { AreaProdutorComponent } from './component/area-produtor/area-produtor.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { FuncionariosComponent } from './component/funcionarios/funcionarios.component';
+import { ModalFuncionariosComponent } from './component/funcionarios/components/modal-funcionarios/modal-funcionarios.component';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -42,7 +44,8 @@ const maskConfig: Partial<IConfig> = {
     AnuncioComponent,
     AreaProdutorComponent,
     DashboardComponent,
-    FuncionariosComponent
+    FuncionariosComponent,
+    ModalFuncionariosComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,7 @@ const maskConfig: Partial<IConfig> = {
     MatIconModule,
     ReactiveFormsModule,
     FormsModule,
+    MatDialogModule,
     MatRadioModule,
     MatSelectModule,
     MatListModule,
