@@ -31,6 +31,9 @@ import { FuncionariosComponent } from './component/funcionarios/funcionarios.com
 import { ModalFuncionariosComponent } from './component/funcionarios/components/modal-funcionarios/modal-funcionarios.component';
 import { ModalFuncionariosEditarComponent } from './component/funcionarios/components/modal-funcionarios-editar/modal-funcionarios-editar.component';
 import { ModalConfirmacao } from './component/funcionarios/components/modal-funcionarios-editar/modal-funcionarios-editar.component';
+import { FazendasComponent } from './component/fazendas/fazendas.component';
+import { ModalCadastrarFazendaComponent } from './component/fazendas/components/modal-cadastrar-fazenda/modal-cadastrar-fazenda.component';
+import { ModalDesignarFuncionarioComponent } from './component/fazendas/components/modal-designar-funcionario/modal-designar-funcionario.component';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -49,7 +52,10 @@ const maskConfig: Partial<IConfig> = {
     FuncionariosComponent,
     ModalFuncionariosComponent,
     ModalFuncionariosEditarComponent,
-    ModalConfirmacao
+    ModalConfirmacao,
+    FazendasComponent,
+    ModalCadastrarFazendaComponent,
+    ModalDesignarFuncionarioComponent
   ],
   imports: [
     BrowserModule,

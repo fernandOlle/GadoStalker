@@ -1,0 +1,127 @@
+.list-funcionarios {
+    width: 60%;
+    margin: 20px auto;
+
+    mat-card-title {
+        text-align: center;
+        margin: 9px auto 25px auto;
+    }
+
+    mat-expansion-panel {
+        margin-bottom: 15px;
+
+        mat-expansion-panel-header {
+            height: 58px;
+        }
+        mat-panel-title{
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .dados-title {
+            h1 {
+
+                margin: 10px AUTO;
+                font-size: 18px;
+                text-align: center;
+            }
+        }
+        form{
+            gap: 10px;
+            display: flex;
+            width: 95%;
+            margin: auto;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    }
+
+    .content {
+        display: grid;
+        grid-template-columns: 1.8fr 0.2fr;
+
+        .nome-email {
+            .nome {
+                font-weight: 500;
+                font-size: 20px;
+                height: 28px;
+                margin: 0;
+            }
+
+            .email {
+                color: rgb(139, 139, 139);
+                font-size: 14px;
+            }
+        }
+
+        .cargo-container {
+            display: flex;
+            align-items: center;
+
+            .cargo {
+                font-weight: 400;
+                font-size: 18px;
+                height: 28px;
+                margin: 0;
+            }
+        }
+    }
+
+    mat-card-content {
+        display: flex;
+        align-items: center;
+
+        .container-left {
+            .btn-novo-funcionario {
+                background-color: #594A3C;
+                color: white;
+                border-radius: 20px;
+            }
+            .btn-novo-fazenda{
+                background-color: #8DA633;
+                color: white;
+                border-radius: 20px;
+            }
+
+            width: 77%;
+        }
+
+        margin-top: 10px;
+
+        .container-right {
+            span {
+                text-align: right;
+                margin-right: 10px;
+                font-size: 15px;
+                font-weight: 400;
+            }
+        }
+    }
+
+}
+.btns-modal-cep{
+    width: 80%;
+    margin: 10px auto 10px auto;
+    display: flex;
+    justify-content: right;
+    .btn-cancelar{
+        margin-right: 10px;
+        background-color: white;
+        color: #8A8A8A;
+
+        border-radius: 20px;
+    }
+    .btn-excluir{
+        margin-right: 290px;
+        background-color: white;
+        color: #8DA633;
+
+        border-radius: 20px;
+    }
+    .btn-salvar{
+        background-color: white;
+        color: #594A3C;
+
+        border-radius: 20px;
+    }
+}
