@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalFuncionariosComponent } from '../funcionarios/components/modal-funcionarios/modal-funcionarios.component';
+import { ModalFuncionariosEditarComponent } from '../funcionarios/components/modal-funcionarios-editar/modal-funcionarios-editar.component';
 import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-funcionarios',
@@ -50,8 +51,14 @@ export class FuncionariosComponent implements OnInit {
       const dialog = this.dialog.open(ModalFuncionariosComponent, {
         data: {  },
         autoFocus: false,
-        maxHeight: 1000,
-        maxWidth: 1000,
+        restoreFocus: false
+      });
+    }
+
+    openModalEditar() {
+      const dialog = this.dialog.open(ModalFuncionariosEditarComponent, {
+        data: {  },
+        autoFocus: false,
         restoreFocus: false
       });
     }

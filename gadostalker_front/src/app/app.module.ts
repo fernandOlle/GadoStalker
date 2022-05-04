@@ -29,6 +29,8 @@ import { AreaProdutorComponent } from './component/area-produtor/area-produtor.c
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { FuncionariosComponent } from './component/funcionarios/funcionarios.component';
 import { ModalFuncionariosComponent } from './component/funcionarios/components/modal-funcionarios/modal-funcionarios.component';
+import { ModalFuncionariosEditarComponent } from './component/funcionarios/components/modal-funcionarios-editar/modal-funcionarios-editar.component';
+import { ModalConfirmacao } from './component/funcionarios/components/modal-funcionarios-editar/modal-funcionarios-editar.component';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -45,7 +47,9 @@ const maskConfig: Partial<IConfig> = {
     AreaProdutorComponent,
     DashboardComponent,
     FuncionariosComponent,
-    ModalFuncionariosComponent
+    ModalFuncionariosComponent,
+    ModalFuncionariosEditarComponent,
+    ModalConfirmacao
   ],
   imports: [
     BrowserModule,

@@ -4,7 +4,7 @@
     </mat-card-title>
     <mat-selection-list #funcionario [multiple]="false">
         <mat-list-option *ngFor="let funcionario of funcionarios" [value]="funcionario">
-          <div class="content">
+          <div class="content" (click)="openModalEditar()">
               <div class="nome-email">
                   <h1 class="nome">{{funcionario.nome}}</h1>
                   <span class="email">{{funcionario.email}}</span>

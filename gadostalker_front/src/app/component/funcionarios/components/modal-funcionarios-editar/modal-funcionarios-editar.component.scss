@@ -1,6 +1,6 @@
 .header-modal{
     display: flex;
-    width: 800px;
+    width: 500px;
     margin: 15px auto;
     h2{
         margin: 5px;
@@ -23,10 +23,14 @@
         margin-bottom: 15px;
     }
     form{
-        width: 720px;
+        width: 420px;
         mat-form-field{
             margin-right: 10px;
         }
+    }
+    .btn-excluir{
+        color: black;
+        border-radius: 20px;
     }
 }
 
