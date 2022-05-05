@@ -15,12 +15,6 @@ export class ListaProdutoComponent implements OnInit {
     public dialog: MatDialog
   ) {}
 
-  produto = {
-    nome: '',
-    especializado: false,
-    quantidade: 5,
-    fazenda: '',
-  };
   ngOnInit(): void {}
 
   produtos = [
@@ -54,8 +48,8 @@ export class ListaProdutoComponent implements OnInit {
     const dialog = this.dialog.open(NovoProdutoComponent, {
       data: {},
       autoFocus: false,
-      maxHeight: 300,
-      maxWidth: 400,
+      maxHeight: 1000,
+      maxWidth: 1200,
       restoreFocus: false,
     });
   }

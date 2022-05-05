@@ -13,7 +13,7 @@ export class CatalogoComponent implements OnInit {
   ngOnInit(): void {}
 
   catalogo = [
-    { nome: 'Feijão', enabled: false },
+    { nome: 'Feijão', enabled: true },
     { nome: 'Alface', enabled: false },
     { nome: 'Soja', enabled: false },
     { nome: 'Mel', enabled: false },

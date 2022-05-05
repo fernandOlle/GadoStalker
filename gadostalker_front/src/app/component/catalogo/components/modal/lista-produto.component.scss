@@ -1,6 +1,6 @@
 .header-modal {
   display: flex;
-  width: 500px;
+  width: 800px;
   h2 {
     margin-top: 0.5em;
     margin-bottom: -0.6em;
@@ -17,9 +17,8 @@
 }
 
 .content-modal {
-  height: 300px;
   width: 90%;
-  width: 450px;
+
   margin: auto;
   h4 {
     text-align: center;
@@ -85,6 +84,18 @@ mat-card-content {
       margin-right: 10px;
       font-size: 15px;
       font-weight: 400;
+      align-items: right;
+      justify-content: right;
     }
+  }
+}
+
+::ng-deep {
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: #594a3c;
+  }
+
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: rgba(89, 74, 60, 0.8);
   }
 }
