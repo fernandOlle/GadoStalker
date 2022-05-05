@@ -21,7 +21,6 @@ export class CatalogoComponent implements OnInit {
     { nome: 'Vagem', enabled: false },
     { nome: 'Tomate', enabled: false },
     { nome: 'Leite', enabled: false },
-    { nome: 'Alface', enabled: false },
   ];
 
   openModal() {
