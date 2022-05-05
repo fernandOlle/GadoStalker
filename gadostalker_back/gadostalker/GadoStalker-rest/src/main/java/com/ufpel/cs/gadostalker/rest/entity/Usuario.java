@@ -1,25 +1,37 @@
 package com.ufpel.cs.gadostalker.rest.entity;
 
+import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author kevin
  */
-
 @Entity
 @Table(name = "usuario")
 @SequenceGenerator(name = "seqUsuario", sequenceName = "SEQUSUARIO", allocationSize = 1)
+@NamedQuery(name = "Usuario.login", query = "SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha")
+@XmlRootElement
+
+/**
+ * DiscriminatorColumn -> permite fazer a juncao da coluna DTYPE gerada pelo JPA com o enum de tipo de usuario
+ * a annotation nao permite enum como tipo, entao precisa fazer uns esqueminhas
+ * o uso dessa annotation nao muda em nada o uso dos endpoints, todos os endpoints criados ate entao continuam funcionando igualmente
+ */
+@DiscriminatorColumn(name = "TIPO_USUARIO", discriminatorType = DiscriminatorType.STRING)
 public class Usuario implements Serializable {
 
     public enum PerguntaSegurancaEnum {
@@ -37,42 +49,90 @@ public class Usuario implements Serializable {
             return pergunta;
         }
     };
+
+    /**
+     * pra conseguir fazer a juncao da tabela DTYPE com o enum de tipo é necessario criar constantes,
+     * ja que apenas constantes sao permitidas como DTYPE
+     * a classe Tipo dentro do enum encapsula essas constantes
+     */
+    public enum TipoUsuario {
+        PROPRIETARIO(Tipo.PROPRIETARIO),
+        FUNCIONARIO(Tipo.FUNCIONARIO),
+        USUARIO_COMUM(Tipo.USUARIO_COMUM);
+
+        private TipoUsuario(String val) {
+            if (!this.name().equals(val)) {
+                throw new IllegalArgumentException("Valor do Enum deve ser igual ao da constante");
+            }
+        }
+
+        public static class Tipo {
+
+            public static final String PROPRIETARIO = "PROPRIETARIO";
+            public static final String FUNCIONARIO = "FUNCIONARIO";
+            public static final String USUARIO_COMUM = "USUARIO_COMUM";
+        }
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqUsuario")
-    protected Long id;
+    @Column(unique = true)
+    @XmlElement
+    protected String cpf;
+
     @Column
-    private String nome;
+    @XmlElement
+    protected String nome;
+
     @Column
-    private String telefone;
+    @XmlElement
+    protected String telefone;
+
     @Column
-    private String senha;
+    @XmlElement
+    protected String senha;
+
     @Column
     @Enumerated(EnumType.ORDINAL)
-    private PerguntaSegurancaEnum pergunta;
-    @Column
-    private String resposta;
-    @Column
-    private String cpf;
+    @XmlElement
+    protected PerguntaSegurancaEnum pergunta;
 
-    public Usuario(Long id, String nome, String telefone, String senha, PerguntaSegurancaEnum pergunta, String resposta, String cpf) {
-        this.id = id;
+    @Column
+    @XmlElement
+    protected String resposta;
+
+    @Column(unique = true)
+    @XmlElement
+    protected String email;
+
+    // tipo do enum precisa ser string
+    @Column(name = "tipo_usuario", nullable = false, insertable = false, updatable = false)
+    @Enumerated(EnumType.STRING)
+    @XmlElement
+    protected TipoUsuario tipoUsuario;
+
+    public Usuario(String nome, String telefone, String senha, PerguntaSegurancaEnum pergunta, String resposta, String cpf, String email, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.telefone = telefone;
         this.senha = senha;
         this.pergunta = pergunta;
         this.resposta = resposta;
         this.cpf = cpf;
+        this.email = email;
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public Usuario(UsuarioDTO usuarioDTO) {
+        this.nome = usuarioDTO.nome;
+        this.telefone = usuarioDTO.telefone;
+        this.senha = usuarioDTO.senha;
+        this.pergunta = usuarioDTO.pergunta;
+        this.resposta = usuarioDTO.resposta;
+        this.cpf = usuarioDTO.cpf;
+        this.email = usuarioDTO.email;
+        this.tipoUsuario = usuarioDTO.tipoUsuario;
     }
 
     public Usuario() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -123,10 +183,26 @@ public class Usuario implements Serializable {
         this.cpf = cpf;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 41 * hash + Objects.hashCode(this.id);
+        hash = 41 * hash + Objects.hashCode(this.cpf);
         hash = 41 * hash + Objects.hashCode(this.cpf);
         return hash;
     }
@@ -143,11 +219,6 @@ public class Usuario implements Serializable {
             return false;
         }
         final Usuario other = (Usuario) obj;
-        if (!Objects.equals(this.cpf, other.cpf)) {
-            return false;
-        }
-        return Objects.equals(this.id, other.id);
+        return Objects.equals(this.cpf, other.cpf);
     }
-
-    
 }

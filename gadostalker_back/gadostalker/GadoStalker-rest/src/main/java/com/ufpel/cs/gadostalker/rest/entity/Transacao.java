@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ufpel.cs.gadostalker.rest.entity;
 
 import java.io.Serializable;
@@ -52,8 +47,7 @@ public class Transacao implements Serializable {
     public Transacao() {
     }
 
-    public Transacao(Long id, Date data, BigDecimal preco, int quantidade) {
-        this.id = id;
+    public Transacao(Date data, BigDecimal preco, int quantidade) {
         this.dataTransacao = data;
         this.preco = preco;
         this.quantidade = quantidade;

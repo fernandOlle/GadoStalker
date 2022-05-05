@@ -1,21 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ufpel.cs.gadostalker.rest.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -24,13 +24,15 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "fazenda")
 @SequenceGenerator(name = "seqFazenda", sequenceName = "SEQFAZENDA", allocationSize = 1)
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Fazenda.getAllProdutos", query = "SELECT p FROM Fazenda f INNER JOIN f.produtos p WHERE f.SNCR = :sncr"),
+    @NamedQuery(name = "Fazenda.getAllProdutosByTipo", query = "SELECT p FROM Fazenda f INNER JOIN f.produtos p where f.SNCR = :sncr and p.tipo = :tipo")
+})
 public class Fazenda implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqFazenda")
-    private Long id;
-
-    @Column
+    @Column(unique=true)
     private String SNCR;
 
     @Column
@@ -42,23 +44,21 @@ public class Fazenda implements Serializable {
     @Column
     private String telefone;
     
-    @ManyToOne
-    @JoinColumn(name = "PROPRIETARIOID", nullable = false, referencedColumnName = "id")
+    @OneToMany(mappedBy = "fazenda", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "FAZENDA_SNCR")
+    private List<Produto> produtos;
+    
+    @ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private Proprietario proprietario;
 
     public Fazenda() {
     }
 
-    public Fazenda(Long id, String SNCR, String nome, String email, String telefone) {
-        this.id = id;
+    public Fazenda(String SNCR, String nome, String email, String telefone) {
         this.SNCR = SNCR;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getSNCR() {
@@ -100,11 +100,22 @@ public class Fazenda implements Serializable {
     public void setProprietario(Proprietario proprietario) {
         this.proprietario = proprietario;
     }
+    
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+    
+    public void addProduto(Produto produto) {
+        produtos.add(produto);
+    }
+    
+    public void removeProduto(Produto produto) {
+        produtos.remove(produto);
+    }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.id);
         hash = 71 * hash + Objects.hashCode(this.SNCR);
         return hash;
     }
@@ -124,15 +135,11 @@ public class Fazenda implements Serializable {
         if (!Objects.equals(this.SNCR, other.SNCR)) {
             return false;
         }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "com.ufpel.cs.gadostalker.rest.entity.Fazenda[ id=" + id + " ]";
+        return "com.ufpel.cs.gadostalker.rest.entity.Fazenda[ SNCR=" + SNCR + " ]";
     }
-
 }

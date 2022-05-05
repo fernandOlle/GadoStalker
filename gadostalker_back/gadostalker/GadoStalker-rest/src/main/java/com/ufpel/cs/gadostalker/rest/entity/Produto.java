@@ -1,5 +1,6 @@
 package com.ufpel.cs.gadostalker.rest.entity;
 
+import com.ufpel.cs.gadostalker.rest.dtos.ProdutoDTO;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -13,22 +14,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
  *
- * @author fernandOlle 
+ * @author fernandOlle
  */
 @Entity
 @Table(name = "produto")
-@SequenceGenerator(name = "seqAnuncio", sequenceName = "SEQANUNCIO", allocationSize = 1)
+@SequenceGenerator(name = "seqProduto", sequenceName = "SEQPRODUTO", allocationSize = 1)
+@NamedQuery(name = "Produto.getAllProdutosByTipo", query = "SELECT p FROM Produto p WHERE p.tipo = :tipo")
 public class Produto implements Serializable {
 
-    
     public enum TipoProdutoEnum {
         MEL("Mel"),
-        OVO("Ovo");
+        OVO("Ovo"),
+        ALFACE("Alface"),
+        FEIJAO("Feijao"),
+        LEITE("Leite"),
+        MILHO("Milho"),
+        SOJA("Soja"),
+        TOMATE("Tomate"),
+        VAGEM("Vagem");
         private final String tipo;
 
         private TipoProdutoEnum(String tipo) {
@@ -39,20 +48,20 @@ public class Produto implements Serializable {
             return tipo;
         }
     };
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqAnuncio")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqProduto")
     private Long id;
 
     @Column
     private String nome;
-    
+
     @Column
     @Enumerated(EnumType.ORDINAL)
     private TipoProdutoEnum tipo;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FAZENDAID", nullable = true, referencedColumnName = "id")
+    @JoinColumn(name = "FAZENDA_SNCR", nullable = true, referencedColumnName = "SNCR")
     private Fazenda fazenda;
 
     @Column
@@ -61,12 +70,18 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Long id, String nome, TipoProdutoEnum tipo, Fazenda fazenda, BigDecimal quantidade) {
-        this.id = id;
+    public Produto(String nome, TipoProdutoEnum tipo, Fazenda fazenda, BigDecimal quantidade) {
         this.nome = nome;
         this.tipo = tipo;
         this.fazenda = fazenda;
         this.quantidade = quantidade;
+    }
+
+    public Produto(ProdutoDTO produtoDTO) {
+        this.nome = produtoDTO.nome;
+        this.tipo = produtoDTO.tipo;
+        this.fazenda = produtoDTO.fazenda;
+        this.quantidade = produtoDTO.quantidade;
     }
 
     public Long getId() {
@@ -135,5 +150,4 @@ public class Produto implements Serializable {
         return "Produto{" + "id=" + id + ", nome=" + nome + ", tipo=" + tipo + ", fazenda=" + fazenda + ", quantidade=" + quantidade + ", dataInicial=" + '}';
     }
 
-    
 }

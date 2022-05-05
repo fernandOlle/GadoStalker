@@ -1,11 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.ufpel.cs.gadostalker.rest.entity;
 
+import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -13,17 +11,24 @@ import javax.persistence.Table;
  *
  * @author thomazio
  */
-@Entity
-@Table(name = "usuarioComum")
+@Entity(name = "usuario_comum")
+@Table(name = "usuario_comum")
+
+// define o DTYPE da classe UsuarioComum como USUARIO_COMUM
+@DiscriminatorValue(value = Usuario.TipoUsuario.Tipo.USUARIO_COMUM)
 public class UsuarioComum extends Usuario implements Serializable {
     
     public UsuarioComum() {
+    }
+    
+    public UsuarioComum(UsuarioDTO usuarioDTO) {
+        super(usuarioDTO);
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.cpf);
         return hash;
     }
 
@@ -39,6 +44,6 @@ public class UsuarioComum extends Usuario implements Serializable {
             return false;
         }
         final UsuarioComum other = (UsuarioComum) obj;
-        return Objects.equals(this.id, other.id);
+        return Objects.equals(this.cpf, other.cpf);
     }
 }
