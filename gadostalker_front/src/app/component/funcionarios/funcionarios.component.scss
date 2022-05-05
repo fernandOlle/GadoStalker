@@ -1,0 +1,56 @@
+.list-funcionarios {
+    width: 60%;
+    margin: 20px auto;
+    mat-card-title{
+        text-align: center;
+    }
+    .content {
+        display: grid;
+        grid-template-columns: 1.8fr 0.2fr;
+        .nome-email {
+            .nome {
+                font-weight: 400;
+                font-size: 18px;
+                height: 28px;
+                margin: 0;
+            }
+
+            .email {
+                color: rgb(139, 139, 139);
+                font-size: 14px;
+            }
+        }
+        .cargo-container{
+            display: flex;
+            align-items: center;
+        .cargo {
+            font-weight: 400;
+            font-size: 18px;
+            height: 28px;
+            margin: 0;
+        }
+    }
+    }
+    mat-card-content{
+        display: flex;
+        align-items: center;
+        .container-left{
+        .btn-novo-funcionario{
+            background-color: #594A3C;
+            color: white;
+            border-radius: 20px;
+        }
+        width: 77%;
+        }
+        margin-top: 10px;
+        .container-right{
+        span{
+        text-align: right;
+        margin-right: 10px;
+        font-size: 15px;
+        font-weight: 400;
+        }
+    }
+    }
+}
+

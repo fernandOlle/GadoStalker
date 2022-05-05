@@ -1,0 +1,23 @@
+<mat-card class="list-funcionarios">
+    <mat-card-title>
+        Funcionários Fazenda Feliz
+    </mat-card-title>
+    <mat-selection-list #funcionario [multiple]="false">
+        <mat-list-option *ngFor="let funcionario of funcionarios" [value]="funcionario">
+          <div class="content">
+              <div class="nome-email">
+                  <h1 class="nome">{{funcionario.nome}}</h1>
+                  <span class="email">{{funcionario.email}}</span>
+              </div>
+              <div class="cargo-container">
+                  <h1 class="cargo">{{funcionario.cargo}}</h1>
+              </div>
+          </div>
+          <mat-divider></mat-divider>
+        </mat-list-option>
+      </mat-selection-list>
+      <mat-card-content>
+        <div class="container-left"><button mat-raised-button class="btn-novo-funcionario" (click)="openModal()">+ Novo Funcionário</button></div>
+        <div class="container-right"><span>Quantidade de funcionários: {{funcionarios?.length}}</span></div>
+      </mat-card-content>
+</mat-card>
