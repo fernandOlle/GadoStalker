@@ -30,11 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 // a annotation nao permite enum como tipo, entao precisa fazer uns esqueminhas
 // o uso dessa annotation nao muda em nada o uso dos endpoints, todos os endpoints criados ate entao continuam funcionando igualmente
 @DiscriminatorColumn(name = "TIPO_USUARIO", discriminatorType = DiscriminatorType.STRING)
-
-// Inheritance -> descomentar essa linha vai fazer com que cada entidade tenha sua propria tabela,
-// porem sem duplicar as colunas da entidade usuario,
-// parte das informacoes de uma subclasse estarao na classe usuario, parte fica na tabela propria da subclasse
-//@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario implements Serializable {
 
     public enum PerguntaSegurancaEnum {
