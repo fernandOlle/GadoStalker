@@ -26,9 +26,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQuery(name = "Usuario.login", query = "SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha")
 @XmlRootElement
 
-// DiscriminatorColumn -> permite fazer a juncao da coluna DTYPE gerada pelo JPA com o enum de tipo de usuario
-// a annotation nao permite enum como tipo, entao precisa fazer uns esqueminhas
-// o uso dessa annotation nao muda em nada o uso dos endpoints, todos os endpoints criados ate entao continuam funcionando igualmente
+/**
+ * DiscriminatorColumn -> permite fazer a juncao da coluna DTYPE gerada pelo JPA com o enum de tipo de usuario
+ * a annotation nao permite enum como tipo, entao precisa fazer uns esqueminhas
+ * o uso dessa annotation nao muda em nada o uso dos endpoints, todos os endpoints criados ate entao continuam funcionando igualmente
+ */
 @DiscriminatorColumn(name = "TIPO_USUARIO", discriminatorType = DiscriminatorType.STRING)
 public class Usuario implements Serializable {
 
@@ -48,9 +50,11 @@ public class Usuario implements Serializable {
         }
     };
 
-    // pra conseguir fazer a juncao da tabela DTYPE com o enum de tipo é necessario criar constantes,
-    // ja que apenas constantes sao permitidas como DTYPE
-    // a classe Tipo dentro do enum encapsula essas constantes
+    /**
+     * pra conseguir fazer a juncao da tabela DTYPE com o enum de tipo é necessario criar constantes,
+     * ja que apenas constantes sao permitidas como DTYPE
+     * a classe Tipo dentro do enum encapsula essas constantes
+     */
     public enum TipoUsuario {
         PROPRIETARIO(Tipo.PROPRIETARIO),
         FUNCIONARIO(Tipo.FUNCIONARIO),

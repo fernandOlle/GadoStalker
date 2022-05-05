@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author 
+ * @author gsutavo
  */
 @Path("rest")
 public class JakartaEE8Resource {
