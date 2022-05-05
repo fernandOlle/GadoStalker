@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.ufpel.cs.gadostalker.rest.dtos;
 
 import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
@@ -24,6 +20,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @XmlRootElement
 public class ProdutoDTO {
+    
+    @XmlElement
+    public Long id;
     
     @XmlElement
     public String nome;

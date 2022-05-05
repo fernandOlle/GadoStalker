@@ -1,5 +1,6 @@
 package com.ufpel.cs.gadostalker.rest.entity;
 
+import com.ufpel.cs.gadostalker.rest.dtos.ProdutoDTO;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -19,7 +20,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author fernandOlle 
+ * @author fernandOlle
  */
 @Entity
 @Table(name = "produto")
@@ -47,18 +48,18 @@ public class Produto implements Serializable {
             return tipo;
         }
     };
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqProduto")
     private Long id;
 
     @Column
     private String nome;
-    
+
     @Column
     @Enumerated(EnumType.ORDINAL)
     private TipoProdutoEnum tipo;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FAZENDA_SNCR", nullable = true, referencedColumnName = "SNCR")
     private Fazenda fazenda;
@@ -74,6 +75,13 @@ public class Produto implements Serializable {
         this.tipo = tipo;
         this.fazenda = fazenda;
         this.quantidade = quantidade;
+    }
+
+    public Produto(ProdutoDTO produtoDTO) {
+        this.nome = produtoDTO.nome;
+        this.tipo = produtoDTO.tipo;
+        this.fazenda = produtoDTO.fazenda;
+        this.quantidade = produtoDTO.quantidade;
     }
 
     public Long getId() {
@@ -142,5 +150,4 @@ public class Produto implements Serializable {
         return "Produto{" + "id=" + id + ", nome=" + nome + ", tipo=" + tipo + ", fazenda=" + fazenda + ", quantidade=" + quantidade + ", dataInicial=" + '}';
     }
 
-    
 }
