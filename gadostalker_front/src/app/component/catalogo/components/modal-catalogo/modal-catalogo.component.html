@@ -1,0 +1,48 @@
+<div class="header-modal">
+  <h2 mat-dialog-title>Cadastrar novo produto</h2>
+  <div>
+    <button mat-icon-button (click)="closeModal()">
+      <mat-icon style="margin-left">close</mat-icon>
+    </button>
+  </div>
+</div>
+<hr />
+<div class="content-modal" mat-dialog-container>
+  <form>
+    <mat-form-field class="inputs-form fonts-sizes col-xl-8">
+      <mat-label>Nome do produto</mat-label>
+      <input matInput />
+    </mat-form-field>
+    <section class="fonts-sizes col-xl-4">
+      <mat-checkbox class="example-margin" [(ngModel)]="checked"
+        >Especializado</mat-checkbox
+      >
+    </section>
+    <section class="inputs-form fonts-sizes col-xl-6">
+      <mat-form-field class="inputs-form">
+        <mat-label>Fazenda Origem</mat-label>
+        <mat-select>
+          <mat-option value="option1">Olieveiras</mat-option>
+          <mat-option value="option2" disable>Canguçu (disabled)</mat-option>
+          <mat-option value="option3">Cruz Alta</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    ㅤ
+    <section class="inputs-form fonts-sizes col-xl-2">
+      <mat-form-field class="inputs-form fonts-sizes">
+        <mat-label>Quantidade</mat-label>
+        <input matInput />
+      </mat-form-field>
+    </section>
+  </form>
+</div>
+<hr />
+<div class="btns-modal-cep">
+  <button mat-raised-button class="btn-cancelar" (click)="closeModal()">
+    CANCELAR
+  </button>
+  <button mat-raised-button class="btn-salvar" (click)="closeModal()">
+    SALVAR
+  </button>
+</div>

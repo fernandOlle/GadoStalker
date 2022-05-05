@@ -29,6 +29,10 @@ import { AreaProdutorComponent } from './component/area-produtor/area-produtor.c
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { FuncionariosComponent } from './component/funcionarios/funcionarios.component';
 import { ModalFuncionariosComponent } from './component/funcionarios/components/modal-funcionarios/modal-funcionarios.component';
+import { CatalogoComponent } from '../app/component/catalogo/catalogo.component';
+import { ModalCatalogoComponent } from './component/catalogo/components/modal-catalogo/modal-catalogo.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -45,7 +49,9 @@ const maskConfig: Partial<IConfig> = {
     AreaProdutorComponent,
     DashboardComponent,
     FuncionariosComponent,
-    ModalFuncionariosComponent
+    ModalFuncionariosComponent,
+    CatalogoComponent,
+    ModalCatalogoComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,9 +73,10 @@ const maskConfig: Partial<IConfig> = {
     MatToolbarModule,
     MatButtonToggleModule,
     HttpClientModule,
+    MatSlideToggleModule,
     NgxMaskModule.forRoot(maskConfig),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

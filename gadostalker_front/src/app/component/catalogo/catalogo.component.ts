@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+
+import { ModalCatalogoComponent } from '../catalogo/components/modal-catalogo/modal-catalogo.component';
 
 @Component({
   selector: 'app-catalogo',
@@ -6,28 +9,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./catalogo.component.scss'],
 })
 export class CatalogoComponent implements OnInit {
-  catalogo = [
-    { nome: 'Feijão-3', enabled: false },
-    { nome: 'Alface', enabled: true },
-    { nome: 'Feijão', enabled: true },
-    { nome: 'Soja', enabled: true },
-    { nome: 'Feijão-0', enabled: false },
-    { nome: 'Mel', enabled: true },
-    { nome: 'Vagem', enabled: true },
-    { nome: 'Tomate', enabled: false },
-    { nome: 'Leite', enabled: true },
-    { nome: 'Feijão-1', enabled: true },
-    { nome: 'Alface', enabled: true },
-    { nome: 'Feijão', enabled: true },
-    { nome: 'Soja', enabled: true },
-    { nome: 'Mel', enabled: false },
-    { nome: 'Vagem', enabled: true },
-    { nome: 'Tomate', enabled: true },
-    { nome: 'Feijão-2', enabled: true },
-    { nome: 'Leite', enabled: true },
-  ];
-
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {}
+
+  catalogo = [
+    { nome: 'Feijão', enabled: false },
+    { nome: 'Alface', enabled: false },
+    { nome: 'Soja', enabled: false },
+    { nome: 'Mel', enabled: false },
+    { nome: 'Vagem', enabled: false },
+    { nome: 'Tomate', enabled: false },
+    { nome: 'Leite', enabled: false },
+    { nome: 'Alface', enabled: false },
+  ];
+
+  openModal() {
+    const dialog = this.dialog.open(ModalCatalogoComponent, {
+      data: {},
+      autoFocus: false,
+      maxHeight: 300,
+      maxWidth: 400,
+      restoreFocus: false,
+    });
+  }
 }
