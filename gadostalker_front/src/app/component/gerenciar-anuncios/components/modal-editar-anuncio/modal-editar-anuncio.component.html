@@ -1,0 +1,52 @@
+<div class="header-modal">
+    <h2 mat-dialog-title>
+        Editar Anúncio
+    </h2>
+    <div>
+        <button mat-icon-button (click)="closeModal()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<hr>
+<div class="content-modal" mat-dialog-container>
+    <form>
+        <div class="form-content">
+            <mat-form-field class="inputs-form fonts-sizes col-xl-5">
+                <mat-label>Título</mat-label>
+                <input matInput>
+            </mat-form-field>
+            <mat-form-field class="inputs-form fonts-sizes col-xl-5">
+                <mat-label>Produto</mat-label>
+                <mat-select>
+                    <mat-option value="0">Feijão</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="inputs-form fonts-sizes col-xl-5">
+                <mat-label>Preço</mat-label>
+                <input matInput>
+            </mat-form-field>
+            <mat-form-field class="inputs-form fonts-sizes col-xl-5">
+                <mat-label>Desconto</mat-label>
+                <input matInput>
+            </mat-form-field>
+            <mat-form-field class="inputs-form fonts-sizes col-xl-5">
+                <mat-label>Descrição</mat-label>
+                <textarea matInput></textarea>
+            </mat-form-field >
+            <div class="inputs-form fonts-sizes col-xl-5" style="display: flex;
+            align-items: center;justify-content: center;">
+                <button mat-raised-button class="btn-salvar"> <mat-icon [svgIcon]="'anexo'"></mat-icon>Atualizar imagem</button>
+            </div>
+        </div>
+        <div class="inputs-form fonts-sizes col-xl-5" style="display: flex;
+        align-items: center;justify-content: left;margin-left: 40px;">
+             <mat-slide-toggle>Fechar o Anúncio</mat-slide-toggle>
+        </div>
+    </form>
+</div>
+<hr>
+<div class="btns-modal-cep">
+    <button mat-raised-button class="btn-cancelar" (click)="closeModal()">CANCELAR</button>
+    <button mat-raised-button class="btn-salvar" (click)="closeModal()">SALVAR</button>
+</div>

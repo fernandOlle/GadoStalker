@@ -1,0 +1,67 @@
+.header-modal {
+  display: flex;
+  width: 300px;
+  h2 {
+    margin-top: 0.5em;
+    margin-bottom: -0.6em;
+    justify-content: center;
+    text-align: center;
+    margin-top: px;
+    margin-left: 1em;
+    width: 90%;
+    font-size: 18px;
+    color: #3b3b3b;
+    font-weight: normal;
+    text-transform: none;
+  }
+}
+
+.content-modal {
+  height: 100px;
+  width: 90%;
+  margin: auto;
+  h4 {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  form {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.btns-modal-cep {
+  width: 95%;
+  margin: 0 auto 10px auto;
+  display: flex;
+  justify-content: right;
+  .btn-cancelar {
+    margin-right: 10px;
+    background-color: white;
+    color: #8a8a8a;
+    box-shadow: none;
+    border-radius: 20px;
+  }
+  .btn-salvar {
+    background-color: white;
+    color: #008ade;
+    box-shadow: none;
+    border-radius: 20px;
+  }
+}
+
+::ng-deep .mat-dialog-container {
+  padding: 0 !important;
+}
+
+::ng-deep .btns-modal-cep {
+  .mat-button-disabled {
+    color: #8a8a8a !important;
+  }
+}
+
+::ng-deep .mat-icon {
+  margin-bottom: -0.3em;
+  justify-content: center;
+  align-items: center;
+}

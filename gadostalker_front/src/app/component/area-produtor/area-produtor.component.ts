@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
+import { ModalCriarAnuncioComponent } from '../gerenciar-anuncios/components/modal-criar-anuncio/modal-criar-anuncio.component';
+import { MatDialog } from '@angular/material/dialog';
 
 const MENU_ICON =
   `
@@ -63,6 +65,7 @@ export class AreaProdutorComponent implements OnInit {
   constructor(
     iconRegistry: MatIconRegistry, 
     sanitizer: DomSanitizer,
+    public dialog: MatDialog,
   ) { 
     iconRegistry.addSvgIconLiteral('menu', sanitizer.bypassSecurityTrustHtml(MENU_ICON));
     iconRegistry.addSvgIconLiteral('Dashboard', sanitizer.bypassSecurityTrustHtml(DASHBOARD_ICON));
@@ -77,4 +80,11 @@ export class AreaProdutorComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  openModal() {
+    const dialog = this.dialog.open(ModalCriarAnuncioComponent, {
+      data: {  },
+      autoFocus: false,
+      restoreFocus: false
+    });
+  }
 }

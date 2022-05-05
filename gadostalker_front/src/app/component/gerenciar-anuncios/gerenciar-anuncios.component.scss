@@ -1,0 +1,33 @@
+.container-anuncios{
+    margin: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    mat-card-header{
+        justify-content: center;
+        .mat-card-title{
+            font-size: 22px;
+        }
+    }
+    .preco{
+        color: #8DA633;
+        font-size: 26px;
+        font-weight: 700;
+        margin: 20px auto;
+        text-align: center;
+
+    }
+    mat-card-actions{
+        justify-content: center;
+        display: flex;
+        .btn-venda{
+            border-radius: 20px;
+            color: white;
+            background-color: #594A3C;
+        }
+        .btn-anuncio{
+            border-radius: 20px;
+            background-color: white;
+        }
+    }
+}
