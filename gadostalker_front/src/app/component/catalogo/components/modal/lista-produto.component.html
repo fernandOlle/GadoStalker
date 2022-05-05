@@ -8,34 +8,37 @@
 </div>
 <hr />
 <div class="content-modal" mat-dialog-container>
-  <section class="inputs-form fonts-sizes col-xl-2">
-    <mat-select [(ngModel)]="produto" name="produto">
-      <mat-option *ngFor="let produto of produtos" [value]="produto">
-        {{ produto.nome }}
-      </mat-option>
-    </mat-select>
-  </section>
-  <form>
-    <section class="inputs-form fonts-sizes col-xl-2">
-      <mat-form-field class="inputs-form">
+  <section class="fonts-sizes" *ngFor="let produto of produtos">
+    <form>
+      <div class="col-xl-4">
+        <mat-label>Nome do produto</mat-label>
+        <input value="{{ produto.nome }}" />
+      </div>
+
+      <div class="push-down col-xl-2">
         <mat-label>Produto especializado</mat-label>
-        <h2>{{ produto.especializado }}</h2>
-      </mat-form-field>
-    </section>
-    <section class="inputs-form fonts-sizes col-xl-2">
-      <mat-form-field class="inputs-form">
-        <mat-label>Fazenda Origem</mat-label>
-        <h2>{{ produto.fazenda }}</h2>
-      </mat-form-field>
-    </section>
-    ㅤ
-    <section class="inputs-form fonts-sizes col-xl-2">
-      <mat-form-field class="inputs-form fonts-sizes">
+        ㅤ
+        <input type="checkbox" checked="{{ produto.especializado }}" />
+      </div>
+      ㅤㅤ
+      <div class="col-xl-1">
         <mat-label>Quantidade</mat-label>
-        <h2>{{ produto.quantidade }}</h2>
-      </mat-form-field>
-    </section>
-  </form>
+        <input
+          type="number"
+          min="0"
+          max="1000000"
+          step="1"
+          value="{{ produto.quantidade }}"
+        />
+        ㅤㅤㅤㅤ
+      </div>
+      ㅤㅤㅤㅤ
+      <div style="padding-left: 15px" class="col-xl-3">
+        <mat-label>Fazenda Origem</mat-label>
+        <input value="{{ produto.fazenda }}" />
+      </div>
+    </form>
+  </section>
 
   <mat-card-content>
     <div class="container-left">
@@ -48,7 +51,7 @@
       </button>
     </div>
     <div class="container-right">
-      <span>Tipos de Feijão: {{ produtos?.length }}</span>
+      Desativar todos : <mat-slide-toggle> </mat-slide-toggle>
     </div>
   </mat-card-content>
 </div>
