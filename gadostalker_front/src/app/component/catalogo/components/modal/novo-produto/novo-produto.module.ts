@@ -8,11 +8,11 @@ import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ModalCatalogoComponent } from './modal-catalogo.component';
+import { NovoProdutoComponent } from './novo-produto.component';
 import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  declarations: [ModalCatalogoComponent],
+  declarations: [NovoProdutoComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -26,6 +26,6 @@ import { MatSelectModule } from '@angular/material/select';
     MatCheckboxModule,
     MatSelectModule,
   ],
-  exports: [ModalCatalogoComponent],
+  exports: [NovoProdutoComponent],
 })
 export class ModalFuncionariosModule {}

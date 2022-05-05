@@ -30,8 +30,26 @@
         </mat-list-option>
       </mat-selection-list>
     </div>
-    <div class="container-component">
-      <app-catalogo></app-catalogo>
-    </div>
+    <ng-template
+      [ngIf]="
+        options.selectedOptions.selected[0]?.value == 'Catálogo de Produtos'
+      "
+    >
+      <div class="container-component">
+        <app-catalogo></app-catalogo>
+      </div>
+    </ng-template>
+    <ng-template
+      [ngIf]="options.selectedOptions.selected[0]?.value == 'Funcionários'"
+    >
+      <div class="container-component">
+        <app-funcionarios></app-funcionarios>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="options.selectedOptions.selected[0]?.value == null">
+      <div class="container-component">
+        <div style="background-color: rgba(0, 0, 0, 0.12)"></div>
+      </div>
+    </ng-template>
   </div>
 </div>

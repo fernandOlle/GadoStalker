@@ -29,9 +29,10 @@ import { AreaProdutorComponent } from './component/area-produtor/area-produtor.c
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { FuncionariosComponent } from './component/funcionarios/funcionarios.component';
 import { ModalFuncionariosComponent } from './component/funcionarios/components/modal-funcionarios/modal-funcionarios.component';
-import { CatalogoComponent } from '../app/component/catalogo/catalogo.component';
-import { ModalCatalogoComponent } from './component/catalogo/components/modal-catalogo/modal-catalogo.component';
+import { CatalogoComponent } from './component/catalogo/catalogo.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ListaProdutoComponent } from './component/catalogo/components/modal/lista-produto.component';
+import { NovoProdutoComponent } from './component/catalogo/components/modal/novo-produto/novo-produto.component';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -51,7 +52,9 @@ const maskConfig: Partial<IConfig> = {
     FuncionariosComponent,
     ModalFuncionariosComponent,
     CatalogoComponent,
-    ModalCatalogoComponent,
+    ListaProdutoComponent,
+    NovoProdutoComponent,
+    NovoProdutoComponent,
   ],
   imports: [
     BrowserModule,

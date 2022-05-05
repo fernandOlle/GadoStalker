@@ -1,7 +1,6 @@
+import { ListaProdutoComponent } from './components/modal/lista-produto.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-
-import { ModalCatalogoComponent } from '../catalogo/components/modal-catalogo/modal-catalogo.component';
 
 @Component({
   selector: 'app-catalogo',
@@ -24,11 +23,11 @@ export class CatalogoComponent implements OnInit {
   ];
 
   openModal() {
-    const dialog = this.dialog.open(ModalCatalogoComponent, {
+    const dialog = this.dialog.open(ListaProdutoComponent, {
       data: {},
       autoFocus: false,
-      maxHeight: 300,
-      maxWidth: 400,
+      maxHeight: 700,
+      maxWidth: 800,
       restoreFocus: false,
     });
   }

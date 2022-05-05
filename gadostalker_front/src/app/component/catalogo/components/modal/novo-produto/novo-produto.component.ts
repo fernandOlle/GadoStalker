@@ -2,16 +2,15 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-modal-catalogo',
-  templateUrl: './modal-catalogo.component.html',
-  styleUrls: ['./modal-catalogo.component.scss'],
+  selector: 'app-novo-produto',
+  templateUrl: './novo-produto.component.html',
+  styleUrls: ['./novo-produto.component.scss'],
 })
-export class ModalCatalogoComponent implements OnInit {
-  cepInformado: any;
+export class NovoProdutoComponent implements OnInit {
   checked = false;
 
   constructor(
-    public dialogRef: MatDialogRef<ModalCatalogoComponent>,
+    public dialogRef: MatDialogRef<NovoProdutoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 

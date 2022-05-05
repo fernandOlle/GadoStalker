@@ -1,0 +1,63 @@
+<div class="header-modal">
+  <h2 mat-dialog-title>Lista de produtos</h2>
+  <div>
+    <button mat-icon-button (click)="closeModal()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>
+<hr />
+<div class="content-modal" mat-dialog-container>
+  <section class="inputs-form fonts-sizes col-xl-2">
+    <mat-select [(ngModel)]="produto" name="produto">
+      <mat-option *ngFor="let produto of produtos" [value]="produto">
+        {{ produto.nome }}
+      </mat-option>
+    </mat-select>
+  </section>
+  <form>
+    <section class="inputs-form fonts-sizes col-xl-2">
+      <mat-form-field class="inputs-form">
+        <mat-label>Produto especializado</mat-label>
+        <h2>{{ produto.especializado }}</h2>
+      </mat-form-field>
+    </section>
+    <section class="inputs-form fonts-sizes col-xl-2">
+      <mat-form-field class="inputs-form">
+        <mat-label>Fazenda Origem</mat-label>
+        <h2>{{ produto.fazenda }}</h2>
+      </mat-form-field>
+    </section>
+    ㅤ
+    <section class="inputs-form fonts-sizes col-xl-2">
+      <mat-form-field class="inputs-form fonts-sizes">
+        <mat-label>Quantidade</mat-label>
+        <h2>{{ produto.quantidade }}</h2>
+      </mat-form-field>
+    </section>
+  </form>
+
+  <mat-card-content>
+    <div class="container-left">
+      <button
+        mat-raised-button
+        class="btn-novo-funcionario"
+        (click)="openModal()"
+      >
+        + Novo produto
+      </button>
+    </div>
+    <div class="container-right">
+      <span>Tipos de Feijão: {{ produtos?.length }}</span>
+    </div>
+  </mat-card-content>
+</div>
+<hr />
+<div class="btns-modal-cep">
+  <button mat-raised-button class="btn-cancelar" (click)="closeModal()">
+    CANCELAR
+  </button>
+  <button mat-raised-button class="btn-salvar" (click)="closeModal()">
+    SALVAR
+  </button>
+</div>
