@@ -17,6 +17,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 import { RecuperarSenhaComponent } from './component/recuperar-senha/recuperar-senha.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
@@ -34,6 +37,13 @@ import { ModalConfirmacao } from './component/funcionarios/components/modal-func
 import { FazendasComponent } from './component/fazendas/fazendas.component';
 import { ModalCadastrarFazendaComponent } from './component/fazendas/components/modal-cadastrar-fazenda/modal-cadastrar-fazenda.component';
 import { ModalDesignarFuncionarioComponent } from './component/fazendas/components/modal-designar-funcionario/modal-designar-funcionario.component';
+import { GerenciarAnunciosComponent } from './component/gerenciar-anuncios/gerenciar-anuncios.component';
+import { ModalCriarAnuncioComponent } from './component/gerenciar-anuncios/components/modal-criar-anuncio/modal-criar-anuncio.component';
+import { ModalEditarAnuncioComponent } from './component/gerenciar-anuncios/components/modal-editar-anuncio/modal-editar-anuncio.component';
+import { ModalRegistrarVendaComponent } from './component/gerenciar-anuncios/components/modal-registrar-venda/modal-registrar-venda.component';
+import { CatalogoComponent } from './component/catalogo/catalogo.component';
+import { ListaProdutoComponent } from './component/catalogo/components/modal/lista-produto.component';
+import { NovoProdutoComponent } from './component/catalogo/components/modal/novo-produto/novo-produto.component';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -55,7 +65,14 @@ const maskConfig: Partial<IConfig> = {
     ModalConfirmacao,
     FazendasComponent,
     ModalCadastrarFazendaComponent,
-    ModalDesignarFuncionarioComponent
+    ModalDesignarFuncionarioComponent,
+    GerenciarAnunciosComponent,
+    ModalCriarAnuncioComponent,
+    ModalEditarAnuncioComponent,
+    ModalRegistrarVendaComponent,
+    CatalogoComponent,
+    ListaProdutoComponent,
+    NovoProdutoComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +94,9 @@ const maskConfig: Partial<IConfig> = {
     MatToolbarModule,
     MatButtonToggleModule,
     HttpClientModule,
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    MatSliderModule,
     NgxMaskModule.forRoot(maskConfig),
   ],
   providers: [],
