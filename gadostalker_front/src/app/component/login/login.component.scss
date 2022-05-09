@@ -100,6 +100,9 @@
 }
 
 ::ng-deep{
+  .mat-button-wrapper{
+    display: block;
+  }
   .mat-form-field.mat-focused .mat-form-field-label {
     color: #594A3C ;
 }

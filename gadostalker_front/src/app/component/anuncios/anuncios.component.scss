@@ -1,0 +1,176 @@
+*{
+    font-family: 'Viga', sans-serif !important;
+  }
+.container-home {
+    background-color: #D9D48F;
+
+    .container-header {
+        width: 80%;
+        height: 100px;
+        margin: auto;
+        background-color: #594A3C;
+        display: grid;
+        grid-template-columns: 1.1fr 1.9fr 1fr;
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            a {
+                font-size: 32px;
+                text-decoration: none;
+                color: white;
+                letter-spacing: 1px;
+                font-weight: 700;
+            }
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .btn-pesquisa {
+                width: 140px;
+                font-size: 16px;
+            }
+        }
+
+        .fazendeiro-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .btn-produtor {
+                width: 180px;
+                height: 40px;
+                border-radius: 20px;
+                background-color: #8DA633;
+                color: white;
+            }
+        }
+    }
+
+    .carousel-container {
+        width: 80%;
+        height: 426px;
+        margin: 0px auto;
+    }
+
+    .container-title{
+        h1{
+            text-align: center;
+            margin: 15px auto;
+            color: white;
+            font-size: 35px;
+            font-weight: 800;
+        }
+    }
+
+    .container-main {
+        background-color: #D9D48F;
+        width: 100%;
+        margin: 5px auto;
+        display: grid;
+        grid-template-columns: 1fr 9fr;
+        gap: 10px;
+
+        .result {
+            height: 250px;
+        }
+
+        .example-h2 {
+            margin: 10px;
+        }
+
+        .example-section {
+            display: flex;
+            align-content: center;
+            align-items: center;
+            height: 30px;
+        }
+
+        .example-margin {
+            margin: 0 10px;
+        }
+
+        .grid-categorias {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 20px 10px;
+            width: 90%;
+            .card-produto {
+                display: grid;
+                grid-template-columns: 1fr;
+                align-items: center;
+                width: 250px;
+                height: 250px;
+                margin: auto;
+                cursor: pointer;
+
+                h1 {
+                    text-align: center;
+                    margin: 0 auto;
+                }
+
+                h2{
+                    text-align: center;
+                    color: #8DA633;
+                    font-weight: 900;
+                }
+
+                img {
+                    margin: auto;
+                }
+            }
+        }
+    }
+}
+
+::ng-deep {
+    .mat-radio-inner-circle {
+        background-color: #594A3C !important;
+    }
+
+    .mat-radio-outer-circle {
+        border-color: #594A3C !important;
+    }
+
+    .mat-form-field.mat-focused .mat-form-field-label {
+        color: #594A3C !important;
+    }
+
+    .mat-form-field.mat-focused .mat-form-field-ripple {
+        background-color: #594A3C !important;
+    }
+
+    .mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
+        background-color: #f44336 !important;
+    }
+
+    .mat-for m-field.mat-form-field-invalid .mat-form-field-label {
+        color: #f44336 !important;
+    }
+
+    .mat-checkbox-checked .mat-checkbox-background {
+        background-color: #594A3C !important;
+    }
+
+    .mat-ink-bar {
+        background-color: #594A3C !important;
+    }
+
+    .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+        color: #594A3C !important;
+    }
+
+    .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+        color: #594A3C !important;
+    }
+
+    .mat-button-disabled {
+        background-color: rgba(0, 0, 0, 0.12) !important;
+        color: rgba(0, 0, 0, 0.26) !important;
+    }
+}

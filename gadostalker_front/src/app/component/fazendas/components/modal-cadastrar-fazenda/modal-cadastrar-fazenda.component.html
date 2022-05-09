@@ -1,0 +1,38 @@
+<div class="header-modal">
+    <h2 mat-dialog-title>
+        Cadastrar nova fazenda
+    </h2>
+    <div>
+        <button mat-icon-button (click)="closeModal()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<hr>
+<div class="content-modal" mat-dialog-container>
+    <form>
+        <div class="form-content">
+            <mat-form-field class="inputs-form fonts-sizes col-xl-5">
+                <mat-label>SNCR</mat-label>
+                <input matInput>
+            </mat-form-field>
+            <mat-form-field class="inputs-form fonts-sizes col-xl-5">
+                <mat-label>Nome da fazenda</mat-label>
+                <input matInput>
+            </mat-form-field>
+            <mat-form-field class="inputs-form fonts-sizes col-xl-5">
+                <mat-label>E-mail</mat-label>
+                <input matInput>
+            </mat-form-field>
+            <mat-form-field class="inputs-form fonts-sizes col-xl-5">
+                <mat-label>Telefone</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<hr>
+<div class="btns-modal-cep">
+    <button mat-raised-button class="btn-cancelar" (click)="closeModal()">CANCELAR</button>
+    <button mat-raised-button class="btn-salvar" (click)="closeModal()">SALVAR</button>
+</div>
