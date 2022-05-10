@@ -1,0 +1,63 @@
+<div class="header-modal">
+    <h2 mat-dialog-title>
+        Cadastrar novo funcionário
+    </h2>
+    <div>
+        <button mat-icon-button (click)="closeModal()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<hr>
+<div class="content-modal" mat-dialog-container>
+    <form>
+        <mat-form-field class="inputs-form fonts-sizes col-xl-4">
+            <mat-label>Fazenda</mat-label>
+            <mat-select [(ngModel)]="fazenda">
+                <mat-option value="0">Fazenda Feliz</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="inputs-form fonts-sizes col-xl-4">
+            <mat-label>CPF</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field class="inputs-form fonts-sizes col-xl-3">
+            <mat-label>Telefone</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field class="inputs-form fonts-sizes col-xl-4">
+            <mat-label>Nome</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field class="inputs-form fonts-sizes col-xl-4">
+            <mat-label>E-mail</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field class="inputs-form fonts-sizes col-xl-3">
+            <mat-label>Senha</mat-label>
+            <input matInput type="password">
+            <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'">
+                <mat-icon [svgIcon]="'eye'"></mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field class="inputs-form fonts-sizes col-xl-3">
+            <mat-label>Confirma Senha</mat-label>
+            <input matInput type="password">
+        </mat-form-field>
+        <mat-form-field class="inputs-form fonts-sizes col-xl-4">
+            <mat-label>Pergunta de Segurança</mat-label>
+            <mat-select [(ngModel)]="pergunta">
+                <mat-option value="0">Qual sua comida favorita?</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="inputs-form fonts-sizes col-xl-4">
+            <mat-label>Resposta</mat-label>
+            <input matInput>
+        </mat-form-field>
+    </form>
+</div>
+<hr>
+<div class="btns-modal-cep">
+    <button mat-raised-button class="btn-cancelar" (click)="closeModal()">CANCELAR</button>
+    <button mat-raised-button class="btn-salvar" (click)="closeModal()">SALVAR</button>
+</div>

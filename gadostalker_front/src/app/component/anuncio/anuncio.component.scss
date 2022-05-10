@@ -1,0 +1,116 @@
+*{
+    font-family: 'Viga', sans-serif !important;
+  }
+.container-anuncio {
+    background-color: #D9D48F;
+
+    .container-header {
+        width: 80%;
+        height: 100px;
+        margin: auto;
+        background-color: #594A3C;
+        display: grid;
+        grid-template-columns: 1.1fr 1.9fr 1fr;
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            a {
+                font-size: 32px;
+                text-decoration: none;
+                color: white;
+                letter-spacing: 1px;
+                font-weight: 700;
+            }
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            form{
+                width: 410px;
+            }
+            .btn-pesquisa {
+                width: 140px;
+                font-size: 16px;
+            }
+        }
+
+        .fazendeiro-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .btn-anunciar {
+                width: 180px;
+                height: 40px;
+                border-radius: 20px;
+                background-color: #8DA633;
+                color: white;
+            }
+        }
+    }
+    .container-main{
+        width: 100%;
+        margin: auto;
+        background-color: white;
+        padding: 30px 0;
+        .container-anuncio{
+            width: 70%;
+            margin: auto;
+            padding: 10px 0;
+            background-color: white;
+            .container-title{
+                width: 65%;
+                h1{
+                    margin: 5px 0;
+                }
+                span{
+                    color: rgb(148, 147, 147);
+                }
+            }
+
+            .carousel-container{
+                width: 100%;
+                margin: 20px 0;
+                display: flex;
+                gap: 10px;
+                .carousel{
+                    width: 65%;
+                }
+                .container-card{
+                    width: 35%;
+                    .card-anuncio{
+                        width: 300px;
+                        h1{
+                            text-align: center;
+                            margin: 10px auto;
+                        }
+                        h2{
+                            margin: 10px 0;
+                            text-align: center;
+                        }
+                        h3{
+                            margin: 5px 0;
+                            mat-icon{
+                                margin-right: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+            .preco{
+                color: #8DA633;
+                font-size: 30px;
+                font-weight: 700;
+                margin: 20px 0;
+            }
+            .descricao{
+                width: 65%;
+            }
+        }
+    }
+}

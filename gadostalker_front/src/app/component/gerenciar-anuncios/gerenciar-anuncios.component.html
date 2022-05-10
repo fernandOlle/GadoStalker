@@ -1,0 +1,15 @@
+<div class="container-anuncios">
+    <mat-card class="example-card" *ngFor="let anuncio of anuncios">
+        <mat-card-header>
+          <mat-card-title>{{anuncio.title}}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="../../../assets/{{anuncio.image}}.png" alt="{{anuncio.title}}" height="200px">
+        <mat-card-content>
+            <h1 class="preco">{{anuncio.preco}}</h1>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button class="btn-anuncio" (click)="openModalEditarAnuncio()">EDITAR ANÚNCIO</button>
+            <button mat-raised-button class="btn-venda" (click)="openModalRegistrarVenda()">REGISTRAR VENDA</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

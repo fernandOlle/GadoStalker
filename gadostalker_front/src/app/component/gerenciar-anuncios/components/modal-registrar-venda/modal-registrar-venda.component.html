@@ -1,0 +1,25 @@
+<div class="header-modal">
+    <h2 mat-dialog-title>
+        Registrar venda
+    </h2>
+    <div>
+        <button mat-icon-button (click)="closeModal()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<hr>
+<div class="content-modal" mat-dialog-container>
+    <form>
+        <div class="form-content">
+                <mat-label>Quantidade</mat-label>
+                <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" step="1000" min="0" max="100000"
+                    aria-label="units"></mat-slider>
+        </div>
+    </form>
+</div>
+<hr>
+<div class="btns-modal-cep">
+    <button mat-raised-button class="btn-cancelar" (click)="closeModal()">CANCELAR</button>
+    <button mat-raised-button class="btn-salvar" (click)="closeModal()">SALVAR</button>
+</div>

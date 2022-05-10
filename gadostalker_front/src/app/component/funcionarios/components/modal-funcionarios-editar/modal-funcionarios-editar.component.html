@@ -1,0 +1,39 @@
+<div class="header-modal">
+    <h2 mat-dialog-title>
+        Editar funcionário
+    </h2>
+    <div>
+        <button mat-icon-button (click)="closeModal()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<hr>
+<div class="content-modal" mat-dialog-container>
+    <form>
+        <mat-form-field class="inputs-form fonts-sizes col-xl-12">
+            <mat-label>Fazenda</mat-label>
+            <mat-select>
+                <mat-option value="0">Fazenda Feliz</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="inputs-form fonts-sizes col-xl-12">
+            <mat-label>E-mail</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field class="inputs-form fonts-sizes col-xl-12">
+            <mat-label>Nome</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field class="inputs-form fonts-sizes col-xl-12">
+            <mat-label>Telefone</mat-label>
+            <input matInput>
+        </mat-form-field>
+    </form>
+    <button mat-raised-button class="btn-excluir" (click)="openDialog()">Excluir funcionário</button>
+</div>
+<hr>
+<div class="btns-modal-cep">
+    <button mat-raised-button class="btn-cancelar" (click)="closeModal()">CANCELAR</button>
+    <button mat-raised-button class="btn-salvar" (click)="closeModal()">SALVAR</button>
+</div>
