@@ -102,7 +102,7 @@ public class ProdutoController {
 
         Produto produto;
         try {
-            produto = em.find(Produto.class, (Long) id);
+            produto = em.find(Produto.class, id);
         } catch (Exception e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
@@ -130,7 +130,7 @@ public class ProdutoController {
         Produto p;
         
         try {
-            p = em.find(Produto.class, (Long) id);
+            p = em.find(Produto.class, id);
         } catch (Exception e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
@@ -162,7 +162,7 @@ public class ProdutoController {
         Produto produto;
 
         try {
-            produto = em.find(Produto.class, (Long) id);
+            produto = em.find(Produto.class, id);
         } catch (Exception e) {
             return Response
                 .status(Response.Status.NOT_FOUND)
