@@ -1,6 +1,7 @@
 package com.ufpel.cs.gadostalker.rest.resources;
 
 import com.ufpel.cs.gadostalker.rest.dtos.ProdutoDTO;
+import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entity.Produto;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -41,6 +42,7 @@ public class ProdutoController {
         Produto p = new Produto(produtoDTO);
 
         try {
+            p.setFazenda(em.find(Fazenda.class, produtoDTO.fazenda));
             em.persist(p);
         } catch (PersistenceException ex) {
             return Response
@@ -102,7 +104,7 @@ public class ProdutoController {
 
         Produto produto;
         try {
-            produto = em.find(Produto.class, (Long) id);
+            produto = em.find(Produto.class, id);
         } catch (Exception e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
@@ -130,7 +132,7 @@ public class ProdutoController {
         Produto p;
         
         try {
-            p = em.find(Produto.class, (Long) id);
+            p = em.find(Produto.class, id);
         } catch (Exception e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
@@ -140,7 +142,7 @@ public class ProdutoController {
         }
         
         p.setNome(produtoDTO.nome);
-        p.setFazenda(produtoDTO.fazenda);
+        p.setFazenda(em.find(Fazenda.class, produtoDTO.fazenda));
         p.setQuantidade(produtoDTO.quantidade);
         p.setTipo(produtoDTO.tipo);
 
@@ -162,7 +164,7 @@ public class ProdutoController {
         Produto produto;
 
         try {
-            produto = em.find(Produto.class, (Long) id);
+            produto = em.find(Produto.class, id);
         } catch (Exception e) {
             return Response
                 .status(Response.Status.NOT_FOUND)

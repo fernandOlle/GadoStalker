@@ -1,6 +1,5 @@
 package com.ufpel.cs.gadostalker.rest.dtos;
 
-import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entity.Produto;
 import com.ufpel.cs.gadostalker.rest.entity.Produto.TipoProdutoEnum;
 import java.math.BigDecimal;
@@ -32,7 +31,7 @@ public class ProdutoDTO {
     public TipoProdutoEnum tipo;
     
     @XmlElement
-    public Fazenda fazenda;
+    public String fazenda;
     
     @XmlElement
     public BigDecimal quantidade;
@@ -41,7 +40,7 @@ public class ProdutoDTO {
         this.id = produto.getId();
         this.nome = produto.getNome();
         this.tipo = produto.getTipo();
-        this.fazenda = produto.getFazenda();
+        this.fazenda = produto.getFazenda().getSNCR();
         this.quantidade = produto.getQuantidade();
     }
 }
