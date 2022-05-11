@@ -80,7 +80,6 @@ public class Produto implements Serializable {
     public Produto(ProdutoDTO produtoDTO) {
         this.nome = produtoDTO.nome;
         this.tipo = produtoDTO.tipo;
-        this.fazenda = produtoDTO.fazenda;
         this.quantidade = produtoDTO.quantidade;
     }
 
