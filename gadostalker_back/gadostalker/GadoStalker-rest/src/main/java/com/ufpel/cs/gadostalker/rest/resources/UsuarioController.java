@@ -54,8 +54,6 @@ public class UsuarioController {
         } catch (PersistenceException ex) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .header("Access-Control-Allow-Origin", "*")
-                    .header("Access-Control-Allow-Methods", "POST")
                     .build();
         }
 
@@ -65,8 +63,6 @@ public class UsuarioController {
         return Response
                 .ok(usuarioDto)
                 .status(Response.Status.ACCEPTED)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "POST")
                 .build();
     }
 
@@ -149,8 +145,6 @@ public class UsuarioController {
         return Response
                 .ok(mapEnumStringPergunta)
                 .status(Response.Status.ACCEPTED)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET")
                 .build();
     }
 
@@ -168,8 +162,6 @@ public class UsuarioController {
         } catch (Exception e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .header("Access-Control-Allow-Origin", "*")
-                    .header("Access-Control-Allow-Methods", "POST")
                     .build();
         }
 
@@ -181,16 +173,12 @@ public class UsuarioController {
 
                 return Response
                         .status(Response.Status.ACCEPTED)
-                        .header("Access-Control-Allow-Origin", "*")
-                        .header("Access-Control-Allow-Methods", "POST")
                         .build();
             }
         }
 
         return Response
                 .status(Response.Status.UNAUTHORIZED)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "POST")
                 .build();
     }
 }

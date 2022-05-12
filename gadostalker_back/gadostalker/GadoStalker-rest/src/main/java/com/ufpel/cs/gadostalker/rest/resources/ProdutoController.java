@@ -47,8 +47,6 @@ public class ProdutoController {
         } catch (PersistenceException ex) {
             return Response
                 .status(Response.Status.BAD_REQUEST)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "POST")
                 .build();
         }
 
@@ -57,8 +55,6 @@ public class ProdutoController {
         return Response
                 .ok(produtoDTO)
                 .status(Response.Status.CREATED)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "POST")
                 .build();
     }
 
@@ -78,8 +74,6 @@ public class ProdutoController {
         } catch (Exception e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .header("Access-Control-Allow-Origin", "*")
-                    .header("Access-Control-Allow-Methods", "GET")
                     .build();
         }
 
@@ -92,8 +86,6 @@ public class ProdutoController {
         return Response
                 .ok(produtoDTOs)
                 .status(Response.Status.FOUND)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET")
                 .build();
     }
 
@@ -108,8 +100,6 @@ public class ProdutoController {
         } catch (Exception e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .header("Access-Control-Allow-Origin", "*")
-                    .header("Access-Control-Allow-Methods", "GET")
                     .build();
         }
 
@@ -118,8 +108,6 @@ public class ProdutoController {
         return Response
                 .ok(produtoDTO)
                 .status(Response.Status.FOUND)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET")
                 .build();
     }
 
@@ -136,8 +124,6 @@ public class ProdutoController {
         } catch (Exception e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .header("Access-Control-Allow-Origin", "*")
-                    .header("Access-Control-Allow-Methods", "POST")
                     .build();
         }
         
@@ -151,8 +137,6 @@ public class ProdutoController {
         return Response
                 .ok(new ProdutoDTO(p))
                 .status(Response.Status.ACCEPTED)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "POST")
                 .build();
     }
 
@@ -168,8 +152,6 @@ public class ProdutoController {
         } catch (Exception e) {
             return Response
                 .status(Response.Status.NOT_FOUND)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET")
                 .build();
         }
 
@@ -178,15 +160,11 @@ public class ProdutoController {
         } catch (PersistenceException ex) {
             return Response
                 .status(Response.Status.BAD_REQUEST)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET")
                 .build();
         }
 
         return Response
                 .status(Response.Status.ACCEPTED)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET")
                 .build();
     }
 }
