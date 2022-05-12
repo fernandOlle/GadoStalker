@@ -4,19 +4,12 @@ import com.ufpel.cs.gadostalker.rest.entity.Usuario;
 import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  *
  * @author thouta
  */
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+
 @XmlRootElement
 public class UsuarioDTO {
 
@@ -38,6 +31,9 @@ public class UsuarioDTO {
     public List<FazendaDTO> fazendas;
     @XmlElement
     public Usuario.TipoUsuario tipoUsuario;
+    
+    public UsuarioDTO(){
+    }
     
     public UsuarioDTO addFazendaDTO(FazendaDTO fazenda) {
         fazendas.add(fazenda);

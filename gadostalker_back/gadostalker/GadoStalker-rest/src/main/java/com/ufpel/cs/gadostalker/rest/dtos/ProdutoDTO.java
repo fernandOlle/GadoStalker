@@ -5,19 +5,12 @@ import com.ufpel.cs.gadostalker.rest.entity.Produto.TipoProdutoEnum;
 import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  *
  * @author kevin
  */
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+
 @XmlRootElement
 public class ProdutoDTO {
     
