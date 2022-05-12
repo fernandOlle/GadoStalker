@@ -14,21 +14,19 @@ import javax.ws.rs.core.Response;
  */
 @Path("rest")
 public class JakartaEE8Resource {
-  
+
     @EJB
     PropTeste propTeste;
-    
+
     @GET
     @Transactional
-    public Response ping(){
-   
+    public Response ping() {
+
         //teste
         Proprietario p = propTeste.TestPropDB("12312312332");
-        
+
         return Response
                 .ok(p)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                 .build();
     }
 }

@@ -59,14 +59,11 @@ public class UsuarioController {
                     .build();
         }
 
+        UsuarioDTO usuarioDto = new UsuarioDTO(); 
+        usuarioDto.cpf = usuarioLogado.getCpf();
+        
         return Response
-                .ok(UsuarioDTO.builder()
-                        .telefone(usuarioLogado.getTelefone())
-                        .nome(usuarioLogado.getNome())
-                        .cpf(usuarioLogado.getCpf())
-                        .email(usuarioLogado.getEmail())
-                        .tipoUsuario(usuarioLogado.getTipoUsuario())
-                        .build())
+                .ok(usuarioDto)
                 .status(Response.Status.ACCEPTED)
                 .header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Methods", "POST")
@@ -83,7 +80,7 @@ public class UsuarioController {
             //Proprietario
             case "prop":
                 try {
-                    usuarioDTO.setTipoUsuario(Usuario.TipoUsuario.PROPRIETARIO);
+                    usuarioDTO.tipoUsuario=(Usuario.TipoUsuario.PROPRIETARIO);
                     Proprietario proprietario = new Proprietario(usuarioDTO);
                     
                     em.persist(proprietario);
@@ -91,8 +88,6 @@ public class UsuarioController {
                     return Response
                             .ok()
                             .status(Response.Status.BAD_REQUEST)
-                            .header("Access-Control-Allow-Origin", "*")
-                            .header("Access-Control-Allow-Methods", "POST")
                             .build();
                 }
                 break;
@@ -104,14 +99,12 @@ public class UsuarioController {
                     TypedQuery<Fazenda> query = em.createQuery("select f from Fazenda f where f.SNCR = :sncr", Fazenda.class)
                             .setParameter("sncr", usuarioDTO.fazendas.get(0).SNCR);
                     fazenda = query.getSingleResult();
-                    usuarioDTO.setTipoUsuario(Usuario.TipoUsuario.FUNCIONARIO);
+                    usuarioDTO.tipoUsuario = (Usuario.TipoUsuario.FUNCIONARIO);
                     Funcionario funcionario = new Funcionario(usuarioDTO, fazenda);
                     em.persist(funcionario);
                 } catch (PersistenceException ex) {
                     return Response
                             .status(Response.Status.BAD_REQUEST)
-                            .header("Access-Control-Allow-Origin", "*")
-                            .header("Access-Control-Allow-Methods", "POST")
                             .build();
                 }
                 break;
@@ -119,14 +112,12 @@ public class UsuarioController {
             //UsuarioComum
             case "uc":
                 try {
-                    usuarioDTO.setTipoUsuario(Usuario.TipoUsuario.USUARIO_COMUM);
+                    usuarioDTO.tipoUsuario = (Usuario.TipoUsuario.USUARIO_COMUM);
                     UsuarioComum uc = new UsuarioComum(usuarioDTO);
                     em.persist(uc);
                 } catch (PersistenceException ex) {
                     return Response
                             .status(Response.Status.BAD_REQUEST)
-                            .header("Access-Control-Allow-Origin", "*")
-                            .header("Access-Control-Allow-Methods", "POST")
                             .build();
                 }
                 break;
@@ -138,8 +129,7 @@ public class UsuarioController {
 
         return Response
                 .status(Response.Status.CREATED)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "POST")
+                
                 .build();
     }
 
