@@ -44,8 +44,7 @@ export class LoginComponent implements OnInit {
   }
 
   logar(){
-    let ret = this.api.testeApi();
-    debugger
+    //let ret = this.api.testeApi();
     this.router.navigate(['/home']);
   }
 
