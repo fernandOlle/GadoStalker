@@ -77,6 +77,11 @@ public class ProdutoController {
                     .build();
         }
 
+        if (produtos.isEmpty())
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+
         List<ProdutoDTO> produtoDTOs = new ArrayList<>();
 
         for (Produto produto : produtos) {
@@ -103,6 +108,11 @@ public class ProdutoController {
                     .build();
         }
 
+        if (produto == null)
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+            
         ProdutoDTO produtoDTO = new ProdutoDTO(produto);
 
         return Response
