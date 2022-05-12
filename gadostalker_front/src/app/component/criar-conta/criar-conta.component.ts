@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
-import { UtilsService } from '../../services/utils.service'
+import { UtilsService } from '../../services/utils.service';
+import { ApiService } from '../../services/api.service';
+import { Router } from '@angular/router';
+
 const ARROW_RIGHT_ICON =
   `
   <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -38,7 +41,7 @@ const EYE_OFF_ICON =
 `;
 
 interface Question {
-  value: number;
+  value: string;
   viewValue: string;
 }
 
@@ -54,16 +57,18 @@ export class CriarContaComponent implements OnInit {
   formUsuario: any;
   formFazenda: any;
   questions: Question[] = [
-    {value: 0, viewValue: 'Nome primeira professora?'},
-    {value: 1, viewValue: 'Qual é a sua comida favorita?'},
-    {value: 2, viewValue: 'Nome do seu primeiro animal de estimação?'},
-    {value: 3, viewValue: 'Nome do seu melhor amigo de infância?'},
+    {value: 'PROFESSORA', viewValue: 'Nome primeira professora?'},
+    {value: 'COMIDA', viewValue: 'Qual é a sua comida favorita?'},
+    {value: 'ANIMAL', viewValue: 'Nome do seu primeiro animal de estimação?'},
+    {value: 'AMIGO', viewValue: 'Nome do seu melhor amigo de infância?'},
   ];
   constructor(
     iconRegistry: MatIconRegistry, 
     sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
     private utilsService: UtilsService,
+    private api: ApiService,
+    private router: Router,
   ) { 
     iconRegistry.addSvgIconLiteral('arrow-right', sanitizer.bypassSecurityTrustHtml(ARROW_RIGHT_ICON));
     iconRegistry.addSvgIconLiteral('arrow-left', sanitizer.bypassSecurityTrustHtml(ARROW_LEFT_ICON));
@@ -75,14 +80,14 @@ export class CriarContaComponent implements OnInit {
 
     this.formUsuario = this.formBuilder.group({
       cargo: new FormControl('0', Validators.required),
-      cpf: new FormControl('', [Validators.required, Validators.pattern('[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}|\\d{2}.\\d{3}.\\d{3}\\/\\d{4}\\-\\d{2}'), utilsService.formBuilderCpfCnpj()]),
       nome: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(60), Validators.pattern('[A-Za-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ.\-\/&_-]+\\s+[A-Za-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ.\-\/&\\s]{3,}')]),
-      email: new FormControl('', [Validators.required, Validators.email]),
       telefone: new FormControl('', [Validators.required]),
       senha,
       confirmaSenha,
-      perguntaSeguranca: new FormControl('', Validators.required),
-      respostaSeguranca: new FormControl('', Validators.required),
+      pergunta: new FormControl('', Validators.required),
+      resposta: new FormControl('', Validators.required),
+      cpf: new FormControl('', [Validators.required, Validators.pattern('[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}|\\d{2}.\\d{3}.\\d{3}\\/\\d{4}\\-\\d{2}'), utilsService.formBuilderCpfCnpj()]),
+      email: new FormControl('', [Validators.required, Validators.email]),
     });
     this.formFazenda = this.formBuilder.group({
       sncr: new FormControl('', Validators.required),
@@ -115,9 +120,21 @@ export class CriarContaComponent implements OnInit {
     }
   }
 
-  criarConta(){
-    console.log(this.formUsuario);
-    console.log(this.formFazenda);
+  async criarConta(tipo: String){
+    if(tipo == 'usuarioComum'){
+      let json = this.formUsuario.value;
+      delete json.cargo;
+      delete json.confirmaSenha;
+      json.cpf = json.cpf.replaceAll('.', '').replaceAll('-', '');
+      this.api.cadastroUsuarioComum(json).subscribe(
+        resposta => {console.log(resposta)}
+      );
+      //this.router.navigate(['/home']);
+    }
+    else if(tipo == 'proprietario'){
+      console.log(this.formFazenda);
+    }
+   
   }
 
 }
