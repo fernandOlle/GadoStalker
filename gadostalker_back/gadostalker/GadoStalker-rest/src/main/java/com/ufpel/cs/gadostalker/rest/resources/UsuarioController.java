@@ -59,6 +59,7 @@ public class UsuarioController {
 
         UsuarioDTO usuarioDto = new UsuarioDTO(); 
         usuarioDto.cpf = usuarioLogado.getCpf();
+        usuarioDto.tipoUsuario = usuarioLogado.getTipoUsuario();
         
         return Response
                 .ok(usuarioDto)
