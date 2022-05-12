@@ -58,12 +58,12 @@ public class ProdutoController {
                 .build();
     }
 
-    @GET
+    @POST
     @Path("/consultarPorTipo")
     @Produces({MediaType.APPLICATION_JSON})
     public Response consultarProdutoPorTipo(ProdutoDTO produtoDTO) {
         
-        TypedQuery<Produto> p = em.createQuery("select p from Produto p where p.tipo = :tipo and p.fazenda = :fazenda", Produto.class)
+        TypedQuery<Produto> p = em.createQuery("select p from Produto p where p.tipo = :tipo and p.fazenda.SNCR = :fazenda", Produto.class)
                 .setParameter("tipo", produtoDTO.tipo)
                 .setParameter("fazenda", produtoDTO.fazenda);
 

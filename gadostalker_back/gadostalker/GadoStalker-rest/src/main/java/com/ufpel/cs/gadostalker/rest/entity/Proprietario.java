@@ -34,7 +34,6 @@ public class Proprietario extends Usuario implements Serializable {
     
     public Proprietario(UsuarioDTO usuarioDTO) {
         super(usuarioDTO);
-        this.fazendas.add(MapperGodClass.convertFazendaDtoToEntity(usuarioDTO.fazendas.get(0)));
     }
 
     public Proprietario(String nome, String telefone, String senha, 

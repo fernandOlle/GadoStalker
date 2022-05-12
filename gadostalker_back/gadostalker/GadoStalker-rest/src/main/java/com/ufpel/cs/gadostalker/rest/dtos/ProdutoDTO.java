@@ -28,6 +28,10 @@ public class ProdutoDTO {
     
     @XmlElement
     public BigDecimal quantidade;
+    
+    public ProdutoDTO(){
+        
+    }
    
     public ProdutoDTO(Produto produto) {
         this.id = produto.getId();
