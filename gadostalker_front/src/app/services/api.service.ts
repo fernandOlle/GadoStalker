@@ -13,8 +13,11 @@ export class ApiService {
 
   cadastroUsuarioComum(body: any){
     let url = 'http://localhost:8080/GadoStalker-rest/resources/usuario/cadastro/uc';
-    //se quiser passar headers usar o base service 
-    //return this.http.post(url, body, this.BS.getHeaders()).pipe(take(1));
+    return this.http.post(url, body).pipe(take(1));
+  }
+
+  cadastroProprietario(body: any){
+    let url = 'http://localhost:8080/GadoStalker-rest/resources/usuario/cadastro/prop';
     return this.http.post(url, body).pipe(take(1));
   }
 

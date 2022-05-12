@@ -113,7 +113,7 @@
               *ngIf="formUsuario.controls.cargo.value == 0" [disabled]="formUsuario.invalid">Próximo <mat-icon [svgIcon]="'arrow-right'"></mat-icon>
             </button>
             <button mat-raised-button class="btn-proximo" (click)="criarConta('usuarioComum')"
-              *ngIf="formUsuario.controls.cargo.value == 2" [disabled]="!formUsuario.invalid">Criar Conta <mat-icon [svgIcon]="'check'"></mat-icon>
+              *ngIf="formUsuario.controls.cargo.value == 2" [disabled]="formUsuario.invalid">Criar Conta <mat-icon [svgIcon]="'check'"></mat-icon>
             </button>
           </div>
         </div>
@@ -124,15 +124,15 @@
           <div class="field">
             <mat-form-field>
               <mat-label>SNCR</mat-label>
-              <input matInput required formControlName="sncr" mask="00.000.000.000-0">
-              <mat-error *ngIf="formFazenda.get('sncr').hasError('required')">Insira o SNCR!</mat-error>
+              <input matInput required formControlName="SNCR" mask="00.000.000.000-0">
+              <mat-error *ngIf="formFazenda.get('SNCR').hasError('required')">Insira o SNCR!</mat-error>
             </mat-form-field>
           </div>
           <div class="field">
             <mat-form-field>
               <mat-label>Nome do Imóvel Rural</mat-label>
-              <input matInput required formControlName="nomeImovelRural">
-              <mat-error *ngIf="formFazenda.get('nomeImovelRural').hasError('required')">Insira o nome do imóvel rural!</mat-error>
+              <input matInput required formControlName="nome">
+              <mat-error *ngIf="formFazenda.get('nome').hasError('required')">Insira o nome do imóvel rural!</mat-error>
             </mat-form-field>
           </div>
           <div class="field">

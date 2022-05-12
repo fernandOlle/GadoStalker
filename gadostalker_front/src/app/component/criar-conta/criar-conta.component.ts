@@ -90,8 +90,8 @@ export class CriarContaComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
     });
     this.formFazenda = this.formBuilder.group({
-      sncr: new FormControl('', Validators.required),
-      nomeImovelRural: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(60), Validators.pattern('[A-Za-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ.\-\/&_-]+\\s+[A-Za-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ.\-\/&\\s]{3,}')]),
+      SNCR: new FormControl('', Validators.required),
+      nome: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(60), Validators.pattern('[A-Za-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ.\-\/&_-]+\\s+[A-Za-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ.\-\/&\\s]{3,}')]),
       email: new FormControl('', [Validators.required, Validators.email]),
       telefone: new FormControl('', [Validators.required]),
     });
@@ -121,18 +121,21 @@ export class CriarContaComponent implements OnInit {
   }
 
   async criarConta(tipo: String){
+    let json = this.formUsuario.value;
+    delete json.cargo;
+    delete json.confirmaSenha;
+    json.cpf = json.cpf.replaceAll('.', '').replaceAll('-', '');
     if(tipo == 'usuarioComum'){
-      let json = this.formUsuario.value;
-      delete json.cargo;
-      delete json.confirmaSenha;
-      json.cpf = json.cpf.replaceAll('.', '').replaceAll('-', '');
       this.api.cadastroUsuarioComum(json).subscribe(
         resposta => {console.log(resposta)}
       );
       //this.router.navigate(['/home']);
     }
     else if(tipo == 'proprietario'){
-      console.log(this.formFazenda);
+      json.fazendas = [this.formFazenda.value];
+      this.api.cadastroProprietario(json).subscribe(
+        resposta => {console.log(resposta)}
+      );
     }
    
   }
