@@ -1,7 +1,6 @@
 package com.ufpel.cs.gadostalker.rest.entity;
 
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
-import com.ufpel.cs.gadostalker.rest.mapper.MapperGodClass;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
