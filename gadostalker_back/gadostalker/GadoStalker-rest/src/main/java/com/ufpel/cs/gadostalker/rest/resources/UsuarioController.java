@@ -78,8 +78,11 @@ public class UsuarioController {
                 try {
                     usuarioDTO.tipoUsuario=(Usuario.TipoUsuario.PROPRIETARIO);
                     Proprietario proprietario = new Proprietario(usuarioDTO);
-                    
+                    proprietario.setFazendas(Arrays.asList(new Fazenda(usuarioDTO.fazendas.get(0))));
                     em.persist(proprietario);
+                    Fazenda f = proprietario.getFazendas().get(0);
+                    f.setProprietario(proprietario);
+                    em.merge(f);
                 } catch (PersistenceException ex) {
                     return Response
                             .ok()
