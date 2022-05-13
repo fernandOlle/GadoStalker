@@ -59,6 +59,7 @@ public class UsuarioController {
 
         UsuarioDTO usuarioDto = new UsuarioDTO(); 
         usuarioDto.cpf = usuarioLogado.getCpf();
+        usuarioDto.tipoUsuario = usuarioLogado.getTipoUsuario();
         
         return Response
                 .ok(usuarioDto)
@@ -122,13 +123,14 @@ public class UsuarioController {
                 break;
                 
             default:
-                //TODO;
+                return Response
+                            .status(Response.Status.BAD_REQUEST)
+                            .build();
         }
 
-
         return Response
+                .ok(true)
                 .status(Response.Status.CREATED)
-                
                 .build();
     }
 
