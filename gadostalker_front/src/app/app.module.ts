@@ -19,7 +19,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSliderModule } from '@angular/material/slider';
-import { MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 import { RecuperarSenhaComponent } from './component/recuperar-senha/recuperar-senha.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
@@ -72,7 +73,7 @@ const maskConfig: Partial<IConfig> = {
     ModalRegistrarVendaComponent,
     CatalogoComponent,
     ListaProdutoComponent,
-    NovoProdutoComponent
+    NovoProdutoComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,9 +98,10 @@ const maskConfig: Partial<IConfig> = {
     MatSlideToggleModule,
     MatDatepickerModule,
     MatSliderModule,
+    MatSnackBarModule,
     NgxMaskModule.forRoot(maskConfig),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
