@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { interval, take, lastValueFrom } from 'rxjs';
+import { interval, take, lastValueFrom, catchError , of} from 'rxjs';
 import { BaseService } from './base.service';
 @Injectable({
   providedIn: 'root',
@@ -11,23 +11,31 @@ export class ApiService {
   cadastroUsuarioComum(body: any) {
     let url =
       'http://localhost:8080/GadoStalker-rest/resources/usuario/cadastro/uc';
-    return this.http.post(url, body).pipe(take(1));
+    return this.http.post(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
   }
 
   cadastroProprietario(body: any) {
     let url =
       'http://localhost:8080/GadoStalker-rest/resources/usuario/cadastro/prop';
-    return this.http.post(url, body).pipe(take(1));
+    return this.http.post(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
   }
 
   login(body: any) {
     let url = 'http://localhost:8080/GadoStalker-rest/resources/usuario/login';
-    return this.http.post(url, body).pipe(take(1));
+    return this.http.post(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
   }
 
   recuperarSenha(body: any) {
     let url =
       'http://localhost:8080/GadoStalker-rest/resources/usuario/recuperarSenha';
-    return this.http.post(url, body).pipe(take(1));
+    return this.http.post(url, body).pipe(take(1) , catchError(error => {
+      return of(0);
+    }));
   }
 }

@@ -11,6 +11,7 @@ import { UtilsService } from '../../services/utils.service';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 const ARROW_RIGHT_ICON = `
   <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -69,7 +70,8 @@ export class CriarContaComponent implements OnInit {
     private utilsService: UtilsService,
     private api: ApiService,
     private router: Router,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private localStorage: LocalStorageService,
   ) {
     iconRegistry.addSvgIconLiteral(
       'arrow-right',
@@ -170,14 +172,30 @@ export class CriarContaComponent implements OnInit {
     if (tipo == 'usuarioComum') {
       this.api.cadastroUsuarioComum(json).subscribe((resposta) => {
         resposta
-          ? this.router.navigate(['/home'])
+          ? ( 
+            this.api.login({email: json.email, senha: json.senha}).subscribe((resposta) => {
+            resposta
+              ? (
+                this.localStorage.set('credenciais', resposta),
+                this.router.navigate(['/home'])
+                )
+              : this.openSnackBar('Falha ao redirecionar, tente novamente mais tarde!', 'Fechar');
+          }))
           : this.openSnackBar('Falha ao criar conta', 'Fechar');
       });
     } else if (tipo == 'proprietario') {
       json.fazendas = [this.formFazenda.value];
       this.api.cadastroProprietario(json).subscribe((resposta) => {
         resposta
-          ? this.router.navigate(['/home'])
+          ? ( 
+            this.api.login({email: json.email, senha: json.senha}).subscribe((resposta) => {
+            resposta
+              ? ( 
+                this.localStorage.set('credenciais', resposta),
+                this.router.navigate(['/home'])
+                )
+              : this.openSnackBar('Falha ao redirecionar, tente novamente mais tarde!', 'Fechar');
+          }))
           : this.openSnackBar('Falha ao criar conta', 'Fechar');
       });
     }

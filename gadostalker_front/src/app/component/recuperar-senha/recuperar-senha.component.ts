@@ -12,7 +12,7 @@ import { ApiService } from '../../services/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface Question {
-  value: number;
+  value: string;
   viewValue: string;
 }
 const EYE_ICON = `
@@ -36,10 +36,10 @@ export class RecuperarSenhaComponent implements OnInit {
   hide = true;
   formRecuperarSenha: any;
   questions: Question[] = [
-    { value: 0, viewValue: 'Nome primeira professora?' },
-    { value: 1, viewValue: 'Qual é a sua comida favorita?' },
-    { value: 2, viewValue: 'Nome do seu primeiro animal de estimação?' },
-    { value: 3, viewValue: 'Nome do seu melhor amigo de infância?' },
+    { value: 'PROFESSORA', viewValue: 'Nome primeira professora?' },
+    { value: 'COMIDA', viewValue: 'Qual é a sua comida favorita?' },
+    { value: 'ANIMAL', viewValue: 'Nome do seu primeiro animal de estimação?' },
+    { value: 'AMIGO', viewValue: 'Nome do seu melhor amigo de infância?' },
   ];
   constructor(
     private formBuilder: FormBuilder,
@@ -81,7 +81,7 @@ export class RecuperarSenhaComponent implements OnInit {
     let json = this.formRecuperarSenha.value;
     delete json.confirmaSenha;
     this.api.recuperarSenha(json).subscribe((resposta) => {
-      resposta
+      (resposta != 0)
         ? this.openSnackBar('Senha alterada com sucesso', 'Fechar')
         : this.openSnackBar(
             'Erro ao alterar a senha, confira os dados informados',

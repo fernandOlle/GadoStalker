@@ -3,6 +3,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
 import { ModalCriarAnuncioComponent } from '../gerenciar-anuncios/components/modal-criar-anuncio/modal-criar-anuncio.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 const MENU_ICON =
   `
@@ -66,6 +67,7 @@ export class AreaProdutorComponent implements OnInit {
     iconRegistry: MatIconRegistry, 
     sanitizer: DomSanitizer,
     public dialog: MatDialog,
+    private router: Router,
   ) { 
     iconRegistry.addSvgIconLiteral('menu', sanitizer.bypassSecurityTrustHtml(MENU_ICON));
     iconRegistry.addSvgIconLiteral('Dashboard', sanitizer.bypassSecurityTrustHtml(DASHBOARD_ICON));
@@ -76,7 +78,7 @@ export class AreaProdutorComponent implements OnInit {
     iconRegistry.addSvgIconLiteral('download', sanitizer.bypassSecurityTrustHtml(DOWNLOAD_ICON));
   }
   Options: string[] = ['Dashboard', 'Anúncios', 'Catálogo de Produtos', 'Fazendas', 'Funcionários'];
-
+  pageAtual: string = 'Dashboard'
   ngOnInit(): void {
   }
 
@@ -86,5 +88,13 @@ export class AreaProdutorComponent implements OnInit {
       autoFocus: false,
       restoreFocus: false
     });
+  }
+  
+  voltarHome(){
+    this.router.navigate(['/home'])
+  }
+
+  changePageSelected(pageSelected: any){
+    this.pageAtual = pageSelected;
   }
 }

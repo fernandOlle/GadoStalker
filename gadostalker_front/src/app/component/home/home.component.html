@@ -10,8 +10,8 @@
             </form>
         </div>
     
-        <div class="fazendeiro-container">
-            <button mat-raised-button class="btn-produtor">Área do Produtor</button>
+        <div class="fazendeiro-container" *ngIf="usuario.tipoUsuario == 'PROPRIETARIO'">
+            <button mat-raised-button class="btn-produtor" (click)="redirecionar()">Área do Produtor</button>
         </div>
     </div>
     
