@@ -4,6 +4,7 @@ import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.ProdutoDTO;
 import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entity.Produto;
+import com.ufpel.cs.gadostalker.rest.entity.Usuario;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
@@ -19,6 +20,9 @@ import javax.ws.rs.core.Response;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -213,6 +217,24 @@ public class ProdutoController {
         }
 
         return Response
+                .status(Response.Status.ACCEPTED)
+                .build();
+    }
+    
+    @GET
+    @Path("/getAllTiposProdutos")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getAllTiposProdutos() {
+        Map<Produto.TipoProdutoEnum, String> mapEnumStringPergunta = new HashMap<>();
+
+        Arrays.asList(Produto.TipoProdutoEnum.values())
+                .stream()
+                .forEach(valueEnum -> {
+                    mapEnumStringPergunta.put(valueEnum, valueEnum.getTipo());
+                });
+
+        return Response
+                .ok(mapEnumStringPergunta)
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
