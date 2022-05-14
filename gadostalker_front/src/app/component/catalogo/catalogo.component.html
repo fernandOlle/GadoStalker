@@ -6,7 +6,7 @@
           [ngClass]="[produto.enabled ? '' : 'card-disabled']"
           class="card-produto"
           *ngFor="let produto of catalogo"
-          (click)="openModal()"
+          (click)="openModal(produto)"
         >
           <img
             src="../../../assets/{{ produto.nome }}.png"

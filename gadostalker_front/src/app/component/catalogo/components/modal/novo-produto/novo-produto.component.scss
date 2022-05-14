@@ -1,6 +1,5 @@
 .header-modal {
   display: flex;
-  width: 300px;
   h2 {
     margin-top: 0.5em;
     margin-bottom: -0.6em;
@@ -27,6 +26,7 @@
   form {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
   }
 }
 

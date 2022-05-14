@@ -21,6 +21,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 import { RecuperarSenhaComponent } from './component/recuperar-senha/recuperar-senha.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
@@ -99,6 +100,7 @@ const maskConfig: Partial<IConfig> = {
     MatDatepickerModule,
     MatSliderModule,
     MatSnackBarModule,
+    MatTooltipModule,
     NgxMaskModule.forRoot(maskConfig),
   ],
   providers: [],

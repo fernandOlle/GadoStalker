@@ -9,17 +9,15 @@
 <hr />
 <div class="content-modal" mat-dialog-container>
   <form>
-    <mat-form-field class="inputs-form fonts-sizes col-xl-8">
+    <section class="inputs-form fonts-sizes col-xl-8">
+    <mat-form-field class="col-xl-8" style="width: 100%;">
       <mat-label>Nome do produto</mat-label>
       <input matInput />
     </mat-form-field>
-    <section class="fonts-sizes col-xl-4">
-      <mat-checkbox class="example-margin" [(ngModel)]="checked"
-        >Especializado</mat-checkbox
-      >
-    </section>
-    <section class="inputs-form fonts-sizes col-xl-6">
-      <mat-form-field class="inputs-form">
+   </section>
+
+    <section class="inputs-form fonts-sizes col-xl-8">
+      <mat-form-field class="inputs-form" style="width: 65%; margin-right: 15px;">
         <mat-label>Fazenda Origem</mat-label>
         <mat-select>
           <mat-option value="option1">Olieveiras</mat-option>
@@ -28,10 +26,8 @@
           <mat-option value="option3">São Lourenço</mat-option>
         </mat-select>
       </mat-form-field>
-    </section>
-    ㅤ
-    <section class="inputs-form fonts-sizes col-xl-2">
-      <mat-form-field class="inputs-form fonts-sizes">
+
+      <mat-form-field class="inputs-form fonts-sizes" style="width: 30%;">
         <mat-label>Quantidade</mat-label>
         <input matInput />
       </mat-form-field>
