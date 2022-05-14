@@ -1,13 +1,16 @@
 package com.ufpel.cs.gadostalker.rest.resources;
 
+import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entity.Funcionario;
 import com.ufpel.cs.gadostalker.rest.entity.Proprietario;
 import com.ufpel.cs.gadostalker.rest.entity.Usuario;
 import com.ufpel.cs.gadostalker.rest.entity.UsuarioComum;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -64,6 +67,45 @@ public class UsuarioController {
         return Response
                 .ok(usuarioDto)
                 .status(Response.Status.ACCEPTED)
+                .build();
+    }
+    
+    @POST
+    @Path("/getFazendasProprietario")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getFazendasProprietario(UsuarioDTO usuario) {
+        TypedQuery<Fazenda> fazendasQuery = em.createQuery("select f from Proprietario p inner join p.fazendas f where p.cpf = :cpf", Fazenda.class);
+        fazendasQuery.setParameter("cpf", usuario.cpf);
+        
+        List<Fazenda> fazendas; 
+        
+        try {
+            fazendas = fazendasQuery.getResultList();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+        
+        if (fazendas.isEmpty()) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+        
+        List<FazendaDTO> fazendaDTOs = new ArrayList<>();
+        
+        fazendas.forEach(f ->{
+                    FazendaDTO fdtos = new FazendaDTO();
+                    fdtos.SNCR = f.getSNCR();
+                    fdtos.nome = f.getNome();
+                    fazendaDTOs.add(fdtos);
+                });
+        
+        return Response
+                .ok(fazendaDTOs)
+                .status(Response.Status.FOUND)
                 .build();
     }
 
