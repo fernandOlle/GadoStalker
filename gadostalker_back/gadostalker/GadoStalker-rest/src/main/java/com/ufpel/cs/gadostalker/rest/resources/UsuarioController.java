@@ -72,13 +72,12 @@ public class UsuarioController {
                 .build();
     }
     
-    @POST
-    @Path("/getFazendasProprietario")
-    @Consumes({MediaType.APPLICATION_JSON})
+    @GET
+    @Path("/getFazendasProprietario/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getFazendasProprietario(UsuarioDTO usuario) {
+    public Response getFazendasProprietario(@PathParam("cpf") String cpf) {
         TypedQuery<Fazenda> fazendasQuery = em.createQuery("select f from Proprietario p inner join p.fazendas f where p.cpf = :cpf", Fazenda.class);
-        fazendasQuery.setParameter("cpf", usuario.cpf);
+        fazendasQuery.setParameter("cpf", cpf);
         
         List<Fazenda> fazendas; 
         
