@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -225,13 +227,11 @@ public class ProdutoController {
     @Path("/getAllTiposProdutos")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllTiposProdutos() {
-        Map<Produto.TipoProdutoEnum, String> mapEnumStringPergunta = new HashMap<>();
+        Map<Produto.TipoProdutoEnum, String> mapEnumStringPergunta;
 
-        Arrays.asList(Produto.TipoProdutoEnum.values())
+        mapEnumStringPergunta = Arrays.asList(Produto.TipoProdutoEnum.values())
                 .stream()
-                .forEach(valueEnum -> {
-                    mapEnumStringPergunta.put(valueEnum, valueEnum.getTipo());
-                });
+                .collect(Collectors.toMap(Function.identity(), v -> v.getTipo()));
 
         return Response
                 .ok(mapEnumStringPergunta)

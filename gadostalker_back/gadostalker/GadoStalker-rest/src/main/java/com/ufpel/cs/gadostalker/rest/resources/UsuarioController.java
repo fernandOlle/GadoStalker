@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
@@ -181,13 +183,11 @@ public class UsuarioController {
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllPerguntas() {
 
-        Map<Usuario.PerguntaSegurancaEnum, String> mapEnumStringPergunta = new HashMap<>();
+        Map<Usuario.PerguntaSegurancaEnum, String> mapEnumStringPergunta;
 
-        Arrays.asList(Usuario.PerguntaSegurancaEnum.values())
+        mapEnumStringPergunta = Arrays.asList(Usuario.PerguntaSegurancaEnum.values())
                 .stream()
-                .forEach(valueEnum -> {
-                    mapEnumStringPergunta.put(valueEnum, valueEnum.getPergunta());
-                });
+                .collect(Collectors.toMap(Function.identity(), v -> v.getPergunta()));
 
         return Response
                 .ok(mapEnumStringPergunta)
