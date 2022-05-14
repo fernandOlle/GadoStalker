@@ -1,5 +1,6 @@
 package com.ufpel.cs.gadostalker.rest.resources;
 
+import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.ProdutoDTO;
 import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entity.Produto;
@@ -57,7 +58,45 @@ public class ProdutoController {
                 .status(Response.Status.CREATED)
                 .build();
     }
-
+    
+    @POST
+    @Path("/getAllProdutosFazenda")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getAllProdutosFazenda(FazendaDTO fazenda) {
+        TypedQuery<Produto> produtosQuery = em.createQuery("select p from Fazenda f inner join f.produtos p where f.SNCR = :sncr", Produto.class);
+        produtosQuery.setParameter("sncr", fazenda.SNCR);
+        
+        List<Produto> produtos;
+        
+        try {
+            produtos = produtosQuery.getResultList();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+        
+        if (produtos.isEmpty()) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+        
+        List<ProdutoDTO> produtoDTOs = new ArrayList<>();
+        
+        produtos.forEach(p -> {
+            ProdutoDTO pdto = new ProdutoDTO();
+            pdto.tipo = p.getTipo();
+            produtoDTOs.add(pdto);
+        });
+        
+        return Response
+                .ok(produtoDTOs)
+                .status(Response.Status.FOUND)
+                .build();
+    }
+    
     @POST
     @Path("/consultarPorTipo")
     @Produces({MediaType.APPLICATION_JSON})
