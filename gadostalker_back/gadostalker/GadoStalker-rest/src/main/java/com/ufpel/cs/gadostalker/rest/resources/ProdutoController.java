@@ -64,7 +64,7 @@ public class ProdutoController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllProdutosFazenda(FazendaDTO fazenda) {
-        TypedQuery<Produto> produtosQuery = em.createQuery("select p from Fazenda f inner join f.produtos p where f.SNCR = :sncr", Produto.class);
+        TypedQuery<Produto> produtosQuery = em.createNamedQuery("Fazenda.getAllProdutos", Produto.class);
         produtosQuery.setParameter("sncr", fazenda.SNCR);
         
         List<Produto> produtos;
@@ -102,9 +102,9 @@ public class ProdutoController {
     @Produces({MediaType.APPLICATION_JSON})
     public Response consultarProdutoPorTipo(ProdutoDTO produtoDTO) {
         
-        TypedQuery<Produto> p = em.createQuery("select p from Produto p where p.tipo = :tipo and p.fazenda.SNCR = :fazenda", Produto.class)
+        TypedQuery<Produto> p = em.createNamedQuery("Fazenda.getAllProdutosByTipo", Produto.class)
                 .setParameter("tipo", produtoDTO.tipo)
-                .setParameter("fazenda", produtoDTO.fazenda);
+                .setParameter("sncr", produtoDTO.fazenda);
 
         List<Produto> produtos;
         try {
