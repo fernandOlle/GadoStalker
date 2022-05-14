@@ -9,7 +9,6 @@ import com.ufpel.cs.gadostalker.rest.entity.Usuario;
 import com.ufpel.cs.gadostalker.rest.entity.UsuarioComum;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -106,7 +105,7 @@ public class UsuarioController {
         
         return Response
                 .ok(fazendaDTOs)
-                .status(Response.Status.FOUND)
+                .status(Response.Status.OK)
                 .build();
     }
 

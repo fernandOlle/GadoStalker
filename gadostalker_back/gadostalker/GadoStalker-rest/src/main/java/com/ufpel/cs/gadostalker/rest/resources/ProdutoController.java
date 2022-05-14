@@ -4,7 +4,6 @@ import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.ProdutoDTO;
 import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entity.Produto;
-import com.ufpel.cs.gadostalker.rest.entity.Usuario;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
@@ -21,7 +20,6 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -99,7 +97,7 @@ public class ProdutoController {
         
         return Response
                 .ok(produtoDTOs)
-                .status(Response.Status.FOUND)
+                .status(Response.Status.OK)
                 .build();
     }
     
@@ -135,7 +133,7 @@ public class ProdutoController {
 
         return Response
                 .ok(produtoDTOs)
-                .status(Response.Status.FOUND)
+                .status(Response.Status.OK)
                 .build();
     }
 
@@ -162,7 +160,7 @@ public class ProdutoController {
 
         return Response
                 .ok(produtoDTO)
-                .status(Response.Status.FOUND)
+                .status(Response.Status.OK)
                 .build();
     }
 
