@@ -5,6 +5,7 @@ import { NovoProdutoComponent } from './novo-produto/novo-produto.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import { ApiService } from '../../../../services/api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const EDIT_ICON = `
 <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -35,6 +36,7 @@ export class ListaProdutoComponent implements OnInit {
   productKey: any;
   produtos: Produto[] | any = [];
   fazendas: any;
+  produtoCadastrado: any;
   constructor(
     public dialogRef: MatDialogRef<ListaProdutoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -42,6 +44,7 @@ export class ListaProdutoComponent implements OnInit {
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
     private api: ApiService,
+    private _snackBar: MatSnackBar
   ) {
     iconRegistry.addSvgIconLiteral(
       'edit',
@@ -83,21 +86,43 @@ export class ListaProdutoComponent implements OnInit {
       restoreFocus: false,
     });
     dialog.afterClosed().subscribe(ret => {
-      if(ret)
+      if(ret){
+        this.produtoCadastrado = ret;
         this.produtos.push(ret);
+      }
     });
  
   }
 
   closeModal(): void {
-    this.dialogRef.close();
+    if(this.produtoCadastrado && this.produtos.length !== 0)
+      this.dialogRef.close(this.produtoSelected);
+    else if(this.produtos.length === 0)
+      this.dialogRef.close([this.produtoSelected, 'vazio']);
+    else
+      this.dialogRef.close();
   }
 
   openModalEditar() {
 
   }
 
+  excluirProduto(id : any){
+    this.api.excluirProdutoById(id).subscribe((resposta) => {
+      (resposta != 0)
+        ? this.produtos.splice(this.produtos.findIndex((produto: { id: number; }) => produto.id === id), 1)
+        : this.openSnackBar(
+            'Erro ao excluir produto',
+            'Fechar'
+          );
+    });
+  }
+
   searchFazendaName(produto: any){
     return this.fazendas.find((a: { SNCR: any; nome:any }) => a.SNCR === produto.fazenda).nome;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }

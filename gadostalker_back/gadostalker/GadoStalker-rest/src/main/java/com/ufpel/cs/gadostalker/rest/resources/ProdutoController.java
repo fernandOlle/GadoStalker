@@ -50,13 +50,13 @@ public class ProdutoController {
 
         try {
             p.setFazenda(em.find(Fazenda.class, produtoDTO.fazenda));
-            em.persist(p);
+            em.persist(p);      
         } catch (PersistenceException ex) {
             return Response
                 .status(Response.Status.BAD_REQUEST)
                 .build();
         }
-
+        em.flush();
         produtoDTO.id = p.getId();
 
         return Response
@@ -92,7 +92,7 @@ public class ProdutoController {
 
         mapEnumStringPergunta = produtos
                 .stream()
-                .collect(Collectors.toMap(k -> k.getTipo(), v -> v.getTipo().getTipo()));
+                .collect(Collectors.toMap(k -> k.getTipo(), v -> v.getTipo().getTipo(),(k1,k2)->k1));
         
         return Response
                 .ok(mapEnumStringPergunta)

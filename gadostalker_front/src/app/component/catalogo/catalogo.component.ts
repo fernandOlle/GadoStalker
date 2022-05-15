@@ -36,6 +36,14 @@ export class CatalogoComponent implements OnInit {
       maxWidth: 800,
       restoreFocus: false,
     });
+    dialog.afterClosed().subscribe(ret => {
+      if(ret){
+        if(typeof(ret) != 'string')
+          this.catalogo.find((produto: { nome: any; }) => produto.nome === ret[0]).enabled = false;
+        else
+          this.catalogo.find((produto: { nome: any; }) => produto.nome === ret).enabled = true;
+      }
+    });
   }
 
   getCatalogo() {

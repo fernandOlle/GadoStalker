@@ -20,7 +20,7 @@
           </div>
           <div class="icons">
               <mat-icon [svgIcon]="'edit'" matTooltip="Editar produto"></mat-icon> 
-              <mat-icon [svgIcon]="'delete'" matTooltip="Excluir produto"></mat-icon> 
+              <mat-icon [svgIcon]="'delete'" matTooltip="Excluir produto" (click)="excluirProduto(produto.id)"></mat-icon> 
           </div>
       </div>
       <mat-divider></mat-divider>

@@ -33,7 +33,7 @@ export class NovoProdutoComponent implements OnInit {
       nome: new FormControl('', Validators.required),
       tipo: new FormControl(this.tipo, Validators.required),
       fazenda: new FormControl('', Validators.required),
-      quantidade: new FormControl('', Validators.required)
+      quantidade: new FormControl('', [Validators.required, Validators.min(1)])
     });
   }
 
@@ -48,8 +48,7 @@ export class NovoProdutoComponent implements OnInit {
     this.api.adicionarProduto(json).subscribe((resposta) => {
       (resposta != 0)
         ? (
-          this.produto = resposta,
-          this.openSnackBar('Produto cadastrado com sucesso', 'Fechar')
+          this.produto = resposta
           )
         : (this.openSnackBar('Erro ao cadastrar o produto','Fechar'))
         this.dialogRef.close(this.produto);
