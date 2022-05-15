@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NovoProdutoComponent } from './novo-produto/novo-produto.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
+import { ApiService } from '../../../../services/api.service';
 
 const EDIT_ICON = `
 <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -17,6 +18,13 @@ const DELETE_ICON = `
 </svg>
 `;
 
+interface Produto {
+  id: String;
+  nome: String,
+  fazenda: String,
+  quantidade: Number,
+}
+
 @Component({
   selector: 'app-lista-produto',
   templateUrl: './lista-produto.component.html',
@@ -24,12 +32,16 @@ const DELETE_ICON = `
 })
 export class ListaProdutoComponent implements OnInit {
   produtoSelected: any;
+  productKey: any;
+  produtos: Produto[] | any = [];
+  fazendas: any;
   constructor(
     public dialogRef: MatDialogRef<ListaProdutoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
+    private api: ApiService,
   ) {
     iconRegistry.addSvgIconLiteral(
       'edit',
@@ -40,38 +52,27 @@ export class ListaProdutoComponent implements OnInit {
       sanitizer.bypassSecurityTrustHtml(DELETE_ICON)
     );
     this.produtoSelected = this.data.produto.nome;
+    this.fazendas = this.data.fazendas;
   }
 
   ngOnInit(): void {
+    this.api.getAllTiposProdutos().subscribe(
+      ret => {
+        this.setValue(ret);
+      }
+    );
+    this.api.getAllProdutosByTypeAndSncr(this.productKey, this.fazendas[0].SNCR)
+      .subscribe(ret => {
+        this.produtos = ret;
+      });
   }
 
-  produtos = [
-    {
-      id: 1,
-      nome: 'Feijão preto',
-      quantidade: 5,
-      fazenda: 'Fazenda Olieveiras',
-    },
-    {
-      id: 2,
-      nome: 'Feijão carioca',
-      quantidade: 4,
-      fazenda: 'Fazenda Canguçu',
-    },
-    {
-      id: 3,
-      nome: 'Feijão branco',
-      quantidade: 3,
-      fazenda: 'Fazenda Cruz Alta',
-    },
-    {
-      id: 4,
-      nome: 'Feijão vermelho',
-      quantidade: 2,
-      fazenda: 'Fazenda São Lourenço',
-    },
-    
-  ];
+  setValue(ret: any){
+    let values = Object.keys(ret);
+    values.find(produtoKey => {
+      ret[produtoKey] === this.produtoSelected ? this.productKey = produtoKey : null;
+    });
+  }
 
   openModal() {
     const dialog = this.dialog.open(NovoProdutoComponent, {
@@ -87,7 +88,7 @@ export class ListaProdutoComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  openModalEditar(){
+  openModalEditar() {
 
   }
 }

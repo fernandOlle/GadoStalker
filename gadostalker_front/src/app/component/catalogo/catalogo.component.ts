@@ -2,6 +2,7 @@ import { ListaProdutoComponent } from './components/modal/lista-produto.componen
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-catalogo',
@@ -9,30 +10,68 @@ import { LocalStorageService } from '../../services/local-storage.service';
   styleUrls: ['./catalogo.component.scss'],
 })
 export class CatalogoComponent implements OnInit {
-  constructor(public dialog: MatDialog) {}
+  credenciais: any;
+  constructor(
+    public dialog: MatDialog,
+    private api: ApiService,
+    private localStorage: LocalStorageService,
+  ) { }
 
   ngOnInit(): void {
+    this.getCatalogo();
+    this.credenciais = this.localStorage.get('credenciais');
+    this.getAllFazendas(this.credenciais.cpf);
 
   }
 
-  catalogo = [
-    { nome: 'Feijão', enabled: false },
-    { nome: 'Alface', enabled: false },
-    { nome: 'Soja', enabled: false },
-    { nome: 'Mel', enabled: false },
-    { nome: 'Vagem', enabled: false },
-    { nome: 'Tomate', enabled: false },
-    { nome: 'Leite', enabled: false },
-  ];
+  catalogo: any = [];
+  fazendas: any = [];
+  produtosFazenda: any;
 
-  openModal(produto: any) {
-    produto.enabled = true;
+  openModal(produto: any, fazendas:any) {
     const dialog = this.dialog.open(ListaProdutoComponent, {
-      data: {produto},
+      data: { produto, fazendas},
       autoFocus: false,
       maxHeight: 700,
       maxWidth: 800,
       restoreFocus: false,
+    });
+  }
+
+  getCatalogo() {
+    this.api.getAllTiposProdutos().subscribe(
+      ret => {
+        let values = Object.values(ret);
+        values.forEach(produto => { this.catalogo.push({ nome: produto, enabled: false }) });
+      }
+    );
+  }
+
+  getAllFazendas(cpf: String) {
+    this.api.getAllFazendasByProprietarioCpf(cpf).subscribe(
+      ret => {
+        this.fazendas = ret;
+        this.getAllProdutosByFazendaSNCR(this.fazendas[0].SNCR);
+      }
+    )
+  }
+
+  getAllProdutosByFazendaSNCR(sncr: String) {
+    this.api.getAllProdutosByFazendaSNCR(sncr).subscribe(
+      ret => {
+        this.produtosFazenda = ret;
+        this.setProdutosEnable();
+      }
+    )
+  }
+
+  setProdutosEnable() {
+    let produtosFazendaRecived = Object.values(this.produtosFazenda);
+    produtosFazendaRecived.forEach((produto: any) => {
+      this.catalogo
+        .find((produtoAComparar: { nome: String, enabled: Boolean }) => { 
+          produtoAComparar.nome === produto ? produtoAComparar.enabled = true : null
+        });
     });
   }
 }

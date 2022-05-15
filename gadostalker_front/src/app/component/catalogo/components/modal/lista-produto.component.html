@@ -8,7 +8,7 @@
 </div>
 <hr />
 <div class="content-modal" mat-dialog-container>
-  <mat-selection-list #funcionario [multiple]="false">
+  <mat-selection-list #funcionario [multiple]="false" *ngIf="produtos.length > 0"> 
     <mat-list-option *ngFor="let produto of produtos" [value]="produto">
       <div class="content" (click)="openModalEditar()">
           <div class="nome-email">
@@ -26,6 +26,10 @@
       <mat-divider></mat-divider>
     </mat-list-option>
   </mat-selection-list>
+
+  <div *ngIf="produtos.length === 0">
+    <p style="text-align: center">Ainda não foram cadastrados produtos nesta categoria.</p>
+  </div>
 
   <mat-card-content>
     <div class="container-left">

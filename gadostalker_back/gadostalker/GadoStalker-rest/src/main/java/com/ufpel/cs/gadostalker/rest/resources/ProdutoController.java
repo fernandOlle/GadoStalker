@@ -4,6 +4,7 @@ import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.ProdutoDTO;
 import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entity.Produto;
+import com.ufpel.cs.gadostalker.rest.entity.Produto.TipoProdutoEnum;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
@@ -23,6 +24,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import javax.ws.rs.PUT;
 
 /**
  *
@@ -97,15 +99,15 @@ public class ProdutoController {
                 .status(Response.Status.OK)
                 .build();
     }
-    
-    @POST
-    @Path("/consultarPorTipo")
+
+    @GET
+    @Path("/consultarPorTipo/{tipo}/{sncr}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response consultarProdutoPorTipo(ProdutoDTO produtoDTO) {
+    public Response consultarProdutoPorTipo(@PathParam("tipo") TipoProdutoEnum tipo, @PathParam("sncr") String sncr) {
         
         TypedQuery<Produto> p = em.createNamedQuery("Fazenda.getAllProdutosByTipo", Produto.class)
-                .setParameter("tipo", produtoDTO.tipo)
-                .setParameter("sncr", produtoDTO.fazenda);
+                .setParameter("tipo", tipo)
+                .setParameter("sncr", sncr);
 
         List<Produto> produtos;
         try {
@@ -161,7 +163,7 @@ public class ProdutoController {
                 .build();
     }
 
-    @POST
+    @PUT
     @Path("/editar/{id}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
