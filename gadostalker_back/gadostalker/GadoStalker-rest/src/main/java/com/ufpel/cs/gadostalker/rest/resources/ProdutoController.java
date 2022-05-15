@@ -82,7 +82,7 @@ public class ProdutoController {
         
         if (produtos.isEmpty()) {
             return Response
-                    .status(Response.Status.NOT_FOUND)
+                    .ok(produtos)
                     .build();
         }
         
