@@ -36,7 +36,7 @@ public class UsuarioController {
 
     @PersistenceContext(unitName = "gadostalker")
     private EntityManager em;
-    
+
     public UsuarioController() {
     }
 
@@ -61,25 +61,25 @@ public class UsuarioController {
                     .build();
         }
 
-        UsuarioDTO usuarioDto = new UsuarioDTO(); 
+        UsuarioDTO usuarioDto = new UsuarioDTO();
         usuarioDto.cpf = usuarioLogado.getCpf();
         usuarioDto.tipoUsuario = usuarioLogado.getTipoUsuario();
-        
+
         return Response
                 .ok(usuarioDto)
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
-    
+
     @GET
     @Path("/getFazendasProprietario/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getFazendasProprietario(@PathParam("cpf") String cpf) {
         TypedQuery<Fazenda> fazendasQuery = em.createQuery("select f from Proprietario p inner join p.fazendas f where p.cpf = :cpf", Fazenda.class);
         fazendasQuery.setParameter("cpf", cpf);
-        
-        List<Fazenda> fazendas; 
-        
+
+        List<Fazenda> fazendas;
+
         try {
             fazendas = fazendasQuery.getResultList();
         } catch (Exception e) {
@@ -87,22 +87,22 @@ public class UsuarioController {
                     .status(Response.Status.NOT_FOUND)
                     .build();
         }
-        
+
         if (fazendas.isEmpty()) {
             return Response
                     .status(Response.Status.NOT_FOUND)
                     .build();
         }
-        
+
         List<FazendaDTO> fazendaDTOs = new ArrayList<>();
-        
-        fazendas.forEach(f ->{
-                    FazendaDTO fdtos = new FazendaDTO();
-                    fdtos.SNCR = f.getSNCR();
-                    fdtos.nome = f.getNome();
-                    fazendaDTOs.add(fdtos);
-                });
-        
+
+        fazendas.forEach(f -> {
+            FazendaDTO fdtos = new FazendaDTO();
+            fdtos.SNCR = f.getSNCR();
+            fdtos.nome = f.getNome();
+            fazendaDTOs.add(fdtos);
+        });
+
         return Response
                 .ok(fazendaDTOs)
                 .status(Response.Status.OK)
@@ -114,60 +114,60 @@ public class UsuarioController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Transactional
     public Response cadastro(UsuarioDTO usuarioDTO, @PathParam("tipo") String tipo) {
-                
+
         switch (tipo) {
             //Proprietario
             case "prop":
                 try {
-                    usuarioDTO.tipoUsuario=(Usuario.TipoUsuario.PROPRIETARIO);
-                    Proprietario proprietario = new Proprietario(usuarioDTO);
-                    proprietario.setFazendas(Arrays.asList(new Fazenda(usuarioDTO.fazendas.get(0))));
-                    em.persist(proprietario);
-                    Fazenda f = proprietario.getFazendas().get(0);
-                    f.setProprietario(proprietario);
-                    em.merge(f);
-                } catch (PersistenceException ex) {
-                    return Response
-                            .ok()
-                            .status(Response.Status.BAD_REQUEST)
-                            .build();
-                }
-                break;
-                
+                usuarioDTO.tipoUsuario = (Usuario.TipoUsuario.PROPRIETARIO);
+                Proprietario proprietario = new Proprietario(usuarioDTO);
+                proprietario.setFazendas(Arrays.asList(new Fazenda(usuarioDTO.fazendas.get(0))));
+                em.persist(proprietario);
+                Fazenda f = proprietario.getFazendas().get(0);
+                f.setProprietario(proprietario);
+                em.merge(f);
+            } catch (PersistenceException ex) {
+                return Response
+                        .ok()
+                        .status(Response.Status.BAD_REQUEST)
+                        .build();
+            }
+            break;
+
             //Funcionario
             case "func":
                 try {
-                    Fazenda fazenda;
-                    TypedQuery<Fazenda> query = em.createQuery("select f from Fazenda f where f.SNCR = :sncr", Fazenda.class)
-                            .setParameter("sncr", usuarioDTO.fazendas.get(0).SNCR);
-                    fazenda = query.getSingleResult();
-                    usuarioDTO.tipoUsuario = (Usuario.TipoUsuario.FUNCIONARIO);
-                    Funcionario funcionario = new Funcionario(usuarioDTO, fazenda);
-                    em.persist(funcionario);
-                } catch (PersistenceException ex) {
-                    return Response
-                            .status(Response.Status.BAD_REQUEST)
-                            .build();
-                }
-                break;
-                
+                Fazenda fazenda;
+                TypedQuery<Fazenda> query = em.createQuery("select f from Fazenda f where f.SNCR = :sncr", Fazenda.class)
+                        .setParameter("sncr", usuarioDTO.fazendas.get(0).SNCR);
+                fazenda = query.getSingleResult();
+                usuarioDTO.tipoUsuario = (Usuario.TipoUsuario.FUNCIONARIO);
+                Funcionario funcionario = new Funcionario(usuarioDTO, fazenda);
+                em.persist(funcionario);
+            } catch (PersistenceException ex) {
+                return Response
+                        .status(Response.Status.BAD_REQUEST)
+                        .build();
+            }
+            break;
+
             //UsuarioComum
             case "uc":
                 try {
-                    usuarioDTO.tipoUsuario = (Usuario.TipoUsuario.USUARIO_COMUM);
-                    UsuarioComum uc = new UsuarioComum(usuarioDTO);
-                    em.persist(uc);
-                } catch (PersistenceException ex) {
-                    return Response
-                            .status(Response.Status.BAD_REQUEST)
-                            .build();
-                }
-                break;
-                
+                usuarioDTO.tipoUsuario = (Usuario.TipoUsuario.USUARIO_COMUM);
+                UsuarioComum uc = new UsuarioComum(usuarioDTO);
+                em.persist(uc);
+            } catch (PersistenceException ex) {
+                return Response
+                        .status(Response.Status.BAD_REQUEST)
+                        .build();
+            }
+            break;
+
             default:
                 return Response
-                            .status(Response.Status.BAD_REQUEST)
-                            .build();
+                        .status(Response.Status.BAD_REQUEST)
+                        .build();
         }
 
         return Response

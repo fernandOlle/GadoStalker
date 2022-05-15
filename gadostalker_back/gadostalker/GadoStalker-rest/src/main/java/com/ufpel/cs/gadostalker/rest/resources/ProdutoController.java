@@ -63,13 +63,12 @@ public class ProdutoController {
                 .build();
     }
     
-    @POST
-    @Path("/getAllProdutosFazenda")
-    @Consumes({MediaType.APPLICATION_JSON})
+    @GET
+    @Path("/getAllProdutosFazenda/{sncr}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getAllProdutosFazenda(FazendaDTO fazenda) {
+    public Response getAllProdutosFazenda(@PathParam("sncr") String sncr) {
         TypedQuery<Produto> produtosQuery = em.createNamedQuery("Fazenda.getAllProdutos", Produto.class);
-        produtosQuery.setParameter("sncr", fazenda.SNCR);
+        produtosQuery.setParameter("sncr", sncr);
         
         List<Produto> produtos;
         
@@ -87,16 +86,14 @@ public class ProdutoController {
                     .build();
         }
         
-        List<ProdutoDTO> produtoDTOs = new ArrayList<>();
-        
-        produtos.forEach(p -> {
-            ProdutoDTO pdto = new ProdutoDTO();
-            pdto.tipo = p.getTipo();
-            produtoDTOs.add(pdto);
-        });
+        Map<Produto.TipoProdutoEnum, String> mapEnumStringPergunta;
+
+        mapEnumStringPergunta = produtos
+                .stream()
+                .collect(Collectors.toMap(k -> k.getTipo(), v -> v.getTipo().getTipo()));
         
         return Response
-                .ok(produtoDTOs)
+                .ok(mapEnumStringPergunta)
                 .status(Response.Status.OK)
                 .build();
     }
