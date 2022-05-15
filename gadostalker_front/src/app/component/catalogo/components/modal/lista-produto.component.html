@@ -16,7 +16,7 @@
               <span class="email">Quantidade em estoque: {{produto.quantidade}}</span>
           </div>
           <div class="cargo-container">
-              <h1 class="cargo">{{produto.fazenda}}</h1>
+              <h1 class="cargo">{{searchFazendaName(produto)}}</h1>
           </div>
           <div class="icons">
               <mat-icon [svgIcon]="'edit'" matTooltip="Editar produto"></mat-icon> 
@@ -36,7 +36,7 @@
       <button
         mat-raised-button
         class="btn-novo-funcionario"
-        (click)="openModal()"
+        (click)="openModal(productKey, fazendas)"
       >
         + Novo produto
       </button>

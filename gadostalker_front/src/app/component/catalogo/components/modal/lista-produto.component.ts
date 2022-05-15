@@ -59,12 +59,12 @@ export class ListaProdutoComponent implements OnInit {
     this.api.getAllTiposProdutos().subscribe(
       ret => {
         this.setValue(ret);
+        this.api.getAllProdutosByTypeAndSncr(this.productKey, this.fazendas[0].SNCR)
+        .subscribe(ret => {
+          this.produtos = ret;
+        });
       }
     );
-    this.api.getAllProdutosByTypeAndSncr(this.productKey, this.fazendas[0].SNCR)
-      .subscribe(ret => {
-        this.produtos = ret;
-      });
   }
 
   setValue(ret: any){
@@ -74,14 +74,19 @@ export class ListaProdutoComponent implements OnInit {
     });
   }
 
-  openModal() {
+  openModal(tipo: any, fazendas: any) {
     const dialog = this.dialog.open(NovoProdutoComponent, {
-      data: {},
+      data: {tipo, fazendas},
       autoFocus: false,
       maxHeight: 1000,
       maxWidth: 1200,
       restoreFocus: false,
     });
+    dialog.afterClosed().subscribe(ret => {
+      if(ret)
+        this.produtos.push(ret);
+    });
+ 
   }
 
   closeModal(): void {
@@ -90,5 +95,9 @@ export class ListaProdutoComponent implements OnInit {
 
   openModalEditar() {
 
+  }
+
+  searchFazendaName(produto: any){
+    return this.fazendas.find((a: { SNCR: any; nome:any }) => a.SNCR === produto.fazenda).nome;
   }
 }

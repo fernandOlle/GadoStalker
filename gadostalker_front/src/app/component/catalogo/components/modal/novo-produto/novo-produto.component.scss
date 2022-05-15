@@ -44,7 +44,7 @@
   }
   .btn-salvar {
     background-color: white;
-    color: #008ade;
+    color: #594a3c;
     box-shadow: none;
     border-radius: 20px;
   }
@@ -57,6 +57,7 @@
 ::ng-deep .btns-modal-cep {
   .mat-button-disabled {
     color: #8a8a8a !important;
+    background-color: white !important;
   }
 }
 
@@ -64,4 +65,49 @@
   margin-bottom: -0.3em;
   justify-content: center;
   align-items: center;
+}
+
+::ng-deep {
+  .mat-radio-inner-circle {
+    background-color: #594a3c !important;
+  }
+
+  .mat-radio-outer-circle {
+    border-color: #594a3c !important;
+  }
+
+  .mat-form-field.mat-focused .mat-form-field-label {
+    color: #594a3c !important;
+  }
+
+  .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: #594a3c !important;
+  }
+
+  .mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
+    background-color: #f44336 !important;
+  }
+
+  .mat-for m-field.mat-form-field-invalid .mat-form-field-label {
+    color: #f44336 !important;
+  }
+
+  .mat-checkbox-checked .mat-checkbox-background {
+    background-color: #594a3c !important;
+  }
+
+  .mat-ink-bar {
+    background-color: #594a3c !important;
+  }
+
+  .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: #594a3c !important;
+  }
+  .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+    color: #594a3c !important;
+  }
+  .mat-button-disabled {
+    background-color: rgba(0, 0, 0, 0.12) !important;
+    color: rgba(0, 0, 0, 0.26) !important;
+  }
 }

@@ -59,4 +59,12 @@ export class ApiService {
     let url = `http://localhost:8080/GadoStalker-rest/resources/produto/consultarPorTipo/${type}/${sncr}`;
     return this.http.get(url);
   }
+
+  adicionarProduto(body: any) {
+    let url = 'http://localhost:8080/GadoStalker-rest/resources/produto/adicionar';
+    return this.http.post(url, body).pipe(take(1) , catchError(error => {
+      return of(0);
+    }));
+  }
+  
 }
