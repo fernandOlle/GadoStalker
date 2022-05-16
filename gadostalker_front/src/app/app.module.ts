@@ -46,6 +46,7 @@ import { ModalRegistrarVendaComponent } from './component/gerenciar-anuncios/com
 import { CatalogoComponent } from './component/catalogo/catalogo.component';
 import { ListaProdutoComponent } from './component/catalogo/components/modal/lista-produto.component';
 import { NovoProdutoComponent } from './component/catalogo/components/modal/novo-produto/novo-produto.component';
+import { EditarProdutoComponent } from './component/catalogo/components/modal/editar-produto/editar-produto.component';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -75,6 +76,7 @@ const maskConfig: Partial<IConfig> = {
     CatalogoComponent,
     ListaProdutoComponent,
     NovoProdutoComponent,
+    EditarProdutoComponent
   ],
   imports: [
     BrowserModule,

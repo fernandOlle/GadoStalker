@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { NovoProdutoComponent } from './novo-produto/novo-produto.component';
+import { EditarProdutoComponent } from './editar-produto/editar-produto.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import { ApiService } from '../../../../services/api.service';
@@ -103,8 +104,22 @@ export class ListaProdutoComponent implements OnInit {
       this.dialogRef.close();
   }
 
-  openModalEditar() {
-
+  openModalEditar(id: any, fazendas: any) {
+    const dialog = this.dialog.open(EditarProdutoComponent, {
+      data: {id, fazendas},
+      autoFocus: false,
+      maxHeight: 1000,
+      maxWidth: 1200,
+      restoreFocus: false,
+    });
+    dialog.afterClosed().subscribe(ret => {
+      if(ret){
+        let produtoEdited = this.produtos.find((produto: any) => produto.id == ret.id);
+        produtoEdited.nome = ret.nome;
+        produtoEdited.fazenda = ret.fazenda;
+        produtoEdited.quantidade = ret.quantidade;
+      }
+    });
   }
 
   excluirProduto(id : any){

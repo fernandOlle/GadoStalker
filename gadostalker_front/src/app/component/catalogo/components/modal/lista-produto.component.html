@@ -10,7 +10,7 @@
 <div class="content-modal" mat-dialog-container>
   <mat-selection-list #funcionario [multiple]="false" *ngIf="produtos.length > 0"> 
     <mat-list-option *ngFor="let produto of produtos" [value]="produto">
-      <div class="content" (click)="openModalEditar()">
+      <div class="content">
           <div class="nome-email">
               <h1 class="nome">{{produto.nome}}</h1>
               <span class="email">Quantidade em estoque: {{produto.quantidade}}</span>
@@ -19,7 +19,7 @@
               <h1 class="cargo">{{searchFazendaName(produto)}}</h1>
           </div>
           <div class="icons">
-              <mat-icon [svgIcon]="'edit'" matTooltip="Editar produto"></mat-icon> 
+              <mat-icon [svgIcon]="'edit'" matTooltip="Editar produto" (click)="openModalEditar(produto.id, fazendas)"></mat-icon> 
               <mat-icon [svgIcon]="'delete'" matTooltip="Excluir produto" (click)="excluirProduto(produto.id)"></mat-icon> 
           </div>
       </div>

@@ -1,0 +1,56 @@
+<div class="header-modal">
+    <h2 mat-dialog-title>Editar produto</h2>
+    <div>
+      <button mat-icon-button (click)="closeModal()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+  <hr />
+  <div class="content-modal" mat-dialog-container>
+    <form [formGroup]="formProduto">
+      <section class="inputs-form fonts-sizes col-xl-8">
+      <mat-form-field class="col-xl-8" style="width: 100%;">
+        <mat-label>Nome do produto</mat-label>
+        <input matInput required formControlName="nome"/>
+        <mat-error *ngIf="formProduto.get('nome').hasError('required')">
+          Insira o nome do produto!
+        </mat-error>
+      </mat-form-field>
+     </section>
+  
+      <section class="inputs-form fonts-sizes col-xl-8">
+        <mat-form-field class="inputs-form" style="width: 65%; margin-right: 15px;">
+          <mat-label>Fazenda Origem</mat-label>
+          <mat-select formControlName="fazenda">
+            <mat-option *ngFor="let fazenda of fazendas"
+            [value]="fazenda.SNCR">{{fazenda.nome}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="formProduto.get('fazenda').hasError('required')">
+            Insira a fazenda!
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field class="inputs-form fonts-sizes" style="width: 30%;">
+          <mat-label>Quantidade</mat-label>
+          <input matInput required formControlName="quantidade" type="number" minlength="0"/>
+          <mat-error *ngIf="formProduto.get('quantidade').hasError('required')">
+            Insira a quantidade!
+          </mat-error>
+          <mat-error *ngIf="formProduto.get('quantidade').hasError('min')">
+            Quantidade inválida!
+          </mat-error>
+        </mat-form-field>
+      </section>
+    </form>
+  </div>
+  <hr />
+  <div class="btns-modal-cep">
+    <button mat-raised-button class="btn-cancelar" (click)="closeModal()">
+      CANCELAR
+    </button>
+    <button mat-raised-button class="btn-salvar" (click)="editarProduto()" [disabled]="formProduto.invalid">
+      SALVAR
+    </button>
+  </div>
+  

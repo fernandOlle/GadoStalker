@@ -74,4 +74,18 @@ export class ApiService {
     }));
   }
 
+  editarProdutoById(id: any, body: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/produto/editar/${id}`;
+    return this.http.put(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  consultarProdutoById(id: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/produto/consultar/${id}`;
+    return this.http.get(url).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
 }
