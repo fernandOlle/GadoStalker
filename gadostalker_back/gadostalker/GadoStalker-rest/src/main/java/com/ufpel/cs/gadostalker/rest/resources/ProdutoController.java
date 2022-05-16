@@ -50,12 +50,13 @@ public class ProdutoController {
 
         try {
             p.setFazenda(em.find(Fazenda.class, produtoDTO.fazenda));
-            p = em.merge(p);      
+            em.persist(p);      
         } catch (PersistenceException ex) {
             return Response
                 .status(Response.Status.BAD_REQUEST)
                 .build();
         }
+        em.flush();
         produtoDTO.id = p.getId();
 
         return Response
