@@ -17,6 +17,7 @@
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.logging.connection" value="true"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create-or-extend-tables"/>
     </properties>
   </persistence-unit>
 </persistence>

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
-
+import { FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 @Injectable({
   providedIn: 'root'
 })
@@ -151,7 +150,12 @@ export class UtilsService {
         }
         return null
     }
-  
-  
   }
+
+  public formBuilderSNCR(sncrValid: boolean): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      return !sncrValid ? { validaSncr: { value: control.value } } : null;
+    };
+  }
+
 }
