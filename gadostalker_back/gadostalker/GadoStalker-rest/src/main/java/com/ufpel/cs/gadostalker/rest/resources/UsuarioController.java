@@ -67,6 +67,7 @@ public class UsuarioController {
         usuarioDto.tipoUsuario = usuarioLogado.getTipoUsuario();
         usuarioDto.nome = usuarioLogado.getNome();
         usuarioDto.email = usuarioLogado.getEmail();
+        usuarioDto.telefone = usuarioLogado.getTelefone(); 
         return Response
                 .ok(usuarioDto)
                 .status(Response.Status.ACCEPTED)

@@ -22,6 +22,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 import { RecuperarSenhaComponent } from './component/recuperar-senha/recuperar-senha.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
@@ -103,6 +104,7 @@ const maskConfig: Partial<IConfig> = {
     MatSliderModule,
     MatSnackBarModule,
     MatTooltipModule,
+    MatMenuModule,
     NgxMaskModule.forRoot(maskConfig),
   ],
   providers: [],
