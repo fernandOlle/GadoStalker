@@ -12,26 +12,42 @@
         </div>
         <div class="fazendeiro-container">
             <button mat-raised-button class="btn-produtor" (click)="voltarHome()">Página Inicial</button>
-            <button mat-raised-button class="btn-relatorios" *ngIf="pageAtual == 'Anúncios'" (click)="openModal()"><div>
-                <span>Criar Anúncio</span>
-            </div></button>
-            <button mat-raised-button class="btn-relatorios" *ngIf="pageAtual == 'Dashboard'"><div>
-                <span>Baixar relatórios</span>
-                <mat-icon
-                    [svgIcon]="'download'"
-                    class="menu-list-icon">
-                </mat-icon>
-            </div></button>
+            <button mat-raised-button class="btn-relatorios" *ngIf="pageAtual == 'Anúncios'" (click)="openModal()">
+                <div>
+                    <span>Criar Anúncio</span>
+                </div>
+            </button>
+            <button mat-raised-button class="btn-relatorios" *ngIf="pageAtual == 'Dashboard'">
+                <div>
+                    <span>Baixar relatórios</span>
+                    <mat-icon [svgIcon]="'download'" class="menu-list-icon">
+                    </mat-icon>
+                </div>
+            </button>
+            <mat-icon [svgIcon]="'user'" class="icon-user" [matMenuTriggerFor]="menu"></mat-icon>
+            <mat-menu #menu="matMenu" xPosition="before" class="icon-container">
+                <p class="text-capitalize">Olá, {{usuario.nome}}</p>
+                <p class="sub-title">{{usuario.email}}</p>
+                <p class="sub-title">{{usuario.tipoUsuario == 'PROPRIETARIO' ? 'Proprietário' : 'Usuário Comum'}}</p>
+                <div class="container-btns">
+                    <button mat-raised-button class="btn-login">
+                        <mat-icon [svgIcon]="'edit'" class="edit-icon" style="margin-bottom: 12px;"></mat-icon>Editar
+                        Perfil
+                    </button>
+                    <button mat-raised-button class="btn-login" (click)="logout()">
+                        <mat-icon [svgIcon]="'out'" class="edit-icon" style="margin-bottom: 12px;"></mat-icon>Sair
+                    </button>
+                </div>
+            </mat-menu>
         </div>
     </div>
     <div class="container-main">
         <div class="container-menu-list">
             <mat-selection-list #options [multiple]="false">
-                <mat-list-option *ngFor="let option of Options" [value]="option" [selected]="option == pageAtual" (click)="changePageSelected(option)">
+                <mat-list-option *ngFor="let option of Options" [value]="option" [selected]="option == pageAtual"
+                    (click)="changePageSelected(option)">
                     <div>
-                        <mat-icon
-                            [svgIcon]="option"
-                            class="menu-list-icon">
+                        <mat-icon [svgIcon]="option" class="menu-list-icon">
                         </mat-icon>
                         <span>{{option}}</span>
                     </div>
