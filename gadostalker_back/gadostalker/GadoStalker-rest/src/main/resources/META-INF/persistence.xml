@@ -13,6 +13,7 @@
     <class>com.ufpel.cs.gadostalker.rest.entity.Produto</class>
     <class>com.ufpel.cs.gadostalker.rest.entity.UsuarioComum</class>
     <class>com.ufpel.cs.gadostalker.rest.entity.Imagem</class>
+    <class>com.ufpel.cs.gadostalker.rest.entity.FazendasValidas</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.logging.connection" value="true"/>

@@ -3,6 +3,7 @@ package com.ufpel.cs.gadostalker.rest.resources;
 import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
+import com.ufpel.cs.gadostalker.rest.entity.FazendasValidas;
 import com.ufpel.cs.gadostalker.rest.entity.Funcionario;
 import com.ufpel.cs.gadostalker.rest.entity.Proprietario;
 import com.ufpel.cs.gadostalker.rest.entity.Usuario;
@@ -107,6 +108,18 @@ public class UsuarioController {
         return Response
                 .ok(fazendaDTOs)
                 .status(Response.Status.OK)
+                .build();
+    }
+    
+    @GET
+    @Path("cadastro/valida/{sncr}")
+    public Response fazendaIsValida(@PathParam("sncr") String SNCR) {
+        TypedQuery<FazendasValidas> fazendaQuery = em.createQuery("SELECT f FROM FazendasValidas f where f.SNCR = :sncr", FazendasValidas.class);
+        fazendaQuery.setParameter("sncr", SNCR);
+        
+        return Response
+                .ok(fazendaQuery.getSingleResult() != null)
+                .status(Response.Status.ACCEPTED)
                 .build();
     }
 

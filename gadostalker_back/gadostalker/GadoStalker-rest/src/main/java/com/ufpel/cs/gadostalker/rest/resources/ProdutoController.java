@@ -1,6 +1,5 @@
 package com.ufpel.cs.gadostalker.rest.resources;
 
-import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.ProdutoDTO;
 import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entity.Produto;
