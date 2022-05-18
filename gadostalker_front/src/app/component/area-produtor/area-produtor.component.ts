@@ -5,7 +5,7 @@ import { ModalCriarAnuncioComponent } from '../gerenciar-anuncios/components/mod
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../services/local-storage.service';
-
+import { EditarUsuarioComponent } from '../../component/home/components/editar-usuario/editar-usuario.component';
 const MENU_ICON =
   `
   <svg style="width:36px;height:36px" viewBox="0 0 24 24">
@@ -126,6 +126,24 @@ export class AreaProdutorComponent implements OnInit {
   logout(){
     this.localStorage.remove('credenciais');
     this.router.navigate(['/login'])
+  }
+
+  openModalEditarUser(usuario: any){
+    const dialog = this.dialog.open(EditarUsuarioComponent, {
+      data: {usuario},
+      autoFocus: false,
+      maxHeight: 700,
+      maxWidth: 800,
+      restoreFocus: false,
+    });
+    dialog.afterClosed().subscribe(ret => {
+      if(ret){
+       this.usuario.nome = ret.nome;
+       this.usuario.email = ret.email;
+       this.usuario.telefone = ret.telefone;
+       this.localStorage.set('credenciais', this.usuario)
+      }
+    });
   }
 
 }

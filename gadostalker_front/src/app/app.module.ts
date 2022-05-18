@@ -48,6 +48,7 @@ import { CatalogoComponent } from './component/catalogo/catalogo.component';
 import { ListaProdutoComponent } from './component/catalogo/components/modal/lista-produto.component';
 import { NovoProdutoComponent } from './component/catalogo/components/modal/novo-produto/novo-produto.component';
 import { EditarProdutoComponent } from './component/catalogo/components/modal/editar-produto/editar-produto.component';
+import { EditarUsuarioComponent } from './component/home/components/editar-usuario/editar-usuario.component';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -77,7 +78,8 @@ const maskConfig: Partial<IConfig> = {
     CatalogoComponent,
     ListaProdutoComponent,
     NovoProdutoComponent,
-    EditarProdutoComponent
+    EditarProdutoComponent,
+    EditarUsuarioComponent
   ],
   imports: [
     BrowserModule,

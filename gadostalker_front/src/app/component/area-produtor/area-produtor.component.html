@@ -30,7 +30,7 @@
                 <p class="sub-title">{{usuario.email}}</p>
                 <p class="sub-title">{{usuario.tipoUsuario == 'PROPRIETARIO' ? 'Proprietário' : 'Usuário Comum'}}</p>
                 <div class="container-btns">
-                    <button mat-raised-button class="btn-login">
+                    <button mat-raised-button class="btn-login" (click)="openModalEditarUser(usuario)">
                         <mat-icon [svgIcon]="'edit'" class="edit-icon" style="margin-bottom: 12px;"></mat-icon>Editar
                         Perfil
                     </button>

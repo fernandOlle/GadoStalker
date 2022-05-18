@@ -95,4 +95,11 @@ export class ApiService {
     }));
   }
 
+  editarPerfilByCpf(cpf: any, body: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/usuario/cadastro/editar/${cpf}`;
+    return this.http.put(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
 }

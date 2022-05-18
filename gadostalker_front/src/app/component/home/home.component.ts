@@ -3,6 +3,8 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { EditarUsuarioComponent } from './components/editar-usuario/editar-usuario.component';
 
 const USER_ICON = `
 <svg style="width:36px;height:36px" viewBox="0 0 24 24">
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private localStorage: LocalStorageService,
     private router: Router,
+    public dialog: MatDialog,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
   ) {
@@ -61,6 +64,24 @@ export class HomeComponent implements OnInit {
   logout(){
     this.localStorage.remove('credenciais');
     this.router.navigate(['/login'])
+  }
+
+  openModalEditarUser(usuario: any){
+    const dialog = this.dialog.open(EditarUsuarioComponent, {
+      data: {usuario},
+      autoFocus: false,
+      maxHeight: 700,
+      maxWidth: 800,
+      restoreFocus: false,
+    });
+    dialog.afterClosed().subscribe(ret => {
+      if(ret){
+       this.usuario.nome = ret.nome;
+       this.usuario.email = ret.email;
+       this.usuario.telefone = ret.telefone;
+       this.localStorage.set('credenciais', this.usuario)
+      }
+    });
   }
 
 }
