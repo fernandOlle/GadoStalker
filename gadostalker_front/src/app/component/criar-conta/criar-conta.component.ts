@@ -63,6 +63,8 @@ export class CriarContaComponent implements OnInit {
     { value: 'ANIMAL', viewValue: 'Nome do seu primeiro animal de estimação?' },
     { value: 'AMIGO', viewValue: 'Nome do seu melhor amigo de infância?' },
   ];
+  sncrValid: any;
+  ultimoSncrBuscado: any;
   constructor(
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
@@ -128,7 +130,7 @@ export class CriarContaComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
     });
     this.formFazenda = this.formBuilder.group({
-      SNCR: new FormControl('', Validators.required),
+      SNCR: new FormControl('', [Validators.required]),
       nome: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
@@ -203,5 +205,16 @@ export class CriarContaComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
+  }
+  
+  addValidacaoSncr(){
+    if(this.ultimoSncrBuscado != this.formFazenda.controls.SNCR.value && this.formFazenda.controls.SNCR.value.length == 12){
+      this.ultimoSncrBuscado = this.formFazenda.controls.SNCR.value;
+      this.api.validaSncr(this.ultimoSncrBuscado).subscribe((resposta) => {
+      resposta ? this.sncrValid = true : this.sncrValid = false;
+      this.formFazenda.controls.SNCR.setValidators([Validators.required, this.utilsService.formBuilderSNCR(this.sncrValid)]);
+      this.formFazenda.controls.SNCR.updateValueAndValidity();
+      });
+  }
   }
 }

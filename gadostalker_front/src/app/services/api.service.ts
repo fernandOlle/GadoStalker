@@ -88,4 +88,11 @@ export class ApiService {
     }));
   }
 
+  validaSncr(sncr: any){
+    let url = ` http://localhost:8080/GadoStalker-rest/resources/usuario/cadastro/valida/${sncr}`;
+    return this.http.get(url).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
 }
