@@ -48,7 +48,7 @@ public class Fazenda implements Serializable {
     @JoinColumn(name = "FAZENDA_SNCR")
     private List<Produto> produtos;
     
-    @ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
     private Proprietario proprietario;
 
     public Fazenda() {
