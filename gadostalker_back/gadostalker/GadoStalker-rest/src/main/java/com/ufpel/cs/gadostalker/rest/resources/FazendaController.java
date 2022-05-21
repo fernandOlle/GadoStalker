@@ -1,6 +1,9 @@
 package com.ufpel.cs.gadostalker.rest.resources;
 
 import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
+import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
+import com.ufpel.cs.gadostalker.rest.entity.Proprietario;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,8 +32,27 @@ public class FazendaController {
     @Path("/cadastro/{cpf}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Transactional
-    public Response cadastraFazenda(@PathParam("cpf") String cpf, List<FazendaDTO> fazendas) {
+    public Response cadastraFazenda(@PathParam("cpf") String cpf, List<FazendaDTO> fazendaDTOs) {
         
+        Proprietario p = em.find(Proprietario.class, cpf);
+        
+        List<Fazenda> fazendas = new ArrayList<>();
+        
+        fazendaDTOs.forEach(f -> {
+            Fazenda fazenda = new Fazenda(f);
+            fazenda.setProprietario(p);
+            fazendas.add(fazenda);
+        });
+        
+        try {
+            fazendas.forEach(f -> {
+                em.persist(f);
+            });
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.CONFLICT)
+                    .build();
+        }
         
         return Response
                 .status(Response.Status.CREATED)
