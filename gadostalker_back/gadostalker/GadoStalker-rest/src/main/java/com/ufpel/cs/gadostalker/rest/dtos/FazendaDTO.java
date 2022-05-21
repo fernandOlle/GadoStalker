@@ -1,5 +1,6 @@
 package com.ufpel.cs.gadostalker.rest.dtos;
 
+import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -21,6 +22,13 @@ public class FazendaDTO {
     public String telefone;
 
     public FazendaDTO() {
+    }
+    
+    public FazendaDTO(Fazenda fazenda) {
+        this.SNCR = fazenda.getSNCR();
+        this.nome = fazenda.getNome();
+        this.email = fazenda.getEmail();
+        this.telefone = fazenda.getTelefone();
     }
     
 }
