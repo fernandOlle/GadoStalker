@@ -11,9 +11,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListaProdutoComponent } from './lista-produto.component';
 import { MatSelectModule } from '@angular/material/select';
 import { NovoProdutoComponent } from './novo-produto/novo-produto.component';
+import { EditarProdutoComponent } from './editar-produto/editar-produto.component';
 
 @NgModule({
-  declarations: [ListaProdutoComponent],
+  declarations: [ListaProdutoComponent, EditarProdutoComponent],
   imports: [
     CommonModule,
     MatCardModule,

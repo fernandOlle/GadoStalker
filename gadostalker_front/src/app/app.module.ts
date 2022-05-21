@@ -19,7 +19,10 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSliderModule } from '@angular/material/slider';
-import { MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 import { RecuperarSenhaComponent } from './component/recuperar-senha/recuperar-senha.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
@@ -44,6 +47,8 @@ import { ModalRegistrarVendaComponent } from './component/gerenciar-anuncios/com
 import { CatalogoComponent } from './component/catalogo/catalogo.component';
 import { ListaProdutoComponent } from './component/catalogo/components/modal/lista-produto.component';
 import { NovoProdutoComponent } from './component/catalogo/components/modal/novo-produto/novo-produto.component';
+import { EditarProdutoComponent } from './component/catalogo/components/modal/editar-produto/editar-produto.component';
+import { EditarUsuarioComponent } from './component/home/components/editar-usuario/editar-usuario.component';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -72,7 +77,9 @@ const maskConfig: Partial<IConfig> = {
     ModalRegistrarVendaComponent,
     CatalogoComponent,
     ListaProdutoComponent,
-    NovoProdutoComponent
+    NovoProdutoComponent,
+    EditarProdutoComponent,
+    EditarUsuarioComponent
   ],
   imports: [
     BrowserModule,
@@ -97,9 +104,12 @@ const maskConfig: Partial<IConfig> = {
     MatSlideToggleModule,
     MatDatepickerModule,
     MatSliderModule,
+    MatSnackBarModule,
+    MatTooltipModule,
+    MatMenuModule,
     NgxMaskModule.forRoot(maskConfig),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

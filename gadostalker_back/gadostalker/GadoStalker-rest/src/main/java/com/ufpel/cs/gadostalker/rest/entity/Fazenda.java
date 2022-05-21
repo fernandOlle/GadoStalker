@@ -33,7 +33,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Fazenda implements Serializable {
 
     @Id
-    @Column(unique=true)
     private String SNCR;
 
     @Column

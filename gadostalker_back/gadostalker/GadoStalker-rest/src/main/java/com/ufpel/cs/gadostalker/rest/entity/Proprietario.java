@@ -17,7 +17,7 @@ import javax.persistence.Table;
  *
  * @author gustavo
  */
-@Entity(name = "proprietario")
+@Entity
 @Table(name = "proprietario")
 
 // define o DTYPE da classe Proprietario como PROPRIETARIO

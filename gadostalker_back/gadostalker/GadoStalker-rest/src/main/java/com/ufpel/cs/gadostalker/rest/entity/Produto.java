@@ -32,7 +32,7 @@ public class Produto implements Serializable {
         MEL("Mel"),
         OVO("Ovo"),
         ALFACE("Alface"),
-        FEIJAO("Feijao"),
+        FEIJAO("Feijão"),
         LEITE("Leite"),
         MILHO("Milho"),
         SOJA("Soja"),

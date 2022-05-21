@@ -14,7 +14,7 @@ import javax.persistence.Table;
  *
  * @author gustavo
  */
-@Entity(name = "funcionario")
+@Entity
 @Table(name = "funcionario")
 
 // define o DTYPE da classe Funcionario como FUNCIONARIO

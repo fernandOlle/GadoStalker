@@ -10,53 +10,68 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-novo-produto',
-  templateUrl: './novo-produto.component.html',
-  styleUrls: ['./novo-produto.component.scss'],
+  selector: 'app-editar-produto',
+  templateUrl: './editar-produto.component.html',
+  styleUrls: ['./editar-produto.component.scss']
 })
-export class NovoProdutoComponent implements OnInit {
-  checked = false;
-  tipo: any;
-  fazendas: any;
+export class EditarProdutoComponent implements OnInit {
   formProduto: any;
   produto: any;
+  id: any;
+  fazendas: any;
   constructor(
-    public dialogRef: MatDialogRef<NovoProdutoComponent>,
+    public dialogRef: MatDialogRef<EditarProdutoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private api: ApiService,
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar
   ) {
-    this.tipo = this.data.tipo;
-    this.fazendas = this.data.fazendas;
     this.formProduto = this.formBuilder.group({
       nome: new FormControl('', Validators.required),
-      tipo: new FormControl(this.tipo, Validators.required),
+      tipo: new FormControl('', Validators.required),
       fazenda: new FormControl('', Validators.required),
       quantidade: new FormControl('', [Validators.required, Validators.min(1)])
     });
+    this.fazendas = this.data.fazendas;
+    this.id = this.data.id;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadProduto(this.id);
+  }
 
   closeModal(): void {
     this.dialogRef.close();
   }
 
-  adicionarProduto(){
+  editarProduto(){
     let json = this.formProduto.value;
-    this.api.adicionarProduto(json).subscribe((resposta) => {
+    this.api.editarProdutoById(this.id, json).subscribe((resposta) => {
       (resposta != 0)
         ? (
           this.produto = resposta
           )
-        : (this.openSnackBar('Erro ao cadastrar o produto','Fechar'))
+        : (this.openSnackBar('Erro ao editar o produto','Fechar'))
         this.dialogRef.close(this.produto);
     });
-
   }
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
   }
+
+  loadProduto(id: any){
+    this.api.consultarProdutoById(id).subscribe((resposta) => {
+      (resposta != 0)
+        ? this.copyObject(resposta) : this.openSnackBar('Erro ao buscar o produto','Fechar')
+    });
+  }
+
+  copyObject(obj: any){
+    this.formProduto.controls.nome.setValue(obj.nome);
+    this.formProduto.controls.fazenda.setValue(obj.fazenda);
+    this.formProduto.controls.tipo.setValue(obj.tipo);
+    this.formProduto.controls.quantidade.setValue(obj.quantidade);
+  }
 }
+

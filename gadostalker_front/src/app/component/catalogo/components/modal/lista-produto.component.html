@@ -8,59 +8,39 @@
 </div>
 <hr />
 <div class="content-modal" mat-dialog-container>
-  <section class="fonts-sizes" *ngFor="let produto of produtos">
-    <form>
-      <div class="col-xl-4">
-        <mat-label>Nome do produto</mat-label>
-        <input value="{{ produto.nome }}" />
+  <mat-selection-list #funcionario [multiple]="false" *ngIf="produtos.length > 0"> 
+    <mat-list-option *ngFor="let produto of produtos" [value]="produto">
+      <div class="content">
+          <div class="nome-email">
+              <h1 class="nome">{{produto.nome}}</h1>
+              <span class="email">Quantidade em estoque: {{produto.quantidade}}</span>
+          </div>
+          <div class="cargo-container">
+              <h1 class="cargo">{{searchFazendaName(produto)}}</h1>
+          </div>
+          <div class="icons">
+              <mat-icon [svgIcon]="'edit'" matTooltip="Editar produto" (click)="openModalEditar(produto.id, fazendas)"></mat-icon> 
+              <mat-icon [svgIcon]="'delete'" matTooltip="Excluir produto" (click)="excluirProduto(produto.id)"></mat-icon> 
+          </div>
       </div>
+      <mat-divider></mat-divider>
+    </mat-list-option>
+  </mat-selection-list>
 
-      <div class="push-down col-xl-2">
-        <mat-label>Produto especializado</mat-label>
-        ㅤ
-        <input type="checkbox" checked="{{ produto.especializado }}" />
-      </div>
-      ㅤㅤ
-      <div class="col-xl-1">
-        <mat-label>Quantidade</mat-label>
-        <input
-          type="number"
-          min="0"
-          max="1000000"
-          step="1"
-          value="{{ produto.quantidade }}"
-        />
-        ㅤㅤㅤㅤ
-      </div>
-      ㅤㅤㅤㅤ
-      <div style="padding-left: 15px" class="col-xl-3">
-        <mat-label>Fazenda Origem</mat-label>
-        <input value="{{ produto.fazenda }}" />
-      </div>
-    </form>
-  </section>
+  <div *ngIf="produtos.length === 0">
+    <p style="text-align: center">Ainda não foram cadastrados produtos nesta categoria.</p>
+  </div>
 
   <mat-card-content>
     <div class="container-left">
       <button
         mat-raised-button
         class="btn-novo-funcionario"
-        (click)="openModal()"
+        (click)="openModal(productKey, fazendas)"
       >
         + Novo produto
       </button>
     </div>
-    <div class="container-right">
-      Desativar todos : <mat-slide-toggle> </mat-slide-toggle>
-    </div>
   </mat-card-content>
 </div>
 <hr />
-<div class="btns-modal-cep">
-  <button mat-raised-button class="btn-cancelar" (click)="closeModal()">
-    CANCELAR
-  </button>
-  <button mat-raised-button class="btn-salvar" (click)="closeModal()">
-    SALVAR
-  </button>
-</div>
