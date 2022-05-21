@@ -1,0 +1,49 @@
+<div class="header-modal">
+    <h2 mat-dialog-title>Editar perfil</h2>
+    <div>
+        <button mat-icon-button (click)="closeModal()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<hr />
+<div class="content-modal" mat-dialog-container>
+    <form [formGroup]="formUsuario">
+        <section class="inputs-form fonts-sizes col-xl-8">
+            <mat-form-field class="col-xl-8" style="width: 100%;">
+                <mat-label>E-mail</mat-label>
+                <input matInput required formControlName="email" type="text"/>
+                <mat-error *ngIf="formUsuario.get('email').hasError('required')">
+                    Insira o e-mail!
+                </mat-error>
+            </mat-form-field>
+        </section>
+
+        <section class="inputs-form fonts-sizes col-xl-8">
+            <mat-form-field class="inputs-form" style="width: 65%; margin-right: 15px;">
+                <mat-label>Nome</mat-label>
+                <input matInput required formControlName="nome" />
+                <mat-error *ngIf="formUsuario.get('nome').hasError('required')">
+                    Insira o nome!
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="inputs-form fonts-sizes" style="width: 30%;">
+                <mat-label>Telefone</mat-label>
+                <input matInput required formControlName="telefone" type="text"  mask="(00) 00000-0000"/>
+                <mat-error *ngIf="formUsuario.get('telefone').hasError('required')">
+                    Insira a telefone!
+                </mat-error>
+            </mat-form-field>
+        </section>
+    </form>
+</div>
+<hr />
+<div class="btns-modal-cep">
+    <button mat-raised-button class="btn-cancelar" (click)="closeModal()">
+        CANCELAR
+    </button>
+    <button mat-raised-button class="btn-salvar" (click)="editarPerfil()" [disabled]="formUsuario.invalid">
+        SALVAR
+    </button>
+</div>

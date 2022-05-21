@@ -1,5 +1,6 @@
 package com.ufpel.cs.gadostalker.rest.entity;
 
+import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -32,7 +33,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Fazenda implements Serializable {
 
     @Id
-    @Column(unique=true)
     private String SNCR;
 
     @Column
@@ -52,6 +52,13 @@ public class Fazenda implements Serializable {
     private Proprietario proprietario;
 
     public Fazenda() {
+    }
+    
+    public Fazenda(FazendaDTO fazendaDTO) {
+        this.SNCR = fazendaDTO.SNCR;
+        this.nome = fazendaDTO.nome;
+        this.email = fazendaDTO.email;
+        this.telefone = fazendaDTO.telefone;
     }
 
     public Fazenda(String SNCR, String nome, String email, String telefone) {

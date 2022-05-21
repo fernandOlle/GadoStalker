@@ -11,7 +11,7 @@ import javax.persistence.Table;
  *
  * @author thomazio
  */
-@Entity(name = "usuario_comum")
+@Entity
 @Table(name = "usuario_comum")
 
 // define o DTYPE da classe UsuarioComum como USUARIO_COMUM

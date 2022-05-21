@@ -1,6 +1,6 @@
 .header-modal {
   display: flex;
-  width: 800px;
+  width: 780px;
   h2 {
     margin-top: 0.5em;
     margin-bottom: -0.6em;
@@ -97,5 +97,48 @@ mat-card-content {
 
   .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
     background-color: rgba(89, 74, 60, 0.8);
+  }
+  .mat-list-text{
+    padding-right: 0 !important;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr 0.2fr;
+  .nome-email {
+    .nome {
+      font-weight: 400;
+      font-size: 18px;
+      height: 28px;
+      margin: 0;
+    }
+
+    .email {
+      color: rgb(139, 139, 139);
+      font-size: 14px;
+    }
+  }
+  .cargo-container {
+    display: flex;
+    align-items: center;
+    .cargo {
+      font-weight: 400;
+      font-size: 18px;
+      height: 28px;
+      margin: 0;
+    }
+  }
+  .icons{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    .btn-sem-estilo{
+      border: none;
+      background: none;
+    }
+    mat-icon{
+      margin-right: 5px;
+    }
   }
 }

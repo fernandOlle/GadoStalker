@@ -124,8 +124,9 @@
           <div class="field">
             <mat-form-field>
               <mat-label>SNCR</mat-label>
-              <input matInput required formControlName="SNCR" mask="00.000.000.000-0">
+              <input matInput required formControlName="SNCR" mask="00.000.000.000-0" (blur)="addValidacaoSncr()">
               <mat-error *ngIf="formFazenda.get('SNCR').hasError('required')">Insira o SNCR!</mat-error>
+              <mat-error *ngIf="formFazenda.get('SNCR').hasError('validaSncr')">SNCR inválido!</mat-error>
             </mat-form-field>
           </div>
           <div class="field">

@@ -75,7 +75,6 @@ public class Usuario implements Serializable {
     }
 
     @Id
-    @Column(unique = true)
     @XmlElement
     protected String cpf;
 

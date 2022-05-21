@@ -3,6 +3,7 @@ package com.ufpel.cs.gadostalker.rest.resources;
 import com.ufpel.cs.gadostalker.rest.dtos.ProdutoDTO;
 import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entity.Produto;
+import com.ufpel.cs.gadostalker.rest.entity.Produto.TipoProdutoEnum;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
@@ -18,6 +19,11 @@ import javax.ws.rs.core.Response;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import javax.ws.rs.PUT;
 
 /**
  *
@@ -43,13 +49,13 @@ public class ProdutoController {
 
         try {
             p.setFazenda(em.find(Fazenda.class, produtoDTO.fazenda));
-            em.persist(p);
+            em.persist(p);      
         } catch (PersistenceException ex) {
             return Response
                 .status(Response.Status.BAD_REQUEST)
                 .build();
         }
-
+        em.flush();
         produtoDTO.id = p.getId();
 
         return Response
@@ -57,15 +63,50 @@ public class ProdutoController {
                 .status(Response.Status.CREATED)
                 .build();
     }
+    
+    @GET
+    @Path("/getAllProdutosFazenda/{sncr}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getAllProdutosFazenda(@PathParam("sncr") String sncr) {
+        TypedQuery<Produto> produtosQuery = em.createNamedQuery("Fazenda.getAllProdutos", Produto.class);
+        produtosQuery.setParameter("sncr", sncr);
+        
+        List<Produto> produtos;
+        
+        try {
+            produtos = produtosQuery.getResultList();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+        
+        if (produtos.isEmpty()) {
+            return Response
+                    .ok(produtos)
+                    .build();
+        }
+        
+        Map<Produto.TipoProdutoEnum, String> mapEnumStringPergunta;
+
+        mapEnumStringPergunta = produtos
+                .stream()
+                .collect(Collectors.toMap(k -> k.getTipo(), v -> v.getTipo().getTipo(),(k1,k2)->k1));
+        
+        return Response
+                .ok(mapEnumStringPergunta)
+                .status(Response.Status.OK)
+                .build();
+    }
 
     @GET
-    @Path("/consultarPorTipo")
+    @Path("/consultarPorTipo/{tipo}/{sncr}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response consultarProdutoPorTipo(ProdutoDTO produtoDTO) {
+    public Response consultarProdutoPorTipo(@PathParam("tipo") TipoProdutoEnum tipo, @PathParam("sncr") String sncr) {
         
-        TypedQuery<Produto> p = em.createQuery("select p from Produto p where p.tipo = :tipo and p.fazenda = :fazenda", Produto.class)
-                .setParameter("tipo", produtoDTO.tipo)
-                .setParameter("fazenda", produtoDTO.fazenda);
+        TypedQuery<Produto> p = em.createNamedQuery("Fazenda.getAllProdutosByTipo", Produto.class)
+                .setParameter("tipo", tipo)
+                .setParameter("sncr", sncr);
 
         List<Produto> produtos;
         try {
@@ -77,6 +118,11 @@ public class ProdutoController {
                     .build();
         }
 
+        if (produtos.isEmpty())
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+
         List<ProdutoDTO> produtoDTOs = new ArrayList<>();
 
         for (Produto produto : produtos) {
@@ -85,7 +131,7 @@ public class ProdutoController {
 
         return Response
                 .ok(produtoDTOs)
-                .status(Response.Status.FOUND)
+                .status(Response.Status.OK)
                 .build();
     }
 
@@ -103,15 +149,20 @@ public class ProdutoController {
                     .build();
         }
 
+        if (produto == null)
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+            
         ProdutoDTO produtoDTO = new ProdutoDTO(produto);
 
         return Response
                 .ok(produtoDTO)
-                .status(Response.Status.FOUND)
+                .status(Response.Status.OK)
                 .build();
     }
 
-    @POST
+    @PUT
     @Path("/editar/{id}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
@@ -164,6 +215,22 @@ public class ProdutoController {
         }
 
         return Response
+                .status(Response.Status.ACCEPTED)
+                .build();
+    }
+    
+    @GET
+    @Path("/getAllTiposProdutos")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getAllTiposProdutos() {
+        Map<Produto.TipoProdutoEnum, String> mapEnumStringPergunta;
+
+        mapEnumStringPergunta = Arrays.asList(Produto.TipoProdutoEnum.values())
+                .stream()
+                .collect(Collectors.toMap(Function.identity(), v -> v.getTipo()));
+
+        return Response
+                .ok(mapEnumStringPergunta)
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
