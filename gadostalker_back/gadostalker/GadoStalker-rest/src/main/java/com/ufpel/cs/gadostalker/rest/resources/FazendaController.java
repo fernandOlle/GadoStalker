@@ -89,4 +89,24 @@ public class FazendaController {
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
+    
+    @DELETE
+    @Path("/remover/{sncr}")
+    @Transactional
+    public Response removerFazenda(@PathParam("sncr") String sncr) {
+        
+        Fazenda f = em.find(Fazenda.class, sncr);
+        
+        try {
+            em.remove(f);
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        return Response
+                .status(Response.Status.ACCEPTED)
+                .build();
+    }
 }
