@@ -1,6 +1,6 @@
-package com.ufpel.cs.gadostalker.rest.resources;
+package com.ufpel.cs.gadostalker.rest.controllers;
 
-import com.ufpel.cs.gadostalker.rest.entity.Proprietario;
+import com.ufpel.cs.gadostalker.rest.entities.Proprietario;
 import com.ufpel.cs.gadostalker.transactions.PropTeste;
 import javax.ejb.EJB;
 import javax.transaction.Transactional;

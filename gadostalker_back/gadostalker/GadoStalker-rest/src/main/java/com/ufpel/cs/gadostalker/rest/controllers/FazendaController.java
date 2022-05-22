@@ -1,8 +1,8 @@
-package com.ufpel.cs.gadostalker.rest.resources;
+package com.ufpel.cs.gadostalker.rest.controllers;
 
 import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
-import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
-import com.ufpel.cs.gadostalker.rest.entity.Proprietario;
+import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
+import com.ufpel.cs.gadostalker.rest.entities.Proprietario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;

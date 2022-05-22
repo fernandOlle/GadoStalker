@@ -1,9 +1,9 @@
-package com.ufpel.cs.gadostalker.rest.mapper;
+package com.ufpel.cs.gadostalker.rest.mappers;
 
 import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
-import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
-import com.ufpel.cs.gadostalker.rest.entity.Usuario;
+import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
+import com.ufpel.cs.gadostalker.rest.entities.Usuario;
 import org.modelmapper.ModelMapper;
 
 /**

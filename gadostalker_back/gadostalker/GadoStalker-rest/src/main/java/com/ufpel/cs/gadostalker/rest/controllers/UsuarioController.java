@@ -1,13 +1,13 @@
-package com.ufpel.cs.gadostalker.rest.resources;
+package com.ufpel.cs.gadostalker.rest.controllers;
 
 import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
-import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
-import com.ufpel.cs.gadostalker.rest.entity.FazendasValidas;
-import com.ufpel.cs.gadostalker.rest.entity.Funcionario;
-import com.ufpel.cs.gadostalker.rest.entity.Proprietario;
-import com.ufpel.cs.gadostalker.rest.entity.Usuario;
-import com.ufpel.cs.gadostalker.rest.entity.UsuarioComum;
+import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
+import com.ufpel.cs.gadostalker.rest.entities.FazendasValidas;
+import com.ufpel.cs.gadostalker.rest.entities.Funcionario;
+import com.ufpel.cs.gadostalker.rest.entities.Proprietario;
+import com.ufpel.cs.gadostalker.rest.entities.Usuario;
+import com.ufpel.cs.gadostalker.rest.entities.UsuarioComum;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
