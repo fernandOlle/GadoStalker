@@ -5,6 +5,7 @@ import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entities.FazendasValidas;
 import com.ufpel.cs.gadostalker.rest.entities.Funcionario;
+import com.ufpel.cs.gadostalker.rest.entities.Produto;
 import com.ufpel.cs.gadostalker.rest.entities.Proprietario;
 import com.ufpel.cs.gadostalker.rest.entities.Usuario;
 import com.ufpel.cs.gadostalker.rest.entities.UsuarioComum;
@@ -79,7 +80,8 @@ public class UsuarioController {
     @Path("/getFazendasProprietario/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getFazendasProprietario(@PathParam("cpf") String cpf) {
-        TypedQuery<Fazenda> fazendasQuery = em.createQuery("select f from Proprietario p inner join p.fazendas f where p.cpf = :cpf", Fazenda.class);
+        TypedQuery<Fazenda> fazendasQuery = em.createQuery("select f from Proprietario p "
+                + "inner join p.fazendas f where p.cpf = :cpf", Fazenda.class);
         fazendasQuery.setParameter("cpf", cpf);
 
         List<Fazenda> fazendas;
@@ -116,7 +118,8 @@ public class UsuarioController {
     @GET
     @Path("cadastro/valida/{sncr}")
     public Response fazendaIsValida(@PathParam("sncr") String SNCR) {
-        TypedQuery<FazendasValidas> fazendaQuery = em.createQuery("SELECT f FROM FazendasValidas f where f.SNCR = :sncr", FazendasValidas.class);
+        TypedQuery<FazendasValidas> fazendaQuery = em.createQuery("SELECT f FROM FazendasValidas f "
+                + "where f.SNCR = :sncr", FazendasValidas.class);
         fazendaQuery.setParameter("sncr", SNCR);
         
         return Response
@@ -154,7 +157,8 @@ public class UsuarioController {
             case "func":
                 try {
                 Fazenda fazenda;
-                TypedQuery<Fazenda> query = em.createQuery("select f from Fazenda f where f.SNCR = :sncr", Fazenda.class)
+                TypedQuery<Fazenda> query = em.createQuery("select f from Fazenda f "
+                        + "where f.SNCR = :sncr", Fazenda.class)
                         .setParameter("sncr", usuarioDTO.fazendas.get(0).SNCR);
                 fazenda = query.getSingleResult();
                 usuarioDTO.tipoUsuario = (Usuario.TipoUsuario.FUNCIONARIO);
@@ -237,12 +241,13 @@ public class UsuarioController {
     }
 
     @Path("/recuperarSenha")
-    @POST
+    @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Transactional
     public Response recuperarSenha(UsuarioDTO usuarioRecuperaSenha) {
 
-        TypedQuery<Usuario> u = em.createQuery("select u from Usuario u where u.email = :email", Usuario.class)
+        TypedQuery<Usuario> u = em.createQuery("select u from Usuario u "
+                + "where u.email = :email", Usuario.class)
                 .setParameter("email", usuarioRecuperaSenha.email);
         Usuario usuario;
         try {
@@ -271,11 +276,15 @@ public class UsuarioController {
     }
     
     @GET
-    @Path("/funcionarios/{cpf}")
+    @Path("/findFuncionariosByProprietarioCPF/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response listaFuncionarios(@PathParam("cpf") String cpf) {
         
-        TypedQuery<Funcionario> funcionarioQuery = em.createQuery("SELECT fu FROM Proprietario p INNER JOIN p.fazendas f INNER JOIN f.funcionarios fu WHERE p.cpf = :cpf", Funcionario.class);
+        TypedQuery<Funcionario> funcionarioQuery = em.createQuery("SELECT fu FROM Proprietario p "
+                + "INNER JOIN p.fazendas f INNER JOIN f.funcionarios fu WHERE p.cpf = :cpf", Funcionario.class);
+        
+        funcionarioQuery.setParameter("cpf", cpf);
+        
         
         List<Funcionario> funcionarios;
         
@@ -283,13 +292,13 @@ public class UsuarioController {
             funcionarios = funcionarioQuery.getResultList();
         } catch(Exception e) {
             return Response
-                    .status(Response.Status.BAD_REQUEST)
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .build();
         }
         
         if (funcionarios.isEmpty()) {
             return Response
-                    .status(Response.Status.NOT_FOUND)
+                    .status(Response.Status.NO_CONTENT)
                     .build();
         }
         
@@ -306,7 +315,7 @@ public class UsuarioController {
         
         return Response
                 .ok(funcionariosDTO)
-                .status(Response.Status.FOUND)
+                .status(Response.Status.OK)
                 .build();
     }
 }
