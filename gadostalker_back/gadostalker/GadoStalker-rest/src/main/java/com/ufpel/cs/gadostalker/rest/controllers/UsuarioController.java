@@ -1,6 +1,7 @@
 package com.ufpel.cs.gadostalker.rest.controllers;
 
 import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
+import com.ufpel.cs.gadostalker.rest.dtos.FuncionarioDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entities.FazendasValidas;
@@ -69,7 +70,7 @@ public class UsuarioController {
         usuarioDto.tipoUsuario = usuarioLogado.getTipoUsuario();
         usuarioDto.nome = usuarioLogado.getNome();
         usuarioDto.email = usuarioLogado.getEmail();
-        usuarioDto.telefone = usuarioLogado.getTelefone(); 
+        usuarioDto.telefone = usuarioLogado.getTelefone();
         return Response
                 .ok(usuarioDto)
                 .status(Response.Status.ACCEPTED)
@@ -114,14 +115,14 @@ public class UsuarioController {
                 .status(Response.Status.OK)
                 .build();
     }
-    
+
     @GET
     @Path("cadastro/valida/{sncr}")
     public Response fazendaIsValida(@PathParam("sncr") String SNCR) {
         TypedQuery<FazendasValidas> fazendaQuery = em.createQuery("SELECT f FROM FazendasValidas f "
                 + "where f.SNCR = :sncr", FazendasValidas.class);
         fazendaQuery.setParameter("sncr", SNCR);
-        
+
         return Response
                 .ok(fazendaQuery.getSingleResult() != null)
                 .status(Response.Status.ACCEPTED)
@@ -198,20 +199,20 @@ public class UsuarioController {
                 .status(Response.Status.CREATED)
                 .build();
     }
-    
+
     @PUT
     @Path("/cadastro/editar/{cpf}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     @Transactional
     public Response editarUsuario(UsuarioDTO usuario, @PathParam("cpf") String cpf) {
-        
+
         Usuario u = em.find(Usuario.class, cpf);
-        
+
         u.setEmail(usuario.email);
         u.setNome(usuario.nome);
         u.setTelefone(usuario.telefone);
-        
+
         try {
             em.merge(u);
         } catch (PersistenceException ex) {
@@ -219,7 +220,7 @@ public class UsuarioController {
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
-        
+
         return Response
                 .ok(usuario)
                 .status(Response.Status.ACCEPTED)
@@ -277,36 +278,35 @@ public class UsuarioController {
                 .status(Response.Status.UNAUTHORIZED)
                 .build();
     }
-    
+
     @GET
     @Path("/listFuncionarios/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response listaFuncionarios(@PathParam("cpf") String cpf) {
-        
+
         TypedQuery<Funcionario> funcionarioQuery = em.createQuery("SELECT fu FROM Proprietario p "
                 + "INNER JOIN p.fazendas f INNER JOIN f.funcionarios fu WHERE p.cpf = :cpf", Funcionario.class);
-        
+
         funcionarioQuery.setParameter("cpf", cpf);
-        
-        
+
         List<Funcionario> funcionarios;
-        
+
         try {
             funcionarios = funcionarioQuery.getResultList();
-        } catch(Exception e) {
+        } catch (Exception e) {
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .build();
         }
-        
+
         if (funcionarios.isEmpty()) {
             return Response
                     .status(Response.Status.NO_CONTENT)
                     .build();
         }
-        
+
         List<UsuarioDTO> funcionariosDTO = new ArrayList<>();
-        
+
         funcionarios.forEach(f -> {
             UsuarioDTO u = new UsuarioDTO();
             u.cpf = f.getCpf();
@@ -315,10 +315,45 @@ public class UsuarioController {
             u.telefone = f.getTelefone();
             funcionariosDTO.add(u);
         });
-        
+
         return Response
                 .ok(funcionariosDTO)
                 .status(Response.Status.OK)
+                .build();
+    }
+
+    @POST
+    @Path("/funcionario/editar/{cpf}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Transactional
+    public Response editarFuncionario(@PathParam("cpf") String cpf, FuncionarioDTO funcionarioDTO) {
+        Funcionario funcionario;
+
+        try {
+            funcionario = em.find(Funcionario.class, cpf);
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+
+        funcionario.setNome(funcionarioDTO.nome);
+        funcionario.setEmail(funcionarioDTO.email);
+        funcionario.setTelefone(funcionarioDTO.telefone);
+        funcionario.setFazenda(funcionarioDTO.fazenda);
+
+        try {
+            em.merge(funcionario);
+        } catch (PersistenceException ex) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+
+        return Response
+                .ok(funcionarioDTO)
+                .status(Response.Status.ACCEPTED)
                 .build();
     }
     
