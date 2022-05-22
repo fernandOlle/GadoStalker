@@ -269,4 +269,44 @@ public class UsuarioController {
                 .status(Response.Status.UNAUTHORIZED)
                 .build();
     }
+    
+    @GET
+    @Path("/funcionarios/{cpf}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response listaFuncionarios(@PathParam("cpf") String cpf) {
+        
+        TypedQuery<Funcionario> funcionarioQuery = em.createQuery("SELECT fu FROM Proprietario p INNER JOIN p.fazendas f INNER JOIN f.funcionarios fu WHERE p.cpf = :cpf", Funcionario.class);
+        
+        List<Funcionario> funcionarios;
+        
+        try {
+            funcionarios = funcionarioQuery.getResultList();
+        } catch(Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        if (funcionarios.isEmpty()) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+        
+        List<UsuarioDTO> funcionariosDTO = new ArrayList<>();
+        
+        funcionarios.forEach(f -> {
+            UsuarioDTO u = new UsuarioDTO();
+            u.cpf = f.getCpf();
+            u.nome = f.getNome();
+            u.email = f.getEmail();
+            u.telefone = f.getTelefone();
+            funcionariosDTO.add(u);
+        });
+        
+        return Response
+                .ok(funcionariosDTO)
+                .status(Response.Status.FOUND)
+                .build();
+    }
 }

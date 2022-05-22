@@ -50,6 +50,10 @@ public class Fazenda implements Serializable {
     
     @ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
     private Proprietario proprietario;
+    
+    @OneToMany(mappedBy = "fazenda", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+    @JoinColumn(name="fazendaid")
+    private List<Funcionario> funcionarios;
 
     public Fazenda() {
     }
@@ -118,6 +122,22 @@ public class Fazenda implements Serializable {
     
     public void removeProduto(Produto produto) {
         produtos.remove(produto);
+    }
+
+    public List<Funcionario> getFuncionarios() {
+        return funcionarios;
+    }
+
+    public void setFuncionarios(List<Funcionario> funcionarios) {
+        this.funcionarios = funcionarios;
+    }
+    
+    public void addFuncionario(Funcionario funcionario) {
+        funcionarios.add(funcionario);
+    }
+    
+    public void removeFuncionario(Funcionario funcionario) {
+        funcionarios.remove(funcionario);
     }
 
     @Override
