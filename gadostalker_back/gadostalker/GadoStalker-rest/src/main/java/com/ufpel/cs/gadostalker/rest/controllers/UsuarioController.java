@@ -164,6 +164,9 @@ public class UsuarioController {
                 usuarioDTO.tipoUsuario = (Usuario.TipoUsuario.FUNCIONARIO);
                 Funcionario funcionario = new Funcionario(usuarioDTO, fazenda);
                 em.persist(funcionario);
+                em.flush();
+                fazenda.addFuncionario(funcionario);
+                em.merge(fazenda);
             } catch (PersistenceException ex) {
                 return Response
                         .status(Response.Status.BAD_REQUEST)
@@ -316,6 +319,42 @@ public class UsuarioController {
         return Response
                 .ok(funcionariosDTO)
                 .status(Response.Status.OK)
+                .build();
+    }
+    
+    @PUT
+    @Path("/funcionario/trocaFazenda")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Transactional
+    public Response trocaFazendaFuncionario(UsuarioDTO usuario) {
+        
+        Funcionario funcionario = em.find(Funcionario.class, usuario.cpf);
+        Fazenda fazenda = em.find(Fazenda.class, usuario.fazendas.get(0).SNCR);
+        
+        funcionario.setFazenda(fazenda);
+        
+        try {
+            em.merge(funcionario);
+        } catch (Exception e) {
+            System.err.println(e);
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        UsuarioDTO u = new UsuarioDTO();
+        
+        u.cpf = funcionario.getCpf();
+        u.email = funcionario.getEmail();
+        u.addFazendaDTO(new FazendaDTO(funcionario.getFazenda()));
+        u.nome = funcionario.getNome();
+        u.telefone = funcionario.getTelefone();
+        u.tipoUsuario = funcionario.getTipoUsuario();
+        
+        return Response
+                .ok(u)
+                .status(Response.Status.ACCEPTED)
                 .build();
     }
 }
