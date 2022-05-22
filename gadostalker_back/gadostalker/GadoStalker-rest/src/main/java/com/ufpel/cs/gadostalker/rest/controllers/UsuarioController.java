@@ -276,7 +276,7 @@ public class UsuarioController {
     }
     
     @GET
-    @Path("/findFuncionariosByProprietarioCPF/{cpf}")
+    @Path("/listFuncionarios/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response listaFuncionarios(@PathParam("cpf") String cpf) {
         
