@@ -1,6 +1,7 @@
 package com.ufpel.cs.gadostalker.rest.dtos;
 
-import com.ufpel.cs.gadostalker.rest.entity.Usuario;
+import com.ufpel.cs.gadostalker.rest.entities.Usuario;
+import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,7 +36,17 @@ public class UsuarioDTO {
     public UsuarioDTO(){
     }
     
+    public UsuarioDTO(Usuario u){
+        this.cpf = u.getCpf();
+        this.nome = u.getNome();
+        this.telefone = u.getTelefone();
+        this.email = u.getEmail();
+    }
+    
     public UsuarioDTO addFazendaDTO(FazendaDTO fazenda) {
+        if (fazendas == null) {
+            fazendas = new ArrayList<>();
+        }
         fazendas.add(fazenda);
         
         return this;

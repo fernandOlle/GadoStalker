@@ -1,13 +1,14 @@
-package com.ufpel.cs.gadostalker.rest.resources;
+package com.ufpel.cs.gadostalker.rest.controllers;
 
 import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
+import com.ufpel.cs.gadostalker.rest.dtos.FuncionarioDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
-import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
-import com.ufpel.cs.gadostalker.rest.entity.FazendasValidas;
-import com.ufpel.cs.gadostalker.rest.entity.Funcionario;
-import com.ufpel.cs.gadostalker.rest.entity.Proprietario;
-import com.ufpel.cs.gadostalker.rest.entity.Usuario;
-import com.ufpel.cs.gadostalker.rest.entity.UsuarioComum;
+import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
+import com.ufpel.cs.gadostalker.rest.entities.FazendasValidas;
+import com.ufpel.cs.gadostalker.rest.entities.Funcionario;
+import com.ufpel.cs.gadostalker.rest.entities.Proprietario;
+import com.ufpel.cs.gadostalker.rest.entities.Usuario;
+import com.ufpel.cs.gadostalker.rest.entities.UsuarioComum;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +21,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -68,7 +70,7 @@ public class UsuarioController {
         usuarioDto.tipoUsuario = usuarioLogado.getTipoUsuario();
         usuarioDto.nome = usuarioLogado.getNome();
         usuarioDto.email = usuarioLogado.getEmail();
-        usuarioDto.telefone = usuarioLogado.getTelefone(); 
+        usuarioDto.telefone = usuarioLogado.getTelefone();
         return Response
                 .ok(usuarioDto)
                 .status(Response.Status.ACCEPTED)
@@ -79,7 +81,8 @@ public class UsuarioController {
     @Path("/getFazendasProprietario/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getFazendasProprietario(@PathParam("cpf") String cpf) {
-        TypedQuery<Fazenda> fazendasQuery = em.createQuery("select f from Proprietario p inner join p.fazendas f where p.cpf = :cpf", Fazenda.class);
+        TypedQuery<Fazenda> fazendasQuery = em.createQuery("select f from Proprietario p "
+                + "inner join p.fazendas f where p.cpf = :cpf", Fazenda.class);
         fazendasQuery.setParameter("cpf", cpf);
 
         List<Fazenda> fazendas;
@@ -104,6 +107,13 @@ public class UsuarioController {
             FazendaDTO fdtos = new FazendaDTO();
             fdtos.SNCR = f.getSNCR();
             fdtos.nome = f.getNome();
+            fdtos.email = f.getEmail();
+            fdtos.telefone = f.getTelefone();
+            fdtos.funcionarios = new ArrayList<>();
+            f.getFuncionarios().forEach(func -> {
+                UsuarioDTO funcDto = new UsuarioDTO(func);
+                fdtos.funcionarios.add(funcDto);
+            });
             fazendaDTOs.add(fdtos);
         });
 
@@ -112,13 +122,14 @@ public class UsuarioController {
                 .status(Response.Status.OK)
                 .build();
     }
-    
+
     @GET
     @Path("cadastro/valida/{sncr}")
     public Response fazendaIsValida(@PathParam("sncr") String SNCR) {
-        TypedQuery<FazendasValidas> fazendaQuery = em.createQuery("SELECT f FROM FazendasValidas f where f.SNCR = :sncr", FazendasValidas.class);
+        TypedQuery<FazendasValidas> fazendaQuery = em.createQuery("SELECT f FROM FazendasValidas f "
+                + "where f.SNCR = :sncr", FazendasValidas.class);
         fazendaQuery.setParameter("sncr", SNCR);
-        
+
         return Response
                 .ok(fazendaQuery.getSingleResult() != null)
                 .status(Response.Status.ACCEPTED)
@@ -154,12 +165,16 @@ public class UsuarioController {
             case "func":
                 try {
                 Fazenda fazenda;
-                TypedQuery<Fazenda> query = em.createQuery("select f from Fazenda f where f.SNCR = :sncr", Fazenda.class)
+                TypedQuery<Fazenda> query = em.createQuery("select f from Fazenda f "
+                        + "where f.SNCR = :sncr", Fazenda.class)
                         .setParameter("sncr", usuarioDTO.fazendas.get(0).SNCR);
                 fazenda = query.getSingleResult();
                 usuarioDTO.tipoUsuario = (Usuario.TipoUsuario.FUNCIONARIO);
                 Funcionario funcionario = new Funcionario(usuarioDTO, fazenda);
                 em.persist(funcionario);
+                em.flush();
+                fazenda.addFuncionario(funcionario);
+                em.merge(fazenda);
             } catch (PersistenceException ex) {
                 return Response
                         .status(Response.Status.BAD_REQUEST)
@@ -191,20 +206,20 @@ public class UsuarioController {
                 .status(Response.Status.CREATED)
                 .build();
     }
-    
+
     @PUT
     @Path("/cadastro/editar/{cpf}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     @Transactional
     public Response editarUsuario(UsuarioDTO usuario, @PathParam("cpf") String cpf) {
-        
+
         Usuario u = em.find(Usuario.class, cpf);
-        
+
         u.setEmail(usuario.email);
         u.setNome(usuario.nome);
         u.setTelefone(usuario.telefone);
-        
+
         try {
             em.merge(u);
         } catch (PersistenceException ex) {
@@ -212,7 +227,7 @@ public class UsuarioController {
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
-        
+
         return Response
                 .ok(usuario)
                 .status(Response.Status.ACCEPTED)
@@ -237,12 +252,13 @@ public class UsuarioController {
     }
 
     @Path("/recuperarSenha")
-    @POST
+    @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Transactional
     public Response recuperarSenha(UsuarioDTO usuarioRecuperaSenha) {
 
-        TypedQuery<Usuario> u = em.createQuery("select u from Usuario u where u.email = :email", Usuario.class)
+        TypedQuery<Usuario> u = em.createQuery("select u from Usuario u "
+                + "where u.email = :email", Usuario.class)
                 .setParameter("email", usuarioRecuperaSenha.email);
         Usuario usuario;
         try {
@@ -267,6 +283,138 @@ public class UsuarioController {
 
         return Response
                 .status(Response.Status.UNAUTHORIZED)
+                .build();
+    }
+
+    @GET
+    @Path("/listFuncionarios/{cpf}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response listaFuncionarios(@PathParam("cpf") String cpf) {
+
+        TypedQuery<Funcionario> funcionarioQuery = em.createQuery("SELECT fu FROM Proprietario p "
+                + "INNER JOIN p.fazendas f INNER JOIN f.funcionarios fu WHERE p.cpf = :cpf", Funcionario.class);
+
+        funcionarioQuery.setParameter("cpf", cpf);
+
+        List<Funcionario> funcionarios;
+
+        try {
+            funcionarios = funcionarioQuery.getResultList();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+
+        if (funcionarios.isEmpty()) {
+            return Response
+                    .status(Response.Status.NO_CONTENT)
+                    .build();
+        }
+
+        List<UsuarioDTO> funcionariosDTO = new ArrayList<>();
+
+        funcionarios.forEach(f -> {
+            UsuarioDTO u = new UsuarioDTO();
+            u.cpf = f.getCpf();
+            u.nome = f.getNome();
+            u.email = f.getEmail();
+            u.telefone = f.getTelefone();
+            funcionariosDTO.add(u);
+        });
+
+        return Response
+                .ok(funcionariosDTO)
+                .status(Response.Status.OK)
+                .build();
+    }
+
+    @POST
+    @Path("/funcionario/editar/{cpf}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Transactional
+    public Response editarFuncionario(@PathParam("cpf") String cpf, FuncionarioDTO funcionarioDTO) {
+        Funcionario funcionario;
+
+        try {
+            funcionario = em.find(Funcionario.class, cpf);
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+
+        funcionario.setNome(funcionarioDTO.nome);
+        funcionario.setEmail(funcionarioDTO.email);
+        funcionario.setTelefone(funcionarioDTO.telefone);
+        funcionario.setFazenda(funcionarioDTO.fazenda);
+
+        try {
+            em.merge(funcionario);
+        } catch (PersistenceException ex) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+
+        return Response
+                .ok(funcionarioDTO)
+                .status(Response.Status.ACCEPTED)
+                .build();
+    }
+    
+    @DELETE
+    @Path("/remover/{cpf}")
+    @Transactional
+    public Response removerUsuario(@PathParam("cpf") String cpf) {
+        Usuario u = em.find(Usuario.class, cpf);
+        
+        try {
+            em.remove(u);
+        } catch (Exception e) {
+        return Response
+                .status(Response.Status.ACCEPTED)
+                .build();
+        }
+
+        return Response
+                .status(Response.Status.ACCEPTED)
+                .build();
+    }
+  
+    @PUT
+    @Path("/funcionario/trocaFazenda")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Transactional
+    public Response trocaFazendaFuncionario(UsuarioDTO usuario) {
+        
+        Funcionario funcionario = em.find(Funcionario.class, usuario.cpf);
+        Fazenda fazenda = em.find(Fazenda.class, usuario.fazendas.get(0).SNCR);
+        
+        funcionario.setFazenda(fazenda);
+        
+        try {
+            em.merge(funcionario);
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        UsuarioDTO u = new UsuarioDTO();
+        
+        u.cpf = funcionario.getCpf();
+        u.email = funcionario.getEmail();
+        u.addFazendaDTO(new FazendaDTO(funcionario.getFazenda()));
+        u.nome = funcionario.getNome();
+        u.telefone = funcionario.getTelefone();
+        u.tipoUsuario = funcionario.getTipoUsuario();
+        
+        return Response
+                .ok(u)
+                .status(Response.Status.ACCEPTED)
                 .build();
     }
 }

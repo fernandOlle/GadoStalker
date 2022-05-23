@@ -1,7 +1,7 @@
 package com.ufpel.cs.gadostalker.rest.dtos;
 
-import com.ufpel.cs.gadostalker.rest.entity.Produto;
-import com.ufpel.cs.gadostalker.rest.entity.Produto.TipoProdutoEnum;
+import com.ufpel.cs.gadostalker.rest.entities.Produto;
+import com.ufpel.cs.gadostalker.rest.entities.Produto.TipoProdutoEnum;
 import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

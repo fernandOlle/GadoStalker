@@ -4,16 +4,16 @@
   <persistence-unit name="gadostalker" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>jdbc/GadoStalker</jta-data-source>
-    <class>com.ufpel.cs.gadostalker.rest.entity.Anuncio</class>
-    <class>com.ufpel.cs.gadostalker.rest.entity.Fazenda</class>
-    <class>com.ufpel.cs.gadostalker.rest.entity.Funcionario</class>
-    <class>com.ufpel.cs.gadostalker.rest.entity.Proprietario</class>
-    <class>com.ufpel.cs.gadostalker.rest.entity.Transacao</class>
-    <class>com.ufpel.cs.gadostalker.rest.entity.Usuario</class>
-    <class>com.ufpel.cs.gadostalker.rest.entity.Produto</class>
-    <class>com.ufpel.cs.gadostalker.rest.entity.UsuarioComum</class>
-    <class>com.ufpel.cs.gadostalker.rest.entity.Imagem</class>
-    <class>com.ufpel.cs.gadostalker.rest.entity.FazendasValidas</class>
+    <class>com.ufpel.cs.gadostalker.rest.entities.Funcionario</class>
+    <class>com.ufpel.cs.gadostalker.rest.entities.Usuario</class>
+    <class>com.ufpel.cs.gadostalker.rest.entities.Proprietario</class>
+    <class>com.ufpel.cs.gadostalker.rest.entities.UsuarioComum</class>
+    <class>com.ufpel.cs.gadostalker.rest.entities.Anuncio</class>
+    <class>com.ufpel.cs.gadostalker.rest.entities.Transacao</class>
+    <class>com.ufpel.cs.gadostalker.rest.entities.FazendasValidas</class>
+    <class>com.ufpel.cs.gadostalker.rest.entities.Produto</class>
+    <class>com.ufpel.cs.gadostalker.rest.entities.Fazenda</class>
+    <class>com.ufpel.cs.gadostalker.rest.entities.Imagem</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.logging.connection" value="true"/>
