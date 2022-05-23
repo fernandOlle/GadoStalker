@@ -35,7 +35,7 @@ export class ApiService {
   recuperarSenha(body: any) {
     let url =
       'http://localhost:8080/GadoStalker-rest/resources/usuario/recuperarSenha';
-    return this.http.post(url, body).pipe(take(1), catchError(error => {
+    return this.http.put(url, body).pipe(take(1), catchError(error => {
       return of(0);
     }));
   }
