@@ -6,7 +6,6 @@ import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entities.FazendasValidas;
 import com.ufpel.cs.gadostalker.rest.entities.Funcionario;
-import com.ufpel.cs.gadostalker.rest.entities.Produto;
 import com.ufpel.cs.gadostalker.rest.entities.Proprietario;
 import com.ufpel.cs.gadostalker.rest.entities.Usuario;
 import com.ufpel.cs.gadostalker.rest.entities.UsuarioComum;
@@ -22,6 +21,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -352,5 +352,25 @@ public class UsuarioController {
                 .ok(funcionarioDTO)
                 .status(Response.Status.ACCEPTED)
                 .build();
+    }
+    
+    @DELETE
+    @Path("/remover/{cpf}")
+    @Transactional
+    public Response removerUsuario(@PathParam("cpf") String cpf) {
+        Usuario u = em.find(Usuario.class, cpf);
+        
+        try {
+            em.remove(u);
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        return Response
+                .status(Response.Status.ACCEPTED)
+                .build();
+
     }
 }
