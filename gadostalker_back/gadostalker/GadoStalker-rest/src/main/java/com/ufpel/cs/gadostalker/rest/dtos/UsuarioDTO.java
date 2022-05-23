@@ -36,6 +36,13 @@ public class UsuarioDTO {
     public UsuarioDTO(){
     }
     
+    public UsuarioDTO(Usuario u){
+        this.cpf = u.getCpf();
+        this.nome = u.getNome();
+        this.telefone = u.getTelefone();
+        this.email = u.getEmail();
+    }
+    
     public UsuarioDTO addFazendaDTO(FazendaDTO fazenda) {
         if (fazendas == null) {
             fazendas = new ArrayList<>();

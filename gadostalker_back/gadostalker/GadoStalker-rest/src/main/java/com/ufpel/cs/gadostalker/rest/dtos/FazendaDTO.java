@@ -1,6 +1,7 @@
 package com.ufpel.cs.gadostalker.rest.dtos;
 
 import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
+import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -20,6 +21,8 @@ public class FazendaDTO {
     public String email;
     @XmlElement
     public String telefone;
+    @XmlElement
+    public List<UsuarioDTO> funcionarios;
 
     public FazendaDTO() {
     }

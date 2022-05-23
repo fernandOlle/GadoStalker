@@ -107,6 +107,13 @@ public class UsuarioController {
             FazendaDTO fdtos = new FazendaDTO();
             fdtos.SNCR = f.getSNCR();
             fdtos.nome = f.getNome();
+            fdtos.email = f.getEmail();
+            fdtos.telefone = f.getTelefone();
+            fdtos.funcionarios = new ArrayList<>();
+            f.getFuncionarios().forEach(func -> {
+                UsuarioDTO funcDto = new UsuarioDTO(func);
+                fdtos.funcionarios.add(funcDto);
+            });
             fazendaDTOs.add(fdtos);
         });
 
