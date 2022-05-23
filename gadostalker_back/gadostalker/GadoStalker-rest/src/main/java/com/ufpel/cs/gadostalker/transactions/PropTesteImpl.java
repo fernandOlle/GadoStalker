@@ -1,6 +1,6 @@
 package com.ufpel.cs.gadostalker.transactions;
 
-import com.ufpel.cs.gadostalker.rest.entity.Proprietario;
+import com.ufpel.cs.gadostalker.rest.entities.Proprietario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

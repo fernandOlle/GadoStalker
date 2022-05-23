@@ -1,4 +1,4 @@
-package com.ufpel.cs.gadostalker.rest.entity;
+package com.ufpel.cs.gadostalker.rest.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

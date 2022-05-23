@@ -1,9 +1,9 @@
-package com.ufpel.cs.gadostalker.rest.resources;
+package com.ufpel.cs.gadostalker.rest.controllers;
 
 import com.ufpel.cs.gadostalker.rest.dtos.ProdutoDTO;
-import com.ufpel.cs.gadostalker.rest.entity.Fazenda;
-import com.ufpel.cs.gadostalker.rest.entity.Produto;
-import com.ufpel.cs.gadostalker.rest.entity.Produto.TipoProdutoEnum;
+import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
+import com.ufpel.cs.gadostalker.rest.entities.Produto;
+import com.ufpel.cs.gadostalker.rest.entities.Produto.TipoProdutoEnum;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;

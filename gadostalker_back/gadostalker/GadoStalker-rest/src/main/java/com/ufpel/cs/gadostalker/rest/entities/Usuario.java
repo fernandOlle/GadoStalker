@@ -1,4 +1,4 @@
-package com.ufpel.cs.gadostalker.rest.entity;
+package com.ufpel.cs.gadostalker.rest.entities;
 
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import java.io.Serializable;
