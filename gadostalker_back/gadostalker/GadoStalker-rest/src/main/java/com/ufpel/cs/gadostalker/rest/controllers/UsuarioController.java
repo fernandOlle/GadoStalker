@@ -129,9 +129,18 @@ public class UsuarioController {
         TypedQuery<FazendasValidas> fazendaQuery = em.createQuery("SELECT f FROM FazendasValidas f "
                 + "where f.SNCR = :sncr", FazendasValidas.class);
         fazendaQuery.setParameter("sncr", SNCR);
+        
+        try {
+            fazendaQuery.getSingleResult();
+        } catch (Exception e){
+            return Response
+                    .ok(false)
+                    .status(Response.Status.NO_CONTENT)
+                    .build();
+        }
 
         return Response
-                .ok(fazendaQuery.getSingleResult() != null)
+                .ok(true)
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
