@@ -3,8 +3,6 @@ package com.ufpel.cs.gadostalker.rest.controllers;
 import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
 import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entities.Proprietario;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -34,31 +32,26 @@ public class FazendaController {
     @Path("/cadastro/{cpf}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Transactional
-    public Response cadastraFazenda(@PathParam("cpf") String cpf, List<FazendaDTO> fazendaDTOs) {
+    public Response cadastraFazenda(@PathParam("cpf") String cpf, FazendaDTO fazendaDTO) {
 
         Proprietario p = em.find(Proprietario.class, cpf);
 
-        List<Fazenda> fazendas = new ArrayList<>();
-
-        fazendaDTOs.forEach(f -> {
-            Fazenda fazenda = new Fazenda(f);
-            fazenda.setProprietario(p);
-            fazendas.add(fazenda);
-        });
+        Fazenda fazenda = new Fazenda(fazendaDTO);
+        fazenda.setProprietario(p);
 
         try {
-            fazendas.forEach(f -> {
-                em.persist(f);
-            });
+            em.persist(fazenda);
+            em.flush();
         } catch (Exception e) {
             return Response
                     .status(Response.Status.CONFLICT)
                     .build();
         }
-
+        
         return Response
                 .status(Response.Status.CREATED)
                 .build();
+
     }
 
     @POST
@@ -89,14 +82,14 @@ public class FazendaController {
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
-    
+
     @DELETE
     @Path("/remover/{sncr}")
     @Transactional
     public Response removerFazenda(@PathParam("sncr") String sncr) {
-        
+
         Fazenda f = em.find(Fazenda.class, sncr);
-        
+
         try {
             em.remove(f);
         } catch (Exception e) {
@@ -104,7 +97,7 @@ public class FazendaController {
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
-        
+
         return Response
                 .status(Response.Status.ACCEPTED)
                 .build();
