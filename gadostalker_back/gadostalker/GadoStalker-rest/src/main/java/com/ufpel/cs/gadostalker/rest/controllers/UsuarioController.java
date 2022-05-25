@@ -353,6 +353,12 @@ public class UsuarioController {
                     .status(Response.Status.NOT_FOUND)
                     .build();
         }
+        
+        if (funcionario == null) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
 
         funcionario.setNome(funcionarioDTO.nome);
         funcionario.setEmail(funcionarioDTO.email);
@@ -377,13 +383,28 @@ public class UsuarioController {
     @Path("/remover/{cpf}")
     @Transactional
     public Response removerUsuario(@PathParam("cpf") String cpf) {
-        Usuario u = em.find(Usuario.class, cpf);
+        
+        Usuario u;
+        
+        try {
+            u = em.find(Usuario.class, cpf);
+        } catch (Exception e) {
+            return Response
+                .status(Response.Status.BAD_REQUEST)
+                .build();
+        }
+        
+        if (u == null) {
+            return Response
+                .status(Response.Status.NOT_FOUND)
+                .build();
+        }
         
         try {
             em.remove(u);
         } catch (Exception e) {
         return Response
-                .status(Response.Status.ACCEPTED)
+                .status(Response.Status.BAD_REQUEST)
                 .build();
         }
 
@@ -402,6 +423,12 @@ public class UsuarioController {
         Funcionario funcionario = em.find(Funcionario.class, usuario.cpf);
         Fazenda fazenda = em.find(Fazenda.class, usuario.fazendas.get(0).SNCR);
         
+        if (funcionario == null || fazenda == null) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+        
         funcionario.setFazenda(fazenda);
         
         try {
@@ -411,7 +438,7 @@ public class UsuarioController {
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
-        
+        //TODO: Trocar UsuarioDTO por FuncionarioDTO; parece facil mas tem um monte de coisa pra adaptar
         UsuarioDTO u = new UsuarioDTO();
         
         u.cpf = funcionario.getCpf();

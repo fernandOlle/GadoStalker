@@ -71,6 +71,11 @@ public class FazendaController {
                     .build();
         }
 
+        if (fazenda == null)
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+
         fazenda.setNome(fazendaDTO.nome);
         fazenda.setEmail(fazendaDTO.email);
         fazenda.setTelefone(fazendaDTO.telefone);
@@ -88,7 +93,21 @@ public class FazendaController {
     @Transactional
     public Response removerFazenda(@PathParam("sncr") String sncr) {
 
-        Fazenda f = em.find(Fazenda.class, sncr);
+        Fazenda f;
+        
+        try {
+            f = em.find(Fazenda.class, sncr);
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        if (f == null) {
+            return Response
+                .status(Response.Status.NOT_FOUND)
+                .build();
+        }
 
         try {
             em.remove(f);
