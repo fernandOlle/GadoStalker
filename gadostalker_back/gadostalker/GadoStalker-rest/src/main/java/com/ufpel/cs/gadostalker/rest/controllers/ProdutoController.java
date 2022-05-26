@@ -49,13 +49,13 @@ public class ProdutoController {
 
         try {
             p.setFazenda(em.find(Fazenda.class, produtoDTO.fazenda));
-            em.persist(p);      
+            em.persist(p);
+            em.flush();
         } catch (PersistenceException ex) {
             return Response
                 .status(Response.Status.BAD_REQUEST)
                 .build();
         }
-        em.flush();
         produtoDTO.id = p.getId();
 
         return Response
@@ -68,6 +68,7 @@ public class ProdutoController {
     @Path("/getAllProdutosFazenda/{sncr}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllProdutosFazenda(@PathParam("sncr") String sncr) {
+        
         TypedQuery<Produto> produtosQuery = em.createNamedQuery("Fazenda.getAllProdutos", Produto.class);
         produtosQuery.setParameter("sncr", sncr);
         
@@ -77,13 +78,14 @@ public class ProdutoController {
             produtos = produtosQuery.getResultList();
         } catch (Exception e) {
             return Response
-                    .status(Response.Status.NOT_FOUND)
+                    .status(Response.Status.BAD_REQUEST)
                     .build();
         }
         
         if (produtos.isEmpty()) {
             return Response
                     .ok(produtos)
+                    .status(Response.Status.NO_CONTENT)
                     .build();
         }
         
@@ -120,7 +122,7 @@ public class ProdutoController {
 
         if (produtos.isEmpty())
             return Response
-                    .status(Response.Status.NOT_FOUND)
+                    .status(Response.Status.NO_CONTENT)
                     .build();
 
         List<ProdutoDTO> produtoDTOs = new ArrayList<>();
@@ -151,7 +153,7 @@ public class ProdutoController {
 
         if (produto == null)
             return Response
-                    .status(Response.Status.NOT_FOUND)
+                    .status(Response.Status.NO_CONTENT)
                     .build();
             
         ProdutoDTO produtoDTO = new ProdutoDTO(produto);
@@ -177,6 +179,11 @@ public class ProdutoController {
                     .status(Response.Status.NOT_FOUND)
                     .build();
         }
+
+        if (p == null)
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
         
         p.setNome(produtoDTO.nome);
         p.setFazenda(em.find(Fazenda.class, produtoDTO.fazenda));
@@ -196,19 +203,26 @@ public class ProdutoController {
     @Produces({MediaType.APPLICATION_JSON})
     @Transactional
     public Response removerProduto(@PathParam("id") Long id) {
+        
         Produto produto;
-
+        
         try {
             produto = em.find(Produto.class, id);
-        } catch (Exception e) {
+        } catch (Exception e) { 
+            return Response
+                .status(Response.Status.BAD_REQUEST)
+                .build();
+        }
+
+        if (produto == null) {
             return Response
                 .status(Response.Status.NOT_FOUND)
                 .build();
         }
-
+        
         try {
             em.remove(produto);
-        } catch (PersistenceException ex) {
+        } catch (PersistenceException ex) { 
             return Response
                 .status(Response.Status.BAD_REQUEST)
                 .build();
