@@ -38,8 +38,8 @@ public class Transacao implements Serializable {
     private BigDecimal preco;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PRODUTOID", nullable = true, referencedColumnName = "id")
-    private Produto produto;
+    @JoinColumn(name = "ANUNCIOID", nullable = true, referencedColumnName = "id")
+    private Anuncio anuncio;
     
     @Column
     private int quantidade;
@@ -73,12 +73,12 @@ public class Transacao implements Serializable {
         this.preco = preco;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public Anuncio getAnuncio() {
+        return anuncio;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setAnuncio(Anuncio anuncio) {
+        this.anuncio = anuncio;
     }
 
     public int getQuantidade() {
