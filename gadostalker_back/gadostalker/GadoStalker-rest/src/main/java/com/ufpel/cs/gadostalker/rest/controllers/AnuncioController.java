@@ -1,8 +1,21 @@
 package com.ufpel.cs.gadostalker.rest.controllers;
 
+import com.ufpel.cs.gadostalker.rest.dtos.AnuncioDTO;
+import com.ufpel.cs.gadostalker.rest.dtos.ProdutoDTO;
+import com.ufpel.cs.gadostalker.rest.entities.Anuncio;
+import com.ufpel.cs.gadostalker.rest.entities.Produto;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -14,5 +27,41 @@ public class AnuncioController {
     @PersistenceContext(unitName = "gadostalker")
     private EntityManager em;
     
+    @POST
+    @Path("/cadastrar")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Transactional
+    public Response cadastraAnuncio(AnuncioDTO anuncio) {
+        
+        List<Produto> produtos = new ArrayList<>();
+        
+        anuncio.produtos.forEach(p -> {
+            Produto produto = em.find(Produto.class, p.id);
+            produtos.add(produto);
+        });
+        
+        Anuncio a = new Anuncio(anuncio.titulo, anuncio.descricao, anuncio.preco, anuncio.desconto, produtos, new Date(), null);
+        
+        try {   
+            em.persist(a);
+            em.flush();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        anuncio.produtos = new ArrayList<>();
+        
+        a.getProdutos().forEach(p -> {
+            anuncio.produtos.add(new ProdutoDTO(p));
+        });
+        anuncio.id = a.getId();
+        
+        return Response
+                .ok(anuncio)
+                .status(Response.Status.CREATED)
+                .build();
+    }
     
 }
