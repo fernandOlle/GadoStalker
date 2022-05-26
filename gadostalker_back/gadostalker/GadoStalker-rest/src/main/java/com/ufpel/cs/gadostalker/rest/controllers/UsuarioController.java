@@ -1,7 +1,6 @@
 package com.ufpel.cs.gadostalker.rest.controllers;
 
 import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
-import com.ufpel.cs.gadostalker.rest.dtos.FuncionarioDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entities.FazendasValidas;
@@ -81,6 +80,8 @@ public class UsuarioController {
     @Path("/getFazendasProprietario/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getFazendasProprietario(@PathParam("cpf") String cpf) {
+        
+        em.getEntityManagerFactory().getCache().evictAll();
         TypedQuery<Fazenda> fazendasQuery = em.createQuery("select f from Proprietario p "
                 + "inner join p.fazendas f where p.cpf = :cpf", Fazenda.class);
         fazendasQuery.setParameter("cpf", cpf);
@@ -223,7 +224,21 @@ public class UsuarioController {
     @Transactional
     public Response editarUsuario(UsuarioDTO usuario, @PathParam("cpf") String cpf) {
 
-        Usuario u = em.find(Usuario.class, cpf);
+        Usuario u;
+        
+        try {
+            u = em.find(Usuario.class, cpf);
+        } catch (Exception e) {
+            return Response
+                .status(Response.Status.BAD_REQUEST)
+                .build();
+        }
+        
+        if (u == null) {
+            return Response
+                .status(Response.Status.NO_CONTENT)
+                .build();
+        }
 
         u.setEmail(usuario.email);
         u.setNome(usuario.nome);
@@ -337,47 +352,6 @@ public class UsuarioController {
                 .status(Response.Status.OK)
                 .build();
     }
-
-    @POST
-    @Path("/funcionario/editar/{cpf}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-    @Transactional
-    public Response editarFuncionario(@PathParam("cpf") String cpf, FuncionarioDTO funcionarioDTO) {
-        Funcionario funcionario;
-
-        try {
-            funcionario = em.find(Funcionario.class, cpf);
-        } catch (Exception e) {
-            return Response
-                    .status(Response.Status.NOT_FOUND)
-                    .build();
-        }
-        
-        if (funcionario == null) {
-            return Response
-                    .status(Response.Status.NOT_FOUND)
-                    .build();
-        }
-
-        funcionario.setNome(funcionarioDTO.nome);
-        funcionario.setEmail(funcionarioDTO.email);
-        funcionario.setTelefone(funcionarioDTO.telefone);
-        funcionario.setFazenda(funcionarioDTO.fazenda);
-
-        try {
-            em.merge(funcionario);
-        } catch (PersistenceException ex) {
-            return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .build();
-        }
-
-        return Response
-                .ok(funcionarioDTO)
-                .status(Response.Status.ACCEPTED)
-                .build();
-    }
     
     @DELETE
     @Path("/remover/{cpf}")
@@ -430,9 +404,9 @@ public class UsuarioController {
         }
         
         funcionario.setFazenda(fazenda);
-        
         try {
-            em.merge(funcionario);
+            funcionario = em.merge(funcionario);
+            em.flush();
         } catch (Exception e) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
