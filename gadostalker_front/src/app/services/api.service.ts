@@ -25,6 +25,14 @@ export class ApiService {
     }));
   }
 
+  cadastroFuncionario(body: any) {
+    let url =
+      'http://localhost:8080/GadoStalker-rest/resources/usuario/cadastro/func';
+    return this.http.post(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
   login(body: any) {
     let url = 'http://localhost:8080/GadoStalker-rest/resources/usuario/login';
     return this.http.post(url, body).pipe(take(1), catchError(error => {
@@ -98,6 +106,53 @@ export class ApiService {
   editarPerfilByCpf(cpf: any, body: any){
     let url = `http://localhost:8080/GadoStalker-rest/resources/usuario/cadastro/editar/${cpf}`;
     return this.http.put(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  adicionarFazenda(cpf: any, body: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/fazenda/cadastro/${cpf}`;
+    return this.http.post(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  deletarFazenda(sncr: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/fazenda/remover/${sncr}`;
+    return this.http.delete(url).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  getQuestions() {
+    let url = 'http://localhost:8080/GadoStalker-rest/resources/usuario/getAllPerguntas';
+    return this.http.get(url);
+  }
+
+  getListaFuncionariosByCpf(cpf: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/usuario/listFuncionarios/${cpf}`;
+    return this.http.get(url).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  trocaFuncionarioFazenda(body: any){
+    let url = 'http://localhost:8080/GadoStalker-rest/resources/usuario/funcionario/trocaFazenda';
+    return this.http.put(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+  
+  excluirUsuarioByCpf(cpf: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/usuario/remover/${cpf}`;
+    return this.http.delete(url).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  editarFazendaBySncr(sncr: any, body: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/fazenda/modificar/${sncr}`;
+    return this.http.post(url, body).pipe(take(1), catchError(error => {
       return of(0);
     }));
   }

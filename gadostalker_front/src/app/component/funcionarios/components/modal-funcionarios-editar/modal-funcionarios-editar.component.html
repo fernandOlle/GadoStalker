@@ -10,30 +10,27 @@
 </div>
 <hr>
 <div class="content-modal" mat-dialog-container>
-    <form>
+    <form [formGroup]="formFuncionario">
         <mat-form-field class="inputs-form fonts-sizes col-xl-12">
-            <mat-label>Fazenda</mat-label>
-            <mat-select>
-                <mat-option value="0">Fazenda Feliz</mat-option>
-            </mat-select>
+            <mat-label>Nome</mat-label>
+            <input matInput formControlName="nome">
+            <mat-error *ngIf="formFuncionario.get('nome').hasError('required')">Insira o nome!</mat-error>
         </mat-form-field>
         <mat-form-field class="inputs-form fonts-sizes col-xl-12">
             <mat-label>E-mail</mat-label>
-            <input matInput>
-        </mat-form-field>
-        <mat-form-field class="inputs-form fonts-sizes col-xl-12">
-            <mat-label>Nome</mat-label>
-            <input matInput>
+            <input matInput formControlName="email">
+            <mat-error *ngIf="formFuncionario.get('email').hasError('required')">Insira o e-mail!</mat-error>
         </mat-form-field>
         <mat-form-field class="inputs-form fonts-sizes col-xl-12">
             <mat-label>Telefone</mat-label>
-            <input matInput>
+            <input matInput formControlName="telefone" mask="(00) 00000-0000">
+            <mat-error *ngIf="formFuncionario.get('telefone').hasError('required')">Insira o telefone!</mat-error>
         </mat-form-field>
     </form>
-    <button mat-raised-button class="btn-excluir" (click)="openDialog()">Excluir funcionário</button>
+    <button mat-raised-button class="btn-excluir" (click)="openDialog(funcionario.cpf)">Excluir funcionário</button>
 </div>
 <hr>
 <div class="btns-modal-cep">
     <button mat-raised-button class="btn-cancelar" (click)="closeModal()">CANCELAR</button>
-    <button mat-raised-button class="btn-salvar" (click)="closeModal()">SALVAR</button>
+    <button mat-raised-button class="btn-salvar" (click)="editarFuncionario()">SALVAR</button>
 </div>

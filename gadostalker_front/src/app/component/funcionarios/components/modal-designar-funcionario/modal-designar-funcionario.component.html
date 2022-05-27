@@ -1,0 +1,38 @@
+<div class="header-modal">
+    <h2 mat-dialog-title>
+        Designar funcionário
+    </h2>
+    <div>
+        <button mat-icon-button (click)="closeModal()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<hr>
+<div class="content-modal" mat-dialog-container>
+    <form [formGroup]="formDesignar">
+        <div class="form-content">
+            <mat-form-field class="inputs-form fonts-sizes col-xl-4">
+                <mat-label>Funcionário</mat-label>
+                <mat-select formControlName="funcionario">
+                    <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario.cpf">
+                        <span style="text-transform: capitalize;">{{funcionario.nome}}</span>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="inputs-form fonts-sizes col-xl-4">
+                <mat-label>Fazenda</mat-label>
+                <mat-select formControlName="fazenda">
+                    <mat-option *ngFor="let fazenda of fazendas" [value]="fazenda.SNCR">
+                        <span style="text-transform: capitalize;">{{fazenda.nome}}</span>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<hr>
+<div class="btns-modal-cep">
+    <button mat-raised-button class="btn-cancelar" (click)="closeModal()">CANCELAR</button>
+    <button mat-raised-button class="btn-salvar" (click)="designar()">SALVAR</button>
+</div>

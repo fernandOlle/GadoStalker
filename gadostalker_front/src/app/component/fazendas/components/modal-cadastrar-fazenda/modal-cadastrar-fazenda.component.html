@@ -10,23 +10,30 @@
 </div>
 <hr>
 <div class="content-modal" mat-dialog-container>
-    <form>
+    <form [formGroup]="formFazenda">
         <div class="form-content">
             <mat-form-field class="inputs-form fonts-sizes col-xl-5">
                 <mat-label>SNCR</mat-label>
-                <input matInput>
+                <input matInput formControlName="SNCR" mask="00.000.000.000-0" (blur)="addValidacaoSncr()">
+                <mat-error *ngIf="formFazenda.get('SNCR').hasError('required')">Insira o SNCR!</mat-error>
+                <mat-error *ngIf="formFazenda.get('SNCR').hasError('validaSncr')">SNCR inválido!</mat-error>
             </mat-form-field>
             <mat-form-field class="inputs-form fonts-sizes col-xl-5">
-                <mat-label>Nome da fazenda</mat-label>
-                <input matInput>
+                <mat-label>Nome do Imóvel Rural</mat-label>
+                <input matInput formControlName="nome">
+                <mat-error *ngIf="formFazenda.get('nome').hasError('required')">Insira o nome do imóvel rural!</mat-error>
             </mat-form-field>
             <mat-form-field class="inputs-form fonts-sizes col-xl-5">
                 <mat-label>E-mail</mat-label>
-                <input matInput>
+                <input matInput formControlName="email">
+                <mat-error *ngIf="formFazenda.get('email').hasError('required')">Insira o e-mail!</mat-error>
+                <mat-error *ngIf="formFazenda.get('email').hasError('email')">E-mail inválido!</mat-error>
             </mat-form-field>
             <mat-form-field class="inputs-form fonts-sizes col-xl-5">
                 <mat-label>Telefone</mat-label>
-                <input matInput>
+                <input matInput formControlName="telefone"  mask="(00) 00000-0000">
+                <mat-error *ngIf="formFazenda.get('telefone').hasError('required')">Insira o telefone!</mat-error>
+                <mat-error *ngIf="formFazenda.get('telefone').hasError('pattern')">Telefone inválido!</mat-error>
             </mat-form-field>
         </div>
     </form>
@@ -34,5 +41,5 @@
 <hr>
 <div class="btns-modal-cep">
     <button mat-raised-button class="btn-cancelar" (click)="closeModal()">CANCELAR</button>
-    <button mat-raised-button class="btn-salvar" (click)="closeModal()">SALVAR</button>
+    <button mat-raised-button class="btn-salvar" (click)="adicionarFazenda()" [disabled]="formFazenda.invalid">SALVAR</button>
 </div>
