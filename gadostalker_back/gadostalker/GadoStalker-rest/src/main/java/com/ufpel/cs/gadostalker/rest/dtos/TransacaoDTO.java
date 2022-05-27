@@ -24,7 +24,7 @@ public class TransacaoDTO {
     public BigDecimal preco;
     
     @XmlElement
-    public Anuncio anuncio;
+    public AnuncioDTO anuncioDTO;
     
     @XmlElement
     public int quantidade;
@@ -33,10 +33,8 @@ public class TransacaoDTO {
     }
 
     public TransacaoDTO(Transacao transacao) {
-        this.id = transacao.getId();
         this.dataTransacao = transacao.getDataTransacao();
         this.preco = transacao.getPreco();
-        this.anuncio = transacao.getAnuncio();
         this.quantidade = transacao.getQuantidade();
     }
     
