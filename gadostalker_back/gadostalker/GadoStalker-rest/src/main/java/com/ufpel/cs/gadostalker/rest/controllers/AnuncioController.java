@@ -125,4 +125,32 @@ public class AnuncioController {
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
+    
+    @PUT
+    @Path("/reabre/{id}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Transactional
+    public Response reabreAnuncio(@PathParam("id") Long id) {
+        
+        Anuncio a = em.find(Anuncio.class, id);
+        
+        try {
+            a.setDataInicial(new Date());
+            a.setDataFinal(null);
+            a = em.merge(a);
+            em.flush();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        AnuncioDTO anuncio = new AnuncioDTO(a);
+        
+        return Response
+                .ok(anuncio)
+                .status(Response.Status.ACCEPTED)
+                .build();
+    }
 }
