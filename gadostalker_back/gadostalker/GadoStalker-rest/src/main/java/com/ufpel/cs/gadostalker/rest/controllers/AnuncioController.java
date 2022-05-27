@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -59,6 +60,7 @@ public class AnuncioController {
             anuncio.produtos.add(new ProdutoDTO(p));
         });
         anuncio.id = a.getId();
+        anuncio.dataInicial = a.getDataInicial();
         
         return Response
                 .ok(anuncio)
@@ -90,6 +92,33 @@ public class AnuncioController {
         }
         
         anuncio = new AnuncioDTO(a);
+        
+        return Response
+                .ok(anuncio)
+                .status(Response.Status.ACCEPTED)
+                .build();
+    }
+    
+    @PUT
+    @Path("/encerra/{id}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Transactional
+    public Response encerraAnuncio(@PathParam("id") Long id) {
+        
+        Anuncio a = em.find(Anuncio.class, id);
+        
+        try {
+            a.setDataFinal(new Date());
+            a = em.merge(a);
+            em.flush();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        AnuncioDTO anuncio = new AnuncioDTO(a);
         
         return Response
                 .ok(anuncio)
