@@ -153,4 +153,27 @@ public class AnuncioController {
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
+    
+    @DELETE
+    @Path("/deleta/{id}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Transactional
+    public Response deletaAnuncio(@PathParam("id") Long id) {
+        
+        Anuncio a = em.find(Anuncio.class, id);
+        
+        try {
+            em.remove(a);
+            em.flush();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        return Response
+                .status(Response.Status.ACCEPTED)
+                .build();
+    }
 }
