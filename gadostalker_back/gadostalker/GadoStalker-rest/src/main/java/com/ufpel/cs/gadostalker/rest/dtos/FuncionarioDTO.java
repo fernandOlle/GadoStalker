@@ -1,8 +1,8 @@
 package com.ufpel.cs.gadostalker.rest.dtos;
 
 import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  *

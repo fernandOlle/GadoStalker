@@ -1,7 +1,7 @@
 package com.ufpel.cs.gadostalker.transactions;
 
 import com.ufpel.cs.gadostalker.rest.entities.Proprietario;
-import javax.ejb.Local;
+import jakarta.ejb.Local;
 
 /**
  *

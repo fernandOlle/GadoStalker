@@ -4,8 +4,8 @@ import com.ufpel.cs.gadostalker.rest.entities.Anuncio;
 import com.ufpel.cs.gadostalker.rest.entities.Transacao;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  *
