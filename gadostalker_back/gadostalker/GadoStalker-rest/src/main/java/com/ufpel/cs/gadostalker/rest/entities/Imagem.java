@@ -11,10 +11,10 @@ import java.util.Base64;
 import java.util.Objects;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.PostLoad;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 
 /**
@@ -23,6 +23,7 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "imagem")
+@SequenceGenerator(name = "seqImagem", sequenceName = "SEQIMAGEM", allocationSize = 1)
 public class Imagem implements Serializable {
     
     public enum FileFormat {
@@ -41,7 +42,7 @@ public class Imagem implements Serializable {
     }
     
     @Id
-    @Column(name = "anuncio_id")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqImagem")
     private Long id;
     
     @Column(length = 7)
@@ -50,11 +51,6 @@ public class Imagem implements Serializable {
     
     @Column
     private String fileName;
-    
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "ANUNCIO_ID")
-    private Anuncio Anuncio;
     
     @Column
     @Lob
@@ -112,14 +108,6 @@ public class Imagem implements Serializable {
 
     public void setContent(byte[] content) {
         this.content = content;
-    }
-
-    public Anuncio getAnuncio() {
-        return Anuncio;
-    }
-
-    public void setAnuncio(Anuncio Anuncio) {
-        this.Anuncio = Anuncio;
     }
     
     @Override
