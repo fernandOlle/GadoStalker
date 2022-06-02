@@ -48,6 +48,7 @@ public class AnuncioDTO {
     }
     
     public AnuncioDTO(Anuncio a) {
+        this.id = a.getId();
         this.titulo = a.getTitulo();
         this.descricao = a.getDescricao();
         this.preco = a.getPreco();
