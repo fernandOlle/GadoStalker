@@ -10,54 +10,58 @@
 </div>
 <hr>
 <div class="content-modal" mat-dialog-container>
-    <form>
+    <form [formGroup]="formUsuario">
         <mat-form-field class="inputs-form fonts-sizes col-xl-4">
             <mat-label>Fazenda</mat-label>
-            <mat-select [(ngModel)]="fazenda">
-                <mat-option value="0">Fazenda Feliz</mat-option>
+            <mat-select formControlName="fazenda">
+                <mat-option *ngFor="let fazenda of fazendas" [value]="fazenda.SNCR">
+                    {{fazenda.nome}}
+                </mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field class="inputs-form fonts-sizes col-xl-4">
             <mat-label>CPF</mat-label>
-            <input matInput>
+            <input matInput formControlName="cpf"  mask="000.000.000-00" [dropSpecialCharacters]="false">
         </mat-form-field>
         <mat-form-field class="inputs-form fonts-sizes col-xl-3">
             <mat-label>Telefone</mat-label>
-            <input matInput>
+            <input matInput formControlName="telefone"  mask="(00) 00000-0000">
         </mat-form-field>
-        <mat-form-field class="inputs-form fonts-sizes col-xl-4">
+        <mat-form-field class="inputs-form fonts-sizes col-xl-4" class="capitalize">
             <mat-label>Nome</mat-label>
-            <input matInput>
+            <input matInput formControlName="nome">
         </mat-form-field>
         <mat-form-field class="inputs-form fonts-sizes col-xl-4">
             <mat-label>E-mail</mat-label>
-            <input matInput>
+            <input matInput formControlName="email">
         </mat-form-field>
         <mat-form-field class="inputs-form fonts-sizes col-xl-3">
             <mat-label>Senha</mat-label>
-            <input matInput type="password">
+            <input matInput type="password" formControlName="senha">
             <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'">
                 <mat-icon [svgIcon]="'eye'"></mat-icon>
             </button>
         </mat-form-field>
         <mat-form-field class="inputs-form fonts-sizes col-xl-3">
             <mat-label>Confirma Senha</mat-label>
-            <input matInput type="password">
+            <input matInput type="password" formControlName="confirmaSenha">
         </mat-form-field>
         <mat-form-field class="inputs-form fonts-sizes col-xl-4">
             <mat-label>Pergunta de Segurança</mat-label>
-            <mat-select [(ngModel)]="pergunta">
-                <mat-option value="0">Qual sua comida favorita?</mat-option>
+            <mat-select formControlName="pergunta">
+                <mat-option *ngFor="let pergunta of perguntas" [value]="pergunta.value">
+                    {{pergunta.viewValue}}
+                </mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field class="inputs-form fonts-sizes col-xl-4">
             <mat-label>Resposta</mat-label>
-            <input matInput>
+            <input matInput formControlName="resposta">
         </mat-form-field>
     </form>
 </div>
 <hr>
 <div class="btns-modal-cep">
     <button mat-raised-button class="btn-cancelar" (click)="closeModal()">CANCELAR</button>
-    <button mat-raised-button class="btn-salvar" (click)="closeModal()">SALVAR</button>
+    <button mat-raised-button class="btn-salvar" (click)="adicionar()">SALVAR</button>
 </div>

@@ -1,8 +1,8 @@
 <div class="content-modal" mat-dialog-container>
-<h2>Deseja realmente excluir o funcionário?</h2>
+<h2 style="text-align: center;">Deseja realmente excluir o funcionário?</h2>
 </div>
 <hr>
 <div class="btns-modal-cep">
-    <button mat-raised-button class="btn-cancelar">CANCELAR</button>
-    <button mat-raised-button class="btn-salvar">CONFIRMAR</button>
+    <button mat-raised-button class="btn-cancelar" (click)="closeModal()">CANCELAR</button>
+    <button mat-raised-button class="btn-salvar" (click)="excluir(cpf)">CONFIRMAR</button>
 </div>

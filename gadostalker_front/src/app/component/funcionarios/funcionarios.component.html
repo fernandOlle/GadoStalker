@@ -1,23 +1,49 @@
 <mat-card class="list-funcionarios">
     <mat-card-title>
-        Funcionários Fazenda Feliz
+        Funcionários {{this.fazendas[pageIndex].nome}}
     </mat-card-title>
-    <mat-selection-list #funcionario [multiple]="false">
-        <mat-list-option *ngFor="let funcionario of funcionarios" [value]="funcionario">
-          <div class="content" (click)="openModalEditar()">
+    <mat-selection-list #funcionario [multiple]="false" *ngIf="fazendas[pageIndex].funcionarios.length > 0">
+        <mat-list-option *ngFor="let funcionario of this.fazendas[pageIndex].funcionarios" [value]="funcionario">
+          <div class="content" (click)="openModalEditar(funcionario)">
               <div class="nome-email">
-                  <h1 class="nome">{{funcionario.nome}}</h1>
+                  <h1 class="nome" style="text-transform: capitalize;">{{funcionario.nome}}</h1>
                   <span class="email">{{funcionario.email}}</span>
               </div>
               <div class="cargo-container">
-                  <h1 class="cargo">{{funcionario.cargo}}</h1>
+                  <h1 class="cargo">Funcionário</h1>
               </div>
           </div>
           <mat-divider></mat-divider>
         </mat-list-option>
       </mat-selection-list>
+      <div *ngIf="fazendas[pageIndex].funcionarios.length === 0" class="sem-funcionarios">
+        <p style="text-align: center;font-size: 16px;">Ainda não foram adicionados funcionários nesta fazenda.</p>
+      </div>
       <mat-card-content>
-        <div class="container-left"><button mat-raised-button class="btn-novo-funcionario" (click)="openModal()">+ Novo Funcionário</button></div>
-        <div class="container-right"><span>Quantidade de funcionários: {{funcionarios?.length}}</span></div>
+        <div class="container-left">
+          <button mat-raised-button class="btn-novo-funcionario" (click)="openModal(this.cpf)">+ Novo Funcionário</button>
+        </div>
+        <div class="container-center">
+          <mat-icon 
+            [svgIcon]="'arrow-left'" 
+            (click)="changePage('anterior')" 
+            matTooltip="Fazenda anterior"
+            matTooltipPosition="left"
+            [matTooltipDisabled]="pageIndex == 0"
+            [ngClass]="pageIndex == 0 ? 'disabled' : 'arrow'">
+          </mat-icon>
+          <span>Quantidade de funcionários: {{fazendas[pageIndex].funcionarios.length}}</span>
+          <mat-icon 
+            [svgIcon]="'arrow-right'" 
+            (click)="changePage('proxima')" 
+            matTooltip="Próxima fazenda"
+            matTooltipPosition="right" 
+            [matTooltipDisabled]="pageIndex == this.fazendas.length-1" 
+            [ngClass]="pageIndex == this.fazendas.length-1 ? 'disabled' : 'arrow'">
+          </mat-icon>
+        </div>
+        <div class="container-right">
+          <button mat-raised-button class="btn-novo-funcionario" (click)="openModalDesignar(this.fazendas, this.funcionarios)">Designar Funcionário</button>
+        </div>
       </mat-card-content>
 </mat-card>
