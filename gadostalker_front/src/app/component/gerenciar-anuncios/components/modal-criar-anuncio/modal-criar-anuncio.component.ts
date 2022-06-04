@@ -15,16 +15,28 @@ const ANEXO_ICON =
   styleUrls: ['./modal-criar-anuncio.component.scss']
 })
 export class ModalCriarAnuncioComponent implements OnInit {
-
   constructor(
     public dialogRef: MatDialogRef<ModalCriarAnuncioComponent>,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,) {
     iconRegistry.addSvgIconLiteral('anexo', sanitizer.bypassSecurityTrustHtml(ANEXO_ICON));
   }
-
+  file?: File;
+  localUrl = '../../../assets/upload.png'
   ngOnInit(): void {
   }
+
+  selectFile(event: any) {
+    this.file = <File>event.target.files[0];
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.localUrl = event.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
   closeModal(): void {
     this.dialogRef.close();
   }
