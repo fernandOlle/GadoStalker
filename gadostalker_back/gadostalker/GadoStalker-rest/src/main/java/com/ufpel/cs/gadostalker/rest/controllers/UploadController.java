@@ -1,11 +1,6 @@
 package com.ufpel.cs.gadostalker.rest.controllers;
 
 import com.ufpel.cs.gadostalker.rest.entities.Imagem;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
