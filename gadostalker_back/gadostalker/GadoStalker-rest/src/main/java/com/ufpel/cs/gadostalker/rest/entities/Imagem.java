@@ -84,8 +84,7 @@ public class Imagem implements Serializable {
             default:
                 break;
         }
-        //this.content = Base64.getDecoder().decode(content);
-        this.content = content;
+        this.content = Base64.getDecoder().decode(content);
     }
     
     public byte[] toBase64() {
