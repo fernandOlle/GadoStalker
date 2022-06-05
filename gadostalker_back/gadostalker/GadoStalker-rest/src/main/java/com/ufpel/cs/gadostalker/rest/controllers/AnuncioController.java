@@ -184,7 +184,8 @@ public class AnuncioController {
     @GET
     @Path("/pesquisa")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response pesquisaAnuncios(@DefaultValue("1") @QueryParam("page") Integer page, 
+    public Response pesquisaAnuncios(@QueryParam("tipo") String tipo,
+                                     @DefaultValue("1") @QueryParam("page") Integer page, 
                                      @DefaultValue("desc") @QueryParam("order") String order,
                                      @DefaultValue("8") @QueryParam("qnt") Integer quantity,
                                      @QueryParam("search") String search) {
@@ -218,15 +219,25 @@ public class AnuncioController {
                         .build();
         }
         
-        String query = "SELECT a FROM Anuncio a WHERE a.dataFinal IS NULL ";
+        String query = "SELECT a FROM Anuncio a INNER JOIN a.produtos p";
+        
+        query += " WHERE a.dataFinal IS NULL";
+        
+        if (tipo != null) {
+            query += " AND p.tipo = :tipo";
+        }
         
         if (search != null) {
-            query += "AND UPPER(a.titulo) LIKE CONCAT('%',UPPER(:search),'%')";
+            query += " AND UPPER(a.titulo) LIKE CONCAT('%',UPPER(:search),'%')";
         }
         
         query += (" ORDER BY a.titulo, a.id " + order);
         
         TypedQuery<Anuncio> anunciosQuery = em.createQuery(query, Anuncio.class);
+        
+        if (tipo != null) {
+            anunciosQuery.setParameter("tipo", Produto.TipoProdutoEnum.valueOf(tipo));
+        }
         
         if (search != null) {
             anunciosQuery.setParameter("search", search);
