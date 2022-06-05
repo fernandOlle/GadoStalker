@@ -248,4 +248,39 @@ public class ProdutoController {
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
+    
+    @GET
+    @Path("/getAllProdutosProprietario/{cpf}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getAllProdutosProprietario(@PathParam("cpf") String cpf) {
+        
+        TypedQuery<Produto> produtosQuery = em.createQuery("SELECT p FROM Proprietario prop INNER JOIN prop.fazendas f INNER JOIN f.produtos p", Produto.class);
+        
+        List<Produto> produtos;
+        
+        try {
+            produtos = produtosQuery.getResultList();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        if(produtos.isEmpty()) {
+            return Response
+                    .status(Response.Status.NO_CONTENT)
+                    .build();
+        }
+        
+        List<ProdutoDTO> produtoDTOs = new ArrayList<>();
+
+        for (Produto produto : produtos) {
+            produtoDTOs.add(new ProdutoDTO(produto));
+        }
+        
+        return Response
+                .ok(produtoDTOs)
+                .status(Response.Status.ACCEPTED)
+                .build();
+    }
 }

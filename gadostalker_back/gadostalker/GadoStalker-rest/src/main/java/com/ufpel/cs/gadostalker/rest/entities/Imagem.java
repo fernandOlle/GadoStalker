@@ -27,8 +27,9 @@ import javax.persistence.Transient;
 public class Imagem implements Serializable {
     
     public enum FileFormat {
-        PNG(".png"),
-        JPEG(".jpeg");
+        PNG("png"),
+        JPEG("jpeg"),
+        JPG("jpg");
         
         private final String fileExtension;
         
@@ -70,7 +71,19 @@ public class Imagem implements Serializable {
     public Imagem(String fileName, byte[] content) {
         String[] file = fileName.split("\\.");
         this.fileName = file[0];
-        fileExtension = FileFormat.valueOf("." + file[1]);
+        switch(file[1]) {
+            case "png":
+                fileExtension = FileFormat.PNG;
+                break;
+            case "jpg":
+                fileExtension = FileFormat.JPG;
+                break;
+            case "jpeg":
+                fileExtension = FileFormat.JPEG;
+                break;
+            default:
+                break;
+        }
         this.content = Base64.getDecoder().decode(content);
     }
     
