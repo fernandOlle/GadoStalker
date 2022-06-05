@@ -26,6 +26,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 import { RecuperarSenhaComponent } from './component/recuperar-senha/recuperar-senha.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxCurrencyModule } from "ngx-currency";
 import { MatDialogModule } from '@angular/material/dialog';
 import { HomeComponent } from './component/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -109,6 +110,7 @@ const maskConfig: Partial<IConfig> = {
     MatSnackBarModule,
     MatTooltipModule,
     MatMenuModule,
+    NgxCurrencyModule,
     NgxMaskModule.forRoot(maskConfig),
   ],
   providers: [],

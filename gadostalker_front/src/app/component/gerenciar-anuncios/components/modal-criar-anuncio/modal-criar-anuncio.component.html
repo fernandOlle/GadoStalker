@@ -10,29 +10,31 @@
 </div>
 <hr>
 <div class="content-modal" mat-dialog-container>
-    <form>
+    <form [formGroup]="formAnuncio">
         <div class="form-content">
             <mat-form-field class="inputs-form fonts-sizes col-xl-5">
                 <mat-label>Título</mat-label>
-                <input matInput>
+                <input matInput required formControlName="titulo">
             </mat-form-field>
             <mat-form-field class="inputs-form fonts-sizes col-xl-5">
                 <mat-label>Produto</mat-label>
-                <mat-select>
-                    <mat-option value="0">Milho Pipoca</mat-option>
+                <mat-select required formControlName="produto">
+                    <mat-option *ngFor="let produto of produtosFazenda"
+                        [value]="produto.id">{{produto.nome}}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field class="inputs-form fonts-sizes col-xl-5">
                 <mat-label>Preço</mat-label>
-                <input matInput>
+                <input matInput currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left'}" required formControlName="preco">
             </mat-form-field>
             <mat-form-field class="inputs-form fonts-sizes col-xl-5">
                 <mat-label>Desconto</mat-label>
-                <input matInput>
+                <input matInput mask="percent" suffix="%"  required formControlName="desconto">
             </mat-form-field>
             <mat-form-field class="inputs-form fonts-sizes col-xl-10">
                 <mat-label>Descrição</mat-label>
-                <textarea matInput></textarea>
+                <textarea matInput required formControlName="descricao"></textarea>
             </mat-form-field >
         </div>
     </form>
@@ -44,5 +46,5 @@
 <hr>
 <div class="btns-modal-cep">
     <button mat-raised-button class="btn-cancelar" (click)="closeModal()">CANCELAR</button>
-    <button mat-raised-button class="btn-salvar" (click)="closeModal()">SALVAR</button>
+    <button mat-raised-button class="btn-salvar" (click)="uploadImage()" [disabled]="formAnuncio.invalid || localUrl == '../../../assets/upload.png'">SALVAR</button>
 </div>

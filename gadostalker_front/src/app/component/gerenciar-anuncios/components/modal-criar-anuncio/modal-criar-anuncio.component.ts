@@ -2,7 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { ApiService } from '../../../../services/api.service';
+import { LocalStorageService } from '../../../../services/local-storage.service';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  FormControl,
+} from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 const ANEXO_ICON =
   `
   <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -15,23 +23,46 @@ const ANEXO_ICON =
   styleUrls: ['./modal-criar-anuncio.component.scss']
 })
 export class ModalCriarAnuncioComponent implements OnInit {
+  credenciais: any;
+  fazendas: any;
+  produtosFazenda: any;
+  formAnuncio: any;
+  anuncioCadastrado: any;
+  imageBase64: any;
   constructor(
     public dialogRef: MatDialogRef<ModalCriarAnuncioComponent>,
     iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer,) {
+    sanitizer: DomSanitizer,
+    private api: ApiService,
+    private localStorage: LocalStorageService,
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
+    ) {
     iconRegistry.addSvgIconLiteral('anexo', sanitizer.bypassSecurityTrustHtml(ANEXO_ICON));
+    this.formAnuncio = this.formBuilder.group({
+      titulo: new FormControl('', Validators.required),
+      produto: new FormControl('', Validators.required),
+      preco: new FormControl('', Validators.required),
+      desconto: new FormControl('', Validators.required),
+      descricao: new FormControl('', Validators.required),
+    });
   }
   file?: File;
-  localUrl = '../../../assets/upload.png'
+  localUrl = '../../../assets/upload.png';
   ngOnInit(): void {
+    this.credenciais = this.localStorage.get('credenciais');
+    this.getAllFazendas(this.credenciais.cpf);
+    this.getAllProdutosByCpf(this.credenciais.cpf);
   }
 
   selectFile(event: any) {
     this.file = <File>event.target.files[0];
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
+      reader.readAsDataURL(this.file);
       reader.onload = (event: any) => {
         this.localUrl = event.target.result;
+        this.imageBase64 = this.localUrl.split(',')[1];
       }
       reader.readAsDataURL(event.target.files[0]);
     }
@@ -39,5 +70,63 @@ export class ModalCriarAnuncioComponent implements OnInit {
 
   closeModal(): void {
     this.dialogRef.close();
+  }
+
+  getAllFazendas(cpf: String) {
+    this.api.getAllFazendasByProprietarioCpf(cpf).subscribe(
+      ret => {
+        if(ret)
+         this.fazendas = ret;
+        else
+          this.fazendas = [];
+      }
+    )
+  }
+
+  getAllProdutosByCpf(cpf: String) {
+    this.api.getAllProdutosByCPF(cpf).subscribe(
+      ret => {
+        if(ret)
+          this.produtosFazenda = ret;
+        else
+          this.produtosFazenda = [
+            {
+                "fazenda": "1723948172893",
+                "id": 1,
+                "nome": "Feijao Carioca",
+                "quantidade": 2,
+                "tipo": "FEIJAO"
+            }
+        ];
+      }
+    )
+  }
+
+  salvarAnuncio(){
+    let produtoIdSelected = this.formAnuncio.controls.produto.value;
+    let json = this.formAnuncio.value;
+    delete json.produto;
+    json.produtos = [{id: produtoIdSelected}];
+    this.api.adicionarAnuncio(json).subscribe(
+      ret => {
+        if(ret){
+          this.anuncioCadastrado = ret;
+          this.uploadImage();
+        } else
+          this.openSnackBar('Erro ao criar anúncio.', 'Fechar');
+      }
+    )
+  }
+  
+  uploadImage(){
+    if (this.file != undefined) {
+      this.api.uploadFile(this.imageBase64, this.file.name).subscribe((data: any) => {});
+    } else {
+      this.openSnackBar("Selecione um arquivo!", 'Fechar');
+    }
+  }
+
+   openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }
