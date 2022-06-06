@@ -4,6 +4,7 @@ import com.ufpel.cs.gadostalker.rest.dtos.ProdutoDTO;
 import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entities.Produto;
 import com.ufpel.cs.gadostalker.rest.entities.Produto.TipoProdutoEnum;
+import com.ufpel.cs.gadostalker.rest.entities.Proprietario;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
@@ -254,7 +255,10 @@ public class ProdutoController {
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllProdutosProprietario(@PathParam("cpf") String cpf) {
         
-        TypedQuery<Produto> produtosQuery = em.createQuery("SELECT p FROM Proprietario prop INNER JOIN prop.fazendas f INNER JOIN f.produtos p", Produto.class);
+        TypedQuery<Produto> produtosQuery = em.createQuery("SELECT p FROM Proprietario prop INNER JOIN prop.fazendas f INNER JOIN f.produtos p WHERE prop = :prop", 
+                Produto.class);
+        Proprietario prop = em.find(Proprietario.class, cpf);
+        produtosQuery.setParameter("prop", prop);
         
         List<Produto> produtos;
         
