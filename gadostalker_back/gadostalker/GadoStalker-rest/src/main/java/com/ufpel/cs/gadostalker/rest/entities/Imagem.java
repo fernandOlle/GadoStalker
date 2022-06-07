@@ -3,9 +3,7 @@ package com.ufpel.cs.gadostalker.rest.entities;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,7 +13,6 @@ import java.util.Base64;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -72,7 +69,7 @@ public class Imagem implements Serializable {
 
     @PostLoad
     private void encodeAfterFetch() {
-        byte[] header = ("data:image/" + fileExtension.getFileExtension() + ";base,").getBytes();
+        byte[] header = ("data:image/" + fileExtension.getFileExtension() + ";base64,").getBytes();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
             outputStream.write(header);
