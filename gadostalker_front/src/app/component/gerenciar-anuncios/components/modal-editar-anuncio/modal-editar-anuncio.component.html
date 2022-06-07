@@ -10,38 +10,36 @@
 </div>
 <hr>
 <div class="content-modal" mat-dialog-container>
-    <form>
+    <form [formGroup]="formAnuncio">
         <div class="form-content">
             <mat-form-field class="inputs-form fonts-sizes col-xl-5">
                 <mat-label>Título</mat-label>
-                <input matInput>
+                <input matInput formControlName="titulo">
             </mat-form-field>
             <mat-form-field class="inputs-form fonts-sizes col-xl-5">
                 <mat-label>Produto</mat-label>
-                <mat-select>
-                    <mat-option value="0">Feijão Carioca</mat-option>
+                <mat-select formControlName="produto">
+                    <mat-option *ngFor="let produto of produtosFazenda"
+                        [value]="produto.id">{{produto.nome}}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field class="inputs-form fonts-sizes col-xl-5">
                 <mat-label>Preço</mat-label>
-                <input matInput>
+                <input matInput currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left'}" formControlName="preco">
             </mat-form-field>
             <mat-form-field class="inputs-form fonts-sizes col-xl-5">
                 <mat-label>Desconto</mat-label>
-                <input matInput>
+                <input matInput mask="percent" suffix="%" formControlName="desconto">
             </mat-form-field>
-            <mat-form-field class="inputs-form fonts-sizes col-xl-5">
+            <mat-form-field class="inputs-form fonts-sizes col-xl-10">
                 <mat-label>Descrição</mat-label>
-                <textarea matInput></textarea>
+                <textarea matInput formControlName="descricao"></textarea>
             </mat-form-field >
-            <div class="inputs-form fonts-sizes col-xl-5" style="display: flex;
-            align-items: center;justify-content: center;">
-                <button mat-raised-button class="btn-salvar"> <mat-icon [svgIcon]="'anexo'"></mat-icon>Atualizar imagem</button>
-            </div>
         </div>
-        <div class="inputs-form fonts-sizes col-xl-5" style="display: flex;
-        align-items: center;justify-content: left;margin-left: 40px;">
-             <mat-slide-toggle>Fechar o Anúncio</mat-slide-toggle>
+        <div style="display: flex;justify-content: center;align-items: center;cursor: pointer;">
+            <img [src]="localUrl" *ngIf="localUrl" class="imgPlaceholder" width="350px"  onclick="document.getElementById('file').click();">
+            <input type="file" style="display:none;" id="file" name="file" (change)="selectFile($event)"/>
         </div>
     </form>
 </div>

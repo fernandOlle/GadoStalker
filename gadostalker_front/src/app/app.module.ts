@@ -51,6 +51,11 @@ import { NovoProdutoComponent } from './component/catalogo/components/modal/novo
 import { EditarProdutoComponent } from './component/catalogo/components/modal/editar-produto/editar-produto.component';
 import { EditarUsuarioComponent } from './component/home/components/editar-usuario/editar-usuario.component';
 import { ModalExcluirFazendaComponent } from './component/fazendas/components/modal-excluir-fazenda/modal-excluir-fazenda.component';
+import {LOCALE_ID, DEFAULT_CURRENCY_CODE} from '@angular/core';
+import localePt from '@angular/common/locales/pt';
+import {registerLocaleData} from '@angular/common';
+
+registerLocaleData(localePt, 'pt');
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -113,7 +118,12 @@ const maskConfig: Partial<IConfig> = {
     NgxCurrencyModule,
     NgxMaskModule.forRoot(maskConfig),
   ],
-  providers: [],
+  providers: [
+    {
+        provide: LOCALE_ID,
+        useValue: 'pt'
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
