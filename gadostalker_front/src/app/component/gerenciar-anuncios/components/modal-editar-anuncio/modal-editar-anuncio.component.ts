@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import {FormGroup, Validators, FormBuilder, FormControl} from '@angular/forms';
+import { ApiService } from '../../../../services/api.service';
+import { LocalStorageService } from '../../../../services/local-storage.service';
 const ANEXO_ICON =
   `
   <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -15,17 +17,63 @@ const ANEXO_ICON =
   styleUrls: ['./modal-editar-anuncio.component.scss']
 })
 export class ModalEditarAnuncioComponent implements OnInit {
-
-  constructor(public dialogRef: MatDialogRef<ModalEditarAnuncioComponent>,
+  formAnuncio: any;
+  produtosFazenda: any;
+  credenciais: any;
+  file?: File;
+  localUrl: any;
+  imageBase64: any;
+  constructor(
+    public dialogRef: MatDialogRef<ModalEditarAnuncioComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer) {
+    sanitizer: DomSanitizer,
+    private formBuilder: FormBuilder,
+    private api: ApiService,
+    private localStorage: LocalStorageService,
+    ) {
       iconRegistry.addSvgIconLiteral('anexo', sanitizer.bypassSecurityTrustHtml(ANEXO_ICON));
-     }
+      this.localUrl = data.anuncio.imagem;
+      this.formAnuncio = this.formBuilder.group({
+        titulo: new FormControl('', Validators.required),
+        produto: new FormControl('', Validators.required),
+        preco: new FormControl('', Validators.required),
+        desconto: new FormControl('', Validators.required),
+        descricao: new FormControl('', Validators.required),
+      });
+    }
 
   ngOnInit(): void {
+    this.credenciais = this.localStorage.get('credenciais');
+    this.getAllProdutosByCpf(this.credenciais.cpf);
   }
+
   closeModal(): void {
     this.dialogRef.close();
+  }
+
+  getAllProdutosByCpf(cpf: String) {
+    this.api.getAllProdutosByCPF(cpf).subscribe(
+      ret => {
+        if(ret)
+          this.produtosFazenda = ret;
+        else
+          this.produtosFazenda = [];
+      }
+    )
+  }
+
+  selectFile(event: any) {
+    this.file = <File>event.target.files[0];
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.readAsDataURL(this.file);
+      reader.onload = (event: any) => {
+        this.localUrl = event.target.result;
+        this.imageBase64 = this.localUrl.split(',')[1];
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 
 }

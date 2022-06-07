@@ -1,45 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalRegistrarVendaComponent } from './components/modal-registrar-venda/modal-registrar-venda.component';
 import { ModalEditarAnuncioComponent } from './components/modal-editar-anuncio/modal-editar-anuncio.component';
+interface Anuncio {
+  dataInicial: any;
+  desconto: any,
+  descricao: any,
+  id: any,
+  produtos:any,
+  preco: any,
+  titulo: any,
+  imagem: any
+}
 @Component({
   selector: 'app-gerenciar-anuncios',
   templateUrl: './gerenciar-anuncios.component.html',
   styleUrls: ['./gerenciar-anuncios.component.scss']
 })
-export class GerenciarAnunciosComponent implements OnInit {
-  anuncios =  [
-    {image: 'Feijão-anuncio2',
-     title: 'Feijão Carioca',
-     preco: 'R$ 3,99/KG'},
-     {image: 'Feijão-anuncio2',
-     title: 'Feijão Branco',
-     preco: 'R$ 4,00/KG'},
-     {image: 'Feijão-anuncio2',
-     title: 'Feijão Preto',
-     preco: 'R$ 4,05/KG'},
-     {image: 'Feijão-anuncio2',
-     title: 'Feijão Vermelho',
-     preco: 'R$ 4,55/KG'},
-     {image: 'Feijão-anuncio2',
-     title: 'Feijão Branco',
-     preco: 'R$ 4,65/KG'},
-     {image: 'Feijão-anuncio2',
-     title: 'Feijão Carioca',
-     preco: 'R$ 4,70/KG'},
-     {image: 'Feijão-anuncio2',
-     title: 'Feijão Vermelho',
-     preco: 'R$ 5,00/KG'},
-     {image: 'Feijão-anuncio2',
-     title: 'Feijão Preto',
-     preco: 'R$ 5,20/KG'},
 
-  ]
+export class GerenciarAnunciosComponent implements OnInit {
+  @Input() anuncios: Anuncio[] = [];
   constructor(
     public dialog: MatDialog,
+
   ) { }
 
   ngOnInit(): void {
+    
   }
   openModalRegistrarVenda() {
     const dialog = this.dialog.open(ModalRegistrarVendaComponent, {
@@ -48,11 +35,14 @@ export class GerenciarAnunciosComponent implements OnInit {
       restoreFocus: false
     });
   }
-  openModalEditarAnuncio() {
+  openModalEditarAnuncio(anuncio: any) {
     const dialog = this.dialog.open(ModalEditarAnuncioComponent, {
-      data: {  },
+      data: { anuncio },
       autoFocus: false,
       restoreFocus: false
     });
   }
+
+
+
 }
