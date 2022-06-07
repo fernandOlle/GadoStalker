@@ -60,6 +60,6 @@ public class AnuncioDTO {
         a.getProdutos().forEach(p -> this.produtos.add(new ProdutoDTO(p)));
         this.dataInicial = a.getDataInicial();
         this.dataFinal = a.getDataFinal();
-        this.imagemId = a.getImagem() == null ? a.getImagem().getId() : null;
+        this.imagemId = a.getImagem() != null ? a.getImagem().getId() : null;
     }
 }
