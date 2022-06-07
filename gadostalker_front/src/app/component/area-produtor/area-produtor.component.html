@@ -28,7 +28,7 @@
             <mat-menu #menu="matMenu" xPosition="before" class="icon-container">
                 <p class="text-capitalize">Olá, {{usuario.nome}}</p>
                 <p class="sub-title">{{usuario.email}}</p>
-                <p class="sub-title">{{usuario.tipoUsuario == 'PROPRIETARIO' ? 'Proprietário' : 'Usuário Comum'}}</p>
+                <p class="sub-title">{{usuario.tipoUsuario == 'PROPRIETARIO' ? 'Proprietário' : usuario.tipoUsuario == 'FUNCIONARIO' ?  'Funcionário' : 'Usuário Comum'}}</p>
                 <div class="container-btns">
                     <button mat-raised-button class="btn-login" (click)="openModalEditarUser(usuario)">
                         <mat-icon [svgIcon]="'edit'" class="edit-icon" style="margin-bottom: 12px;"></mat-icon>Editar

@@ -81,7 +81,9 @@ const OUT_ICON = `
   styleUrls: ['./area-produtor.component.scss']
 })
 export class AreaProdutorComponent implements OnInit {
-
+  Options: string[]
+  pageAtual: string = 'Dashboard';
+  usuario: any;
   constructor(
     iconRegistry: MatIconRegistry, 
     sanitizer: DomSanitizer,
@@ -99,12 +101,15 @@ export class AreaProdutorComponent implements OnInit {
     iconRegistry.addSvgIconLiteral('user',sanitizer.bypassSecurityTrustHtml(USER_ICON));
     iconRegistry.addSvgIconLiteral('edit',sanitizer.bypassSecurityTrustHtml(EDIT_ICON));
     iconRegistry.addSvgIconLiteral('out',sanitizer.bypassSecurityTrustHtml(OUT_ICON));
-  }
-  Options: string[] = ['Dashboard', 'Anúncios', 'Catálogo de Produtos', 'Fazendas', 'Funcionários'];
-  pageAtual: string = 'Dashboard';
-  usuario: any;
-  ngOnInit(): void {
     this.usuario = this.localStorage.get('credenciais');
+    if(this.usuario.tipoUsuario == 'PROPRIETARIO')
+      this.Options = ['Dashboard', 'Anúncios', 'Catálogo de Produtos', 'Fazendas', 'Funcionários'];
+    else
+      this.Options = ['Dashboard', 'Anúncios', 'Catálogo de Produtos'];
+  }
+
+  ngOnInit(): void {
+
   }
 
   openModal() {

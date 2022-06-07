@@ -1,6 +1,5 @@
 package com.ufpel.cs.gadostalker.rest.dtos;
 
-import com.ufpel.cs.gadostalker.rest.entities.Anuncio;
 import com.ufpel.cs.gadostalker.rest.entities.Transacao;
 import java.math.BigDecimal;
 import java.util.Date;
