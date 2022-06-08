@@ -35,7 +35,7 @@ public class Transacao implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dataTransacao;
     
-    @Column(precision = 2, scale = 10)
+    @Column(precision = 10, scale = 2)
     private BigDecimal preco;
     
     @ManyToOne(fetch = FetchType.LAZY)
