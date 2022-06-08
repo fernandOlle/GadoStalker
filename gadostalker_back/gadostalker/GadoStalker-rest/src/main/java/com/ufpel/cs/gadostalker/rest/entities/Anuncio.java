@@ -43,7 +43,7 @@ public class Anuncio implements Serializable {
     @Column
     private String descricao;
     
-    @Column(precision=2)
+    @Column(precision = 10, length = 2)
     private BigDecimal preco;
     
     @Column
