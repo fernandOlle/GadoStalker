@@ -26,6 +26,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { CriarContaComponent } from './component/criar-conta/criar-conta.component';
 import { RecuperarSenhaComponent } from './component/recuperar-senha/recuperar-senha.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxCurrencyModule } from "ngx-currency";
 import { MatDialogModule } from '@angular/material/dialog';
 import { HomeComponent } from './component/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -39,7 +40,7 @@ import { ModalFuncionariosEditarComponent } from './component/funcionarios/compo
 import { ModalConfirmacao } from './component/funcionarios/components/modal-funcionarios-editar/modal-funcionarios-editar.component';
 import { FazendasComponent } from './component/fazendas/fazendas.component';
 import { ModalCadastrarFazendaComponent } from './component/fazendas/components/modal-cadastrar-fazenda/modal-cadastrar-fazenda.component';
-import { ModalDesignarFuncionarioComponent } from './component/fazendas/components/modal-designar-funcionario/modal-designar-funcionario.component';
+import { ModalDesignarFuncionarioComponent } from './component/funcionarios/components/modal-designar-funcionario/modal-designar-funcionario.component';
 import { GerenciarAnunciosComponent } from './component/gerenciar-anuncios/gerenciar-anuncios.component';
 import { ModalCriarAnuncioComponent } from './component/gerenciar-anuncios/components/modal-criar-anuncio/modal-criar-anuncio.component';
 import { ModalEditarAnuncioComponent } from './component/gerenciar-anuncios/components/modal-editar-anuncio/modal-editar-anuncio.component';
@@ -49,6 +50,12 @@ import { ListaProdutoComponent } from './component/catalogo/components/modal/lis
 import { NovoProdutoComponent } from './component/catalogo/components/modal/novo-produto/novo-produto.component';
 import { EditarProdutoComponent } from './component/catalogo/components/modal/editar-produto/editar-produto.component';
 import { EditarUsuarioComponent } from './component/home/components/editar-usuario/editar-usuario.component';
+import { ModalExcluirFazendaComponent } from './component/fazendas/components/modal-excluir-fazenda/modal-excluir-fazenda.component';
+import {LOCALE_ID, DEFAULT_CURRENCY_CODE} from '@angular/core';
+import localePt from '@angular/common/locales/pt';
+import {registerLocaleData} from '@angular/common';
+
+registerLocaleData(localePt, 'pt');
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -79,7 +86,8 @@ const maskConfig: Partial<IConfig> = {
     ListaProdutoComponent,
     NovoProdutoComponent,
     EditarProdutoComponent,
-    EditarUsuarioComponent
+    EditarUsuarioComponent,
+    ModalExcluirFazendaComponent
   ],
   imports: [
     BrowserModule,
@@ -107,9 +115,15 @@ const maskConfig: Partial<IConfig> = {
     MatSnackBarModule,
     MatTooltipModule,
     MatMenuModule,
+    NgxCurrencyModule,
     NgxMaskModule.forRoot(maskConfig),
   ],
-  providers: [],
+  providers: [
+    {
+        provide: LOCALE_ID,
+        useValue: 'pt'
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

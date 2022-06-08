@@ -65,7 +65,10 @@ export class ListaProdutoComponent implements OnInit {
         this.setValue(ret);
         this.api.getAllProdutosByTypeAndSncr(this.productKey, this.fazendas[0].SNCR)
         .subscribe(ret => {
-          this.produtos = ret;
+          if(ret)
+            this.produtos = ret;
+          else
+            this.produtos = [];
         });
       }
     );

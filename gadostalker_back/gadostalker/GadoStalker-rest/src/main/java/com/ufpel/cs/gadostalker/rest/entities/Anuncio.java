@@ -43,7 +43,7 @@ public class Anuncio implements Serializable {
     @Column
     private String descricao;
     
-    @Column
+    @Column(precision=2)
     private BigDecimal preco;
     
     @Column
@@ -62,9 +62,8 @@ public class Anuncio implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dataFinal;
     
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "Anuncio")
-    @JoinColumn(name = "imagem_id")
-    @PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "IMAGEMID")
     private Imagem imagem;
 
     public Anuncio() {

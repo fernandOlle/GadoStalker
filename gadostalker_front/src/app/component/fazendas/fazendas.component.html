@@ -18,30 +18,30 @@
                     <form>
                         <mat-form-field class="inputs-form fonts-sizes col-xl-4">
                             <mat-label>SNCR</mat-label>
-                            <input matInput value="{{fazenda.SNCR}}">
+                            <input matInput [(ngModel)]="fazenda.SNCR" name="SNCR" disabled="true"  mask="00.000.000.000-0">
                         </mat-form-field>
                         <mat-form-field class="inputs-form fonts-sizes col-xl-6">
                             <mat-label>Nome</mat-label>
-                            <input matInput value="{{fazenda.nome}}">
+                            <input matInput [(ngModel)]="fazenda.nome" name="nome" (change)="change()">
                         </mat-form-field>
                         <mat-form-field class="inputs-form fonts-sizes col-xl-6">
                             <mat-label>E-mail</mat-label>
-                            <input matInput value="{{fazenda.email}}">
+                            <input matInput [(ngModel)]="fazenda.email" name="email" (change)="change()">
                         </mat-form-field>
                         <mat-form-field class="inputs-form fonts-sizes col-xl-4">
                             <mat-label>Telefone</mat-label>
-                            <input matInput value="{{fazenda.telefone}}">
+                            <input matInput [(ngModel)]="fazenda.telefone" name="telefone" mask="(00) 00000-0000" (change)="change()">
                         </mat-form-field>
                     </form>
                     <mat-accordion>
                         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" style="width: 80%; margin: auto;">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    Funcionários ({{funcionarios?.length}})
+                                    Funcionários ({{fazenda.funcionarios?.length}})
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <mat-selection-list #funcionario [multiple]="false">
-                                <mat-list-option *ngFor="let funcionario of funcionarios" [value]="funcionario">
+                                <mat-list-option *ngFor="let funcionario of fazenda.funcionarios" [value]="funcionario">
                                   <div class="content">
                                       <div class="nome-email">
                                           <h1 class="nome">{{funcionario.nome}}</h1>
@@ -53,19 +53,20 @@
                                 </mat-list-option>
                               </mat-selection-list>
                               <mat-card-content>
-                                  <div class="container-left"><button mat-raised-button class="btn-novo-funcionario" (click)="openModalDesignar()">Designar Funcionário</button></div>
                               </mat-card-content>
+                              <div *ngIf="fazenda.funcionarios?.length === 0">
+                                <p style="text-align: center">Ainda não foram cadastrados funcionários nessa fazenda.</p>
+                              </div>
                         </mat-expansion-panel>
                     </mat-accordion>
                     <div class="btns-modal-cep">
-                        <button mat-raised-button class="btn-excluir" (click)="openModalConfirmar()">EXCLUIR FAZENDA</button>
-                        <button mat-raised-button class="btn-cancelar">CANCELAR</button>
-                        <button mat-raised-button class="btn-salvar">SALVAR ALTERAÇÕES</button>
+                        <button mat-raised-button class="btn-excluir" (click)="openModalConfirmar(fazenda.SNCR)">EXCLUIR FAZENDA</button>
+                        <button mat-raised-button class="btn-salvar" (click)="editarFazenda(fazenda)" [disabled]="haveChange">SALVAR ALTERAÇÕES</button>
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>
     <mat-card-content>
-        <div class="container-left"><button mat-raised-button class="btn-novo-fazenda" (click)="openModal()">+ Nova Fazenda</button></div>
+        <div class="container-left"><button mat-raised-button class="btn-novo-fazenda" (click)="openModal(this.cpf)">+ Nova Fazenda</button></div>
         <div class="container-right"><span>Quantidade de fazendas: {{fazendasArray?.length}}</span></div>
     </mat-card-content>
 </mat-card>

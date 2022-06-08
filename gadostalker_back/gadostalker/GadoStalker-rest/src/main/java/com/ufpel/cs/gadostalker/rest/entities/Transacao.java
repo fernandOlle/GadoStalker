@@ -1,5 +1,6 @@
 package com.ufpel.cs.gadostalker.rest.entities;
 
+import com.ufpel.cs.gadostalker.rest.dtos.TransacaoDTO;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -34,7 +35,7 @@ public class Transacao implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dataTransacao;
     
-    @Column
+    @Column(precision=2)
     private BigDecimal preco;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -51,6 +52,11 @@ public class Transacao implements Serializable {
         this.dataTransacao = data;
         this.preco = preco;
         this.quantidade = quantidade;
+    }
+    
+    public Transacao(TransacaoDTO dto) {
+        this.preco = dto.preco;
+        this.quantidade = dto.quantidade;
     }
 
     public Long getId() {

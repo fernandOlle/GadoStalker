@@ -103,14 +103,7 @@
     width: 80%;
     margin: 10px auto 10px auto;
     display: flex;
-    justify-content: right;
-    .btn-cancelar{
-        margin-right: 10px;
-        background-color: white;
-        color: #8A8A8A;
-
-        border-radius: 20px;
-    }
+    justify-content: center;
     .btn-excluir{
         margin-right: 290px;
         background-color: white;
@@ -125,3 +118,53 @@
         border-radius: 20px;
     }
 }
+
+::ng-deep  {
+
+    .mat-button-wrapper{
+      display: flex !important;
+    }
+    .mat-radio-inner-circle{
+        background-color: #594A3C !important;
+    }
+  
+    .mat-radio-outer-circle{
+        border-color: #594A3C !important;
+    }
+  
+    .mat-form-field.mat-focused .mat-form-field-label {
+        color: #594A3C !important;
+    }
+  
+    .mat-form-field.mat-focused .mat-form-field-ripple {
+        background-color: #594A3C !important;
+    }
+  
+    .mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
+        background-color: #f44336 !important;
+    }
+  
+    .mat-for
+    m-field.mat-form-field-invalid .mat-form-field-label {
+        color: #f44336 !important;
+    }
+  
+   .mat-checkbox-checked .mat-checkbox-background{
+        background-color: #594A3C !important;
+    }
+  
+    .mat-ink-bar{
+        background-color: #594A3C !important;
+    }
+  
+    .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+        color: #594A3C !important;
+    }
+    .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+        color: #594A3C !important;
+    }
+    .mat-button-disabled{
+      background-color: rgba(0, 0, 0, 0.12) !important;
+      color: rgba(0, 0, 0, 0.26) !important;
+    }
+  }

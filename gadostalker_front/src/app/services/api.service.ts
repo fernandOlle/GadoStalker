@@ -25,6 +25,14 @@ export class ApiService {
     }));
   }
 
+  cadastroFuncionario(body: any) {
+    let url =
+      'http://localhost:8080/GadoStalker-rest/resources/usuario/cadastro/func';
+    return this.http.post(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
   login(body: any) {
     let url = 'http://localhost:8080/GadoStalker-rest/resources/usuario/login';
     return this.http.post(url, body).pipe(take(1), catchError(error => {
@@ -53,6 +61,13 @@ export class ApiService {
   getAllProdutosByFazendaSNCR(sncr: String) {
     let url = `http://localhost:8080/GadoStalker-rest/resources/produto/getAllProdutosFazenda/${sncr}`;
     return this.http.get(url);
+  }
+
+  getAllProdutosByCPF(cpf: String) {
+    let url = `http://localhost:8080/GadoStalker-rest/resources/produto/getAllProdutosProprietario/${cpf}`;
+    return this.http.get(url).pipe(take(1), catchError(error => {
+      return of(0);
+    }));;
   }
 
   getAllProdutosByTypeAndSncr(type: String, sncr: String) {
@@ -102,4 +117,76 @@ export class ApiService {
     }));
   }
 
+  adicionarFazenda(cpf: any, body: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/fazenda/cadastro/${cpf}`;
+    return this.http.post(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  deletarFazenda(sncr: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/fazenda/remover/${sncr}`;
+    return this.http.delete(url).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  getQuestions() {
+    let url = 'http://localhost:8080/GadoStalker-rest/resources/usuario/getAllPerguntas';
+    return this.http.get(url);
+  }
+
+  getListaFuncionariosByCpf(cpf: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/usuario/listFuncionarios/${cpf}`;
+    return this.http.get(url).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  trocaFuncionarioFazenda(body: any){
+    let url = 'http://localhost:8080/GadoStalker-rest/resources/usuario/funcionario/trocaFazenda';
+    return this.http.put(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+  
+  excluirUsuarioByCpf(cpf: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/usuario/remover/${cpf}`;
+    return this.http.delete(url).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  editarFazendaBySncr(sncr: any, body: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/fazenda/modificar/${sncr}`;
+    return this.http.post(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  adicionarAnuncio(body: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/anuncio/cadastrar`;
+    return this.http.post(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  uploadFile(image: any, fileName: any) { 
+    let url = 'http://localhost:8080/GadoStalker-rest/resources/upload/create';     
+    const formData: FormData = new FormData();
+    formData.append('imagem', image);
+    formData.append('fileName', fileName);
+    return this.http.post(url, formData).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  getImagemById(id: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/upload/get/${id}`;
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+
+    return this.http.get(url,  { headers, responseType: 'text'}).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
 }

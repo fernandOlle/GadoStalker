@@ -1,18 +1,23 @@
 package com.ufpel.cs.gadostalker.rest.controllers;
 
 import com.ufpel.cs.gadostalker.rest.dtos.TransacaoDTO;
-import com.ufpel.cs.gadostalker.rest.entities.Transacao;
 import java.util.ArrayList;
 import java.util.List;
+import com.ufpel.cs.gadostalker.rest.entities.Anuncio;
+import com.ufpel.cs.gadostalker.rest.entities.Transacao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.ws.rs.GET;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.Date;
+import jakarta.ws.rs.PathParam;
 
 /**
  *
@@ -64,4 +69,34 @@ public class TransacaoController {
                 .status(Response.Status.OK)
                 .build();
     }
+    
+    @POST
+    @Path("/registrar/{id}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Transactional
+    public Response registraTransacao(TransacaoDTO transacaoDTO, @PathParam("id") Long id) {       
+        Anuncio a = em.find(Anuncio.class, id);
+        Transacao t = new Transacao(transacaoDTO);
+        t.setAnuncio(a);
+	t.setDataTransacao(new Date());
+	
+        try {
+            em.persist(t);
+            em.flush();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        transacaoDTO.dataTransacao = t.getDataTransacao();
+        transacaoDTO.id = t.getId();
+        
+        return Response
+                .ok(transacaoDTO)
+                .status(Response.Status.CREATED)
+                .build();
+    }
+    
 }

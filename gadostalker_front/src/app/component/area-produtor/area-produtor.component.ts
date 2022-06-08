@@ -6,6 +6,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { EditarUsuarioComponent } from '../../component/home/components/editar-usuario/editar-usuario.component';
+import { ApiService } from '../../services/api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 const MENU_ICON =
   `
   <svg style="width:36px;height:36px" viewBox="0 0 24 24">
@@ -73,20 +76,35 @@ const OUT_ICON = `
     <path fill="currentColor" d="M19,3H5C3.89,3 3,3.89 3,5V9H5V5H19V19H5V15H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M10.08,15.58L11.5,17L16.5,12L11.5,7L10.08,8.41L12.67,11H3V13H12.67L10.08,15.58Z" />
 </svg>
 `
-
+interface Anuncio {
+  dataInicial: any;
+  desconto: any,
+  descricao: any,
+  id: any,
+  produtos:any,
+  preco: any,
+  titulo: any,
+  imagem: any
+}
 
 @Component({
   selector: 'app-area-produtor',
   templateUrl: './area-produtor.component.html',
   styleUrls: ['./area-produtor.component.scss']
 })
-export class AreaProdutorComponent implements OnInit {
 
+export class AreaProdutorComponent implements OnInit {
+  Options: string[]
+  pageAtual: string = 'Dashboard';
+  usuario: any;
+  anuncios: Anuncio[] = [];
   constructor(
     iconRegistry: MatIconRegistry, 
     sanitizer: DomSanitizer,
     public dialog: MatDialog,
     private router: Router,
+    private api: ApiService,
+    private _snackBar: MatSnackBar,
     private localStorage: LocalStorageService,
   ) { 
     iconRegistry.addSvgIconLiteral('menu', sanitizer.bypassSecurityTrustHtml(MENU_ICON));
@@ -99,19 +117,36 @@ export class AreaProdutorComponent implements OnInit {
     iconRegistry.addSvgIconLiteral('user',sanitizer.bypassSecurityTrustHtml(USER_ICON));
     iconRegistry.addSvgIconLiteral('edit',sanitizer.bypassSecurityTrustHtml(EDIT_ICON));
     iconRegistry.addSvgIconLiteral('out',sanitizer.bypassSecurityTrustHtml(OUT_ICON));
-  }
-  Options: string[] = ['Dashboard', 'Anúncios', 'Catálogo de Produtos', 'Fazendas', 'Funcionários'];
-  pageAtual: string = 'Dashboard';
-  usuario: any;
-  ngOnInit(): void {
     this.usuario = this.localStorage.get('credenciais');
+    if(this.usuario.tipoUsuario == 'PROPRIETARIO')
+      this.Options = ['Dashboard', 'Anúncios', 'Catálogo de Produtos', 'Fazendas', 'Funcionários'];
+    else
+      this.Options = ['Dashboard', 'Anúncios', 'Catálogo de Produtos'];
   }
 
+  ngOnInit(): void {
+
+  }
+  anuncio: any;
   openModal() {
     const dialog = this.dialog.open(ModalCriarAnuncioComponent, {
       data: {  },
       autoFocus: false,
       restoreFocus: false
+    });
+    dialog.afterClosed().subscribe(ret => {
+      if(ret){
+        this.anuncio = ret;
+        this.api.getImagemById(this.anuncio.imagemId).subscribe(
+          retImagem => {
+            if(retImagem){
+              this.anuncio.imagem = retImagem;
+              this.anuncios.push(this.anuncio);
+            } else{
+              this.openSnackBar('Erro ao buscar imagem.', 'Fechar');
+            }
+          });
+      }
     });
   }
   
@@ -144,6 +179,11 @@ export class AreaProdutorComponent implements OnInit {
        this.localStorage.set('credenciais', this.usuario)
       }
     });
+  }
+
+  
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 
 }

@@ -64,7 +64,7 @@ public class Produto implements Serializable {
     @JoinColumn(name = "FAZENDA_SNCR", nullable = true, referencedColumnName = "SNCR")
     private Fazenda fazenda;
 
-    @Column
+    @Column(precision=2)
     private BigDecimal quantidade;
 
     public Produto() {

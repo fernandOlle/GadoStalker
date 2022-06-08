@@ -28,7 +28,7 @@
             <mat-menu #menu="matMenu" xPosition="before" class="icon-container">
                 <p class="text-capitalize">Olá, {{usuario.nome}}</p>
                 <p class="sub-title">{{usuario.email}}</p>
-                <p class="sub-title">{{usuario.tipoUsuario == 'PROPRIETARIO' ? 'Proprietário' : 'Usuário Comum'}}</p>
+                <p class="sub-title">{{usuario.tipoUsuario == 'PROPRIETARIO' ? 'Proprietário' : usuario.tipoUsuario == 'FUNCIONARIO' ?  'Funcionário' : 'Usuário Comum'}}</p>
                 <div class="container-btns">
                     <button mat-raised-button class="btn-login" (click)="openModalEditarUser(usuario)">
                         <mat-icon [svgIcon]="'edit'" class="edit-icon" style="margin-bottom: 12px;"></mat-icon>Editar
@@ -56,7 +56,7 @@
         </div>
         <div class="container-component">
             <app-dashboard *ngIf="pageAtual == 'Dashboard'"></app-dashboard>
-            <app-gerenciar-anuncios *ngIf="pageAtual == 'Anúncios'"></app-gerenciar-anuncios>
+            <app-gerenciar-anuncios *ngIf="pageAtual == 'Anúncios'" [anuncios]="anuncios"></app-gerenciar-anuncios>
             <app-catalogo *ngIf="pageAtual == 'Catálogo de Produtos'"></app-catalogo>
             <app-fazendas *ngIf="pageAtual == 'Fazendas'"></app-fazendas>
             <app-funcionarios *ngIf="pageAtual == 'Funcionários'"></app-funcionarios>

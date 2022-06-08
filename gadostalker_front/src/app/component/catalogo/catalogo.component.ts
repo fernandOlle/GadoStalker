@@ -67,7 +67,10 @@ export class CatalogoComponent implements OnInit {
   getAllProdutosByFazendaSNCR(sncr: String) {
     this.api.getAllProdutosByFazendaSNCR(sncr).subscribe(
       ret => {
-        this.produtosFazenda = ret;
+        if(ret)
+          this.produtosFazenda = ret;
+        else 
+          this.produtosFazenda = [];
         this.setProdutosEnable();
       }
     )

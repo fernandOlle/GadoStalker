@@ -51,7 +51,7 @@ public class Fazenda implements Serializable {
     @ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
     private Proprietario proprietario;
     
-    @OneToMany(mappedBy = "fazenda", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "fazenda", cascade={CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.LAZY)
     @JoinColumn(name="fazendaid")
     private List<Funcionario> funcionarios;
 
