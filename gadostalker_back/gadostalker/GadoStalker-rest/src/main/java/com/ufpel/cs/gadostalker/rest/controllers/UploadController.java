@@ -36,8 +36,10 @@ public class UploadController {
         Imagem img = new Imagem(fileName, file);
         
         em.persist(img);
+        em.flush();
         
         return Response
+                .ok(img.getId())
                 .status(Response.Status.CREATED)
                 .build();
     }
