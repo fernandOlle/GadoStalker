@@ -180,4 +180,13 @@ export class ApiService {
       return of(0);
     }));
   }
+
+  getImagemById(id: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/upload/get/${id}`;
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+
+    return this.http.get(url,  { headers, responseType: 'text'}).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
 }

@@ -89,15 +89,7 @@ export class ModalCriarAnuncioComponent implements OnInit {
         if(ret)
           this.produtosFazenda = ret;
         else
-          this.produtosFazenda = [
-            {
-                "fazenda": "1723948172893",
-                "id": 1,
-                "nome": "Feijao Carioca",
-                "quantidade": 2,
-                "tipo": "FEIJAO"
-            }
-        ];
+          this.produtosFazenda = [];
       }
     )
   }
@@ -108,7 +100,7 @@ export class ModalCriarAnuncioComponent implements OnInit {
     delete json.produto;
     json.produtos = [{id: produtoIdSelected}];
     this.api.adicionarAnuncio(json).subscribe(
-      ret => {
+      async ret => {
         if(ret){
           this.anuncioCadastrado = ret;
           this.uploadImage();
@@ -117,15 +109,23 @@ export class ModalCriarAnuncioComponent implements OnInit {
       }
     )
   }
-  
-  uploadImage(){
+
+  async uploadImage(){
     if (this.file != undefined) {
-      this.api.uploadFile(this.imageBase64, this.file.name).subscribe((data: any) => {});
+      this.api.uploadFile(this.imageBase64, this.file.name).subscribe((data: any) => {
+        if (data == 0){
+          this.openSnackBar('Erro com ao fazer upload da imagem.', 'Fechar');
+          this.dialogRef.close();
+        }else{
+          this.anuncioCadastrado.imagemId = data;
+          this.dialogRef.close(this.anuncioCadastrado);
+        }
+      });
     } else {
       this.openSnackBar("Selecione um arquivo!", 'Fechar');
     }
   }
-
+  
    openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
   }

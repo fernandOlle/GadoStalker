@@ -181,6 +181,29 @@ public class AnuncioController {
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
+    
+    @GET
+    @Path("getAnuncioID/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response anunciosProprietario(@PathParam("id") Long id) {
+        
+        Anuncio u;
+        
+        try {
+            u = em.find(Anuncio.class, id);
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        AnuncioDTO anuncioDTO = new AnuncioDTO(u);
+        
+        return Response
+                .ok(anuncioDTO)
+                .status(Response.Status.OK)
+                .build();
+    }
 
     @GET
     @Path("anunciosProprietario/{cpf}")

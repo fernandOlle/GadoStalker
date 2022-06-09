@@ -56,7 +56,7 @@
         </div>
         <div class="container-component">
             <app-dashboard *ngIf="pageAtual == 'Dashboard'"></app-dashboard>
-            <app-gerenciar-anuncios *ngIf="pageAtual == 'Anúncios'"></app-gerenciar-anuncios>
+            <app-gerenciar-anuncios *ngIf="pageAtual == 'Anúncios'" [anuncios]="anuncios"></app-gerenciar-anuncios>
             <app-catalogo *ngIf="pageAtual == 'Catálogo de Produtos'"></app-catalogo>
             <app-fazendas *ngIf="pageAtual == 'Fazendas'"></app-fazendas>
             <app-funcionarios *ngIf="pageAtual == 'Funcionários'"></app-funcionarios>
