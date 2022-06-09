@@ -3,6 +3,7 @@ package com.ufpel.cs.gadostalker.rest.controllers;
 import com.ufpel.cs.gadostalker.rest.dtos.AnuncioDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.ProdutoDTO;
 import com.ufpel.cs.gadostalker.rest.entities.Anuncio;
+import com.ufpel.cs.gadostalker.rest.entities.Imagem;
 import com.ufpel.cs.gadostalker.rest.entities.Produto;
 import java.util.ArrayList;
 import java.util.Date;
@@ -199,13 +200,13 @@ public class AnuncioController {
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
-        
+
         if (anuncios.isEmpty()) {
             return Response
-                .status(Response.Status.NO_CONTENT)
-                .build();
+                    .status(Response.Status.NO_CONTENT)
+                    .build();
         }
-        
+
         List<AnuncioDTO> anuncioDTOs = new ArrayList<>();
 
         anuncios.forEach(a -> {
@@ -301,5 +302,31 @@ public class AnuncioController {
                 .ok(anuncioDTOs)
                 .status(Response.Status.OK)
                 .build();
+    }
+
+    @GET
+    @Path("/setImagemToAnuncio/{idAnuncio}/{idImagem}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response setImagemToAnuncio(@PathParam("idAnuncio") Long idAnuncio, @PathParam("idImagem") Long idImagem) {
+        Anuncio a = em.find(Anuncio.class, idAnuncio);
+        Imagem i = em.find(Imagem.class, idImagem);
+
+        try {
+            a.setImagem(i);
+            a = em.merge(a);
+            em.flush();
+        } catch(Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+
+        AnuncioDTO anuncio = new AnuncioDTO(a);
+
+        return Response
+                .ok(anuncio)
+                .status(Response.Status.ACCEPTED)
+                .build();
+        
     }
 }
