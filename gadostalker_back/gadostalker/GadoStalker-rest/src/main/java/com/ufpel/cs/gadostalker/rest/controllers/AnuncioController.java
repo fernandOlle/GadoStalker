@@ -330,6 +330,7 @@ public class AnuncioController {
     @GET
     @Path("/setImagemToAnuncio/{idAnuncio}/{idImagem}")
     @Produces({MediaType.APPLICATION_JSON})
+    @Transactional
     public Response setImagemToAnuncio(@PathParam("idAnuncio") Long idAnuncio, @PathParam("idImagem") Long idImagem) {
         Anuncio a = em.find(Anuncio.class, idAnuncio);
         Imagem i = em.find(Imagem.class, idImagem);
