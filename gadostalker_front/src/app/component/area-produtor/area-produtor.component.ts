@@ -84,7 +84,8 @@ interface Anuncio {
   produtos:any,
   preco: any,
   titulo: any,
-  imagem: any
+  imagem: any,
+  imagemId:any,
 }
 
 @Component({

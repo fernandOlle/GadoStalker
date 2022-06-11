@@ -118,12 +118,24 @@ export class ModalCriarAnuncioComponent implements OnInit {
           this.dialogRef.close();
         }else{
           this.anuncioCadastrado.imagemId = data;
-          this.dialogRef.close(this.anuncioCadastrado);
+          this.vincularAnuncioImagem(this.anuncioCadastrado.id, this.anuncioCadastrado.imagemId);
         }
       });
     } else {
       this.openSnackBar("Selecione um arquivo!", 'Fechar');
     }
+  }
+
+  vincularAnuncioImagem(idAnuncio: any, Idimagem: any){
+    this.api.setImagemToAnuncio(idAnuncio, Idimagem).subscribe((ret: any) => {
+      debugger
+      if (ret == 0){
+        this.openSnackBar('Erro com vincular anuncio e imagem.', 'Fechar');
+        this.dialogRef.close();
+      }else{
+        this.dialogRef.close(this.anuncioCadastrado);
+      }
+    });
   }
   
    openSnackBar(message: string, action: string) {

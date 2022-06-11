@@ -23,6 +23,7 @@ export class ModalEditarAnuncioComponent implements OnInit {
   file?: File;
   localUrl: any;
   imageBase64: any;
+  anuncio: any;
   constructor(
     public dialogRef: MatDialogRef<ModalEditarAnuncioComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -33,13 +34,14 @@ export class ModalEditarAnuncioComponent implements OnInit {
     private localStorage: LocalStorageService,
     ) {
       iconRegistry.addSvgIconLiteral('anexo', sanitizer.bypassSecurityTrustHtml(ANEXO_ICON));
-      this.localUrl = data.anuncio.imagem;
+      this.anuncio = data.anuncio;
+      this.localUrl = this.anuncio.imagem;
       this.formAnuncio = this.formBuilder.group({
-        titulo: new FormControl('', Validators.required),
-        produto: new FormControl('', Validators.required),
-        preco: new FormControl('', Validators.required),
-        desconto: new FormControl('', Validators.required),
-        descricao: new FormControl('', Validators.required),
+        titulo: new FormControl(this.anuncio.titulo, Validators.required),
+        produto: new FormControl(this.anuncio.produtos[0].id, Validators.required),
+        preco: new FormControl(this.anuncio.preco, Validators.required),
+        desconto: new FormControl(this.anuncio.desconto, Validators.required),
+        descricao: new FormControl(this.anuncio.descricao, Validators.required),
       });
     }
 
@@ -55,8 +57,10 @@ export class ModalEditarAnuncioComponent implements OnInit {
   getAllProdutosByCpf(cpf: String) {
     this.api.getAllProdutosByCPF(cpf).subscribe(
       ret => {
-        if(ret)
+        if(ret){
           this.produtosFazenda = ret;
+          this.produtosFazenda = this.produtosFazenda.filter((produto: { tipo: string; }) => produto.tipo == this.anuncio.produtos[0].tipo);
+        }
         else
           this.produtosFazenda = [];
       }
@@ -74,6 +78,18 @@ export class ModalEditarAnuncioComponent implements OnInit {
       }
       reader.readAsDataURL(event.target.files[0]);
     }
+  }
+
+  editarAnuncio(idAnuncio: any){
+    let json = this.formAnuncio.value;
+    this.api.editarAnuncioById(idAnuncio, json).subscribe(
+      ret => {
+        if(ret)
+          this.anuncio = ret;
+        else
+          this.produtosFazenda = [];
+      }
+    )
   }
 
 }

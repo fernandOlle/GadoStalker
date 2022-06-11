@@ -189,4 +189,25 @@ export class ApiService {
       return of(0);
     }));
   }
+
+  getAllAnunciosByCPF(cpf: String) {
+    let url = `http://localhost:8080/GadoStalker-rest/resources/anuncio/anunciosProprietario/${cpf}`;
+    return this.http.get(url).pipe(take(1), catchError(error => {
+      return of(error);
+    }));
+  }
+
+  setImagemToAnuncio(idAnuncio: any, Idimagem: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/anuncio/setImagemToAnuncio/${idAnuncio}/${Idimagem}`;
+    return this.http.get(url).pipe(take(1), catchError(error => {
+      return of(error);
+    }));
+  }
+
+  editarAnuncioById(id: any, body: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/anuncio/editar/${id}`;
+    return this.http.put(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
 }
