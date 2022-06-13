@@ -28,8 +28,9 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "anuncio")
 @SequenceGenerator(name = "seqAnuncio", sequenceName = "SEQANUNCIO", allocationSize = 1)
-@NamedQuery(name = "Anuncio.getAllAnunciosQueContemProduto", query = "SELECT a FROM Anuncio a INNER JOIN a.produtos p "
-        + "WHERE EXISTS (SELECT p2 FROM Produto p2 WHERE p2.tipo = :tipo)")
+@NamedQuery(name = "Anuncio.getAllAnunciosQueContemProduto", query = "SELECT a FROM Anuncio a WHERE a.produto.tipo = :tipo")
+//@NamedQuery(name = "Anuncio.getAllAnunciosQueContemProduto", query = "SELECT a FROM Anuncio a INNER JOIN a.produtos p "
+//        + "WHERE EXISTS (SELECT p2 FROM Produto p2 WHERE p2.tipo = :tipo)")
 public class Anuncio implements Serializable {
 
     @Id
