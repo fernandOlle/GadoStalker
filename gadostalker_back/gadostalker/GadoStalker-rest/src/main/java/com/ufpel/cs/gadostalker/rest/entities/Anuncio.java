@@ -13,7 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -48,10 +48,10 @@ public class Anuncio implements Serializable {
     @Column
     private String desconto;
     
-    //@ManyToOne(fetch = FetchType.LAZY)
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
+    //@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "PRODUTOID", nullable = true, referencedColumnName = "id")
-    private List<Produto> produtos;
+    private Produto produto;
     
     @Column
     @Temporal(TemporalType.DATE)
@@ -68,12 +68,12 @@ public class Anuncio implements Serializable {
     public Anuncio() {
     }
 
-    public Anuncio(String titulo, String descricao, BigDecimal preco, String desconto, List<Produto> produto, Date dataInicial, Date dataFinal) {
+    public Anuncio(String titulo, String descricao, BigDecimal preco, String desconto, Produto produto, Date dataInicial, Date dataFinal) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.preco = preco;
         this.desconto = desconto;
-        this.produtos = produto;
+        this.produto = produto;
         this.dataInicial = dataInicial;
         this.dataFinal = dataFinal;
     }
@@ -114,16 +114,12 @@ public class Anuncio implements Serializable {
         this.desconto = desconto;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void addProduto(Produto produto) {
-        produtos.add(produto);
+    public Produto getProduto() {
+        return produto;
     }
     
-    public void removeProdto(Produto produto) {
-        produtos.remove(produto);
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
     public Date getDataInicial() {
