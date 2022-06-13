@@ -97,8 +97,7 @@ export class ModalCriarAnuncioComponent implements OnInit {
   salvarAnuncio(){
     let produtoIdSelected = this.formAnuncio.controls.produto.value;
     let json = this.formAnuncio.value;
-    delete json.produto;
-    json.produtos = [{id: produtoIdSelected}];
+    json.produto = {id: produtoIdSelected};
     this.api.adicionarAnuncio(json).subscribe(
       async ret => {
         if(ret){
