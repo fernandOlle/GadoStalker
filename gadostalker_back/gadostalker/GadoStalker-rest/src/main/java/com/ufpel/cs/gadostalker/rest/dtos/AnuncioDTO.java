@@ -6,9 +6,7 @@ package com.ufpel.cs.gadostalker.rest.dtos;
 
 import com.ufpel.cs.gadostalker.rest.entities.Anuncio;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -35,7 +33,7 @@ public class AnuncioDTO {
     public String desconto;
     
     @XmlElement
-    public List<ProdutoDTO> produtos;
+    public ProdutoDTO produto;
     
     @XmlElement
     public Date dataInicial;
@@ -56,8 +54,7 @@ public class AnuncioDTO {
         this.descricao = a.getDescricao();
         this.preco = a.getPreco();
         this.desconto = a.getDesconto();
-        this.produtos = new ArrayList<>();
-        a.getProdutos().forEach(p -> this.produtos.add(new ProdutoDTO(p)));
+        this.produto = new ProdutoDTO(a.getProduto());
         this.dataInicial = a.getDataInicial();
         this.dataFinal = a.getDataFinal();
         this.imagemId = a.getImagem() != null ? a.getImagem().getId() : null;

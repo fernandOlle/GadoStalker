@@ -42,14 +42,16 @@ public class AnuncioController {
     @Transactional
     public Response cadastraAnuncio(AnuncioDTO anuncio) {
 
-        List<Produto> produtos = new ArrayList<>();
+        Produto p;
+        try {
+            p = em.find(Produto.class, anuncio.produto.id);
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
 
-        anuncio.produtos.forEach(p -> {
-            Produto produto = em.find(Produto.class, p.id);
-            produtos.add(produto);
-        });
-
-        Anuncio a = new Anuncio(anuncio.titulo, anuncio.descricao, anuncio.preco, anuncio.desconto, produtos, new Date(), null);
+        Anuncio a = new Anuncio(anuncio.titulo, anuncio.descricao, anuncio.preco, anuncio.desconto, p, new Date(), null);
 
         try {
             em.persist(a);
@@ -59,11 +61,9 @@ public class AnuncioController {
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
-        anuncio.produtos = new ArrayList<>();
-
-        a.getProdutos().forEach(p -> {
-            anuncio.produtos.add(new ProdutoDTO(p));
-        });
+        
+        anuncio.produto = new ProdutoDTO(p);
+        
         anuncio.id = a.getId();
         anuncio.dataInicial = a.getDataInicial();
 
@@ -80,14 +80,20 @@ public class AnuncioController {
     @Transactional
     public Response editarAnuncio(@PathParam("id") Long id, AnuncioDTO anuncio) {
 
-        Anuncio a = em.find(Anuncio.class, id);
+        Anuncio a;
+        Produto p;
+        
 
         try {
+            a = em.find(Anuncio.class, id);
+            p = em.find(Produto.class, anuncio.produto.id);
+            
             a.setTitulo(anuncio.titulo);
             a.setDescricao(anuncio.descricao);
             a.setPreco(anuncio.preco);
             a.setDesconto(anuncio.desconto);
-
+            a.setProduto(p);
+            
             a = em.merge(a);
             em.flush();
         } catch (Exception e) {
@@ -210,7 +216,7 @@ public class AnuncioController {
     @Produces({MediaType.APPLICATION_JSON})
     public Response anunciosProprietario(@PathParam("cpf") String cpf) {
 
-        TypedQuery<Anuncio> anunciosQuery = em.createQuery("SELECT a FROM Anuncio a INNER JOIN a.produtos p WHERE p.fazenda.proprietario.cpf = :cpf",
+        TypedQuery<Anuncio> anunciosQuery = em.createQuery("SELECT a FROM Anuncio a WHERE a.produto.fazenda.proprietario.cpf = :cpf",
                 Anuncio.class);
         anunciosQuery.setParameter("cpf", cpf);
 
@@ -280,12 +286,12 @@ public class AnuncioController {
                         .build();
         }
 
-        String query = "SELECT a FROM Anuncio a INNER JOIN a.produtos p";
+        String query = "SELECT a FROM Anuncio a";
 
         query += " WHERE a.dataFinal IS NULL";
 
         if (tipo != null) {
-            query += " AND p.tipo = :tipo";
+            query += " AND a.produto.tipo = :tipo";
         }
 
         if (search != null) {
