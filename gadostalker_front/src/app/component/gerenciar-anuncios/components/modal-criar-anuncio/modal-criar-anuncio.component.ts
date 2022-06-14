@@ -127,7 +127,6 @@ export class ModalCriarAnuncioComponent implements OnInit {
 
   vincularAnuncioImagem(idAnuncio: any, Idimagem: any){
     this.api.setImagemToAnuncio(idAnuncio, Idimagem).subscribe((ret: any) => {
-      debugger
       if (ret == 0){
         this.openSnackBar('Erro com vincular anuncio e imagem.', 'Fechar');
         this.dialogRef.close();

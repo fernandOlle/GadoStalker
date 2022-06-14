@@ -98,7 +98,8 @@ export class AreaProdutorComponent implements OnInit {
   Options: string[]
   pageAtual: string = 'Dashboard';
   usuario: any;
-  anuncios: Anuncio[] = [];
+  anuncios: any = [];
+  credenciais: any;
   constructor(
     iconRegistry: MatIconRegistry, 
     sanitizer: DomSanitizer,
@@ -126,7 +127,9 @@ export class AreaProdutorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.credenciais = this.localStorage.get('credenciais');
+    this.anuncios = [];
+    this.getAnunciosProprietario(this.credenciais.cpf);
   }
   anuncio: any;
   openModal() {
@@ -185,6 +188,27 @@ export class AreaProdutorComponent implements OnInit {
   
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
+  }
+
+  getAnunciosProprietario(cpf: any){
+    this.api.getAllAnunciosByCPF(cpf).subscribe(
+      ret => {
+        if(ret){
+          ret.forEach((a: Anuncio) => {
+            this.api.getImagemById(a.imagemId).subscribe(
+              retImagem => {
+                if(retImagem){
+                  a.imagem = retImagem;
+                  this.anuncios.push(a);
+                } else{
+                  //this.openSnackBar('Erro ao buscar imagem.', 'Fechar');
+                  this.anuncios.push(a);
+                }
+              });
+          });
+        }
+      }
+    );
   }
 
 }

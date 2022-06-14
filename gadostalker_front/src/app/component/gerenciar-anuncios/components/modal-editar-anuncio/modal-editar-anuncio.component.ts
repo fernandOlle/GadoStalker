@@ -5,6 +5,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import {FormGroup, Validators, FormBuilder, FormControl} from '@angular/forms';
 import { ApiService } from '../../../../services/api.service';
 import { LocalStorageService } from '../../../../services/local-storage.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 const ANEXO_ICON =
   `
   <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -32,13 +34,14 @@ export class ModalEditarAnuncioComponent implements OnInit {
     private formBuilder: FormBuilder,
     private api: ApiService,
     private localStorage: LocalStorageService,
+    private _snackBar: MatSnackBar,
     ) {
       iconRegistry.addSvgIconLiteral('anexo', sanitizer.bypassSecurityTrustHtml(ANEXO_ICON));
       this.anuncio = data.anuncio;
       this.localUrl = this.anuncio.imagem;
       this.formAnuncio = this.formBuilder.group({
         titulo: new FormControl(this.anuncio.titulo, Validators.required),
-        produto: new FormControl(this.anuncio.produtos[0].id, Validators.required),
+        produto: new FormControl(this.anuncio.produto.id, Validators.required),
         preco: new FormControl(this.anuncio.preco, Validators.required),
         desconto: new FormControl(this.anuncio.desconto, Validators.required),
         descricao: new FormControl(this.anuncio.descricao, Validators.required),
@@ -59,7 +62,7 @@ export class ModalEditarAnuncioComponent implements OnInit {
       ret => {
         if(ret){
           this.produtosFazenda = ret;
-          this.produtosFazenda = this.produtosFazenda.filter((produto: { tipo: string; }) => produto.tipo == this.anuncio.produtos[0].tipo);
+          this.produtosFazenda = this.produtosFazenda.filter((produto: { tipo: string; }) => produto.tipo == this.anuncio.produto.tipo);
         }
         else
           this.produtosFazenda = [];
@@ -82,14 +85,52 @@ export class ModalEditarAnuncioComponent implements OnInit {
 
   editarAnuncio(idAnuncio: any){
     let json = this.formAnuncio.value;
+    json.produto = {id: json.produto};
     this.api.editarAnuncioById(idAnuncio, json).subscribe(
       ret => {
-        if(ret)
+        if(ret){
           this.anuncio = ret;
+          if(this.file)
+            this.uploadImage();
+          else
+            this.dialogRef.close(this.anuncio);
+        }
         else
-          this.produtosFazenda = [];
+          this.openSnackBar('Erro ao editar anúncio', 'Fechar');
       }
     )
   }
+
+  async uploadImage(){
+    if (this.file != undefined) {
+      this.api.uploadFile(this.imageBase64, this.file.name).subscribe((data: any) => {
+        if (data == 0){
+          this.openSnackBar('Erro com ao fazer upload da imagem.', 'Fechar');
+          this.dialogRef.close();
+        }else{
+          this.anuncio.imagemId = data;
+          this.vincularAnuncioImagem(this.anuncio.id, this.anuncio.imagemId);
+        }
+      });
+    } else {
+      this.openSnackBar("Selecione um arquivo!", 'Fechar');
+    }
+  }
+
+  vincularAnuncioImagem(idAnuncio: any, Idimagem: any){
+    this.api.setImagemToAnuncio(idAnuncio, Idimagem).subscribe((ret: any) => {
+      if (ret == 0){
+        this.openSnackBar('Erro com vincular anuncio e imagem.', 'Fechar');
+        this.dialogRef.close();
+      }else{
+        this.dialogRef.close(this.anuncio);
+      }
+    });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
+  }
+
 
 }

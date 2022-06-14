@@ -33,7 +33,7 @@ interface Anuncio {
 })
 
 export class GerenciarAnunciosComponent implements OnInit {
-  @Input() anuncios: Anuncio[] = [];
+  @Input() anuncios: any = [];
   credenciais: any;
   constructor(
     public dialog: MatDialog,
@@ -44,12 +44,9 @@ export class GerenciarAnunciosComponent implements OnInit {
     sanitizer: DomSanitizer,
   ) {
     iconRegistry.addSvgIconLiteral('no-database', sanitizer.bypassSecurityTrustHtml(SEM_DADOS_ICON));
-    this.credenciais = this.localStorage.get('credenciais');
-    this.getAnunciosProprietario(this.credenciais.cpf);
    }
 
   ngOnInit(): void {
-    
   }
   openModalRegistrarVenda(anuncio: any) {
     const dialog = this.dialog.open(ModalRegistrarVendaComponent, {
@@ -64,27 +61,19 @@ export class GerenciarAnunciosComponent implements OnInit {
       autoFocus: false,
       restoreFocus: false
     });
-  }
-
-  getAnunciosProprietario(cpf: any){
-    this.api.getAllAnunciosByCPF(cpf).subscribe(
-      ret => {
-        if(ret){
-          ret.forEach((a: Anuncio) => {
-            this.api.getImagemById(a.imagemId).subscribe(
-              retImagem => {
-                if(retImagem){
-                  a.imagem = retImagem;
-                  this.anuncios.push(a);
-                } else{
-                  //this.openSnackBar('Erro ao buscar imagem.', 'Fechar');
-                }
-                this.anuncios.push(a);
-              });
+    dialog.afterClosed().subscribe(anuncioEditado => {
+      if(anuncioEditado){
+        this.api.getImagemById(anuncioEditado.imagemId).subscribe(
+          retImagem => {
+            if(retImagem){
+              anuncioEditado.imagem = retImagem;
+              this.anuncios[this.anuncios.findIndex((anuncio: { id: any; }) => anuncio.id == anuncioEditado.id)] = anuncioEditado;
+            } else{
+              //this.openSnackBar('Erro ao buscar imagem.', 'Fechar');
+            }
           });
-        }
       }
-    );
+    });
   }
 
   openSnackBar(message: string, action: string) {
