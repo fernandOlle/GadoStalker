@@ -62,6 +62,9 @@ export class GerenciarAnunciosComponent implements OnInit {
       restoreFocus: false
     });
     dialog.afterClosed().subscribe(anuncioEditado => {
+      if(anuncioEditado?.lenght > 0){ //remover anuncio
+        this.anuncios.splice(this.anuncios.findIndex((anuncio: { id: number; }) => anuncio.id === anuncioEditado[0]), 1);
+      }else{
       if(anuncioEditado){
         this.api.getImagemById(anuncioEditado.imagemId).subscribe(
           retImagem => {
@@ -73,6 +76,7 @@ export class GerenciarAnunciosComponent implements OnInit {
             }
           });
       }
+    }
     });
   }
 

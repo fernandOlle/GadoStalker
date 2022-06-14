@@ -41,6 +41,10 @@
             <img [src]="localUrl" *ngIf="localUrl" class="imgPlaceholder" width="350px"  onclick="document.getElementById('file').click();">
             <input type="file" style="display:none;" id="file" name="file" (change)="selectFile($event)"/>
         </div>
+
+        <div style="width: 85%;margin: auto;">
+            <button mat-raised-button class="btn-cancelar" (click)="excluirAnuncio(anuncio.id)">Excluir Anúncio</button>
+        </div>
     </form>
 </div>
 <hr>

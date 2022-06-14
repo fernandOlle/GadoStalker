@@ -210,4 +210,12 @@ export class ApiService {
       return of(0);
     }));
   }
+
+  
+  deletarAnuncioById(id: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/anuncio/deleta/${id}`;
+    return this.http.delete(url).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
 }

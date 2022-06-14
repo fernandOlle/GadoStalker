@@ -132,5 +132,16 @@ export class ModalEditarAnuncioComponent implements OnInit {
     this._snackBar.open(message, action);
   }
 
+  excluirAnuncio(id: any){
+    this.api.deletarAnuncioById(id).subscribe((ret: any) => {
+      if (ret == 0){
+        this.openSnackBar('Erro ao excluir o anúncio.', 'Fechar');
+        this.dialogRef.close();
+      }else{
+        this.dialogRef.close([id, 'excluir']);
+      }
+    });
+  }
+
 
 }
