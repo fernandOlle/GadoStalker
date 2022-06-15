@@ -62,6 +62,9 @@ public class Anuncio implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dataFinal;
     
+    @Column
+    private boolean isExcluido;
+    
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "IMAGEMID")
     private Imagem imagem;
@@ -69,7 +72,7 @@ public class Anuncio implements Serializable {
     public Anuncio() {
     }
 
-    public Anuncio(String titulo, String descricao, BigDecimal preco, String desconto, Produto produto, Date dataInicial, Date dataFinal) {
+    public Anuncio(String titulo, String descricao, BigDecimal preco, String desconto, Produto produto, Date dataInicial, Date dataFinal, boolean excluido) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.preco = preco;
@@ -77,6 +80,7 @@ public class Anuncio implements Serializable {
         this.produto = produto;
         this.dataInicial = dataInicial;
         this.dataFinal = dataFinal;
+        this.isExcluido = excluido;
     }
     
     public Long getId() {
@@ -145,6 +149,14 @@ public class Anuncio implements Serializable {
 
     public void setImagem(Imagem imagem) {
         this.imagem = imagem;
+    }
+
+    public boolean isIsExcluido() {
+        return isExcluido;
+    }
+
+    public void setIsExcluido(boolean isExcluido) {
+        this.isExcluido = isExcluido;
     }
 
     @Override

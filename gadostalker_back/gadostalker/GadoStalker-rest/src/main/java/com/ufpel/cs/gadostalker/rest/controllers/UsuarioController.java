@@ -437,7 +437,7 @@ public class UsuarioController {
     public Response infosDashBoard(@PathParam("cpf") String cpf) {
         
         TypedQuery<Long> totalAnunciosQuery = 
-                em.createQuery("SELECT COUNT(a) FROM Anuncio a WHERE a.produto.fazenda.proprietario.cpf = :cpf AND a.dataFinal IS NULL", Long.class)
+                em.createQuery("SELECT COUNT(a) FROM Anuncio a WHERE a.produto.fazenda.proprietario.cpf = :cpf AND a.dataFinal IS NULL AND a.isExcluido = false", Long.class)
                 .setParameter("cpf", cpf);
         
         Date hoje = new Date();
