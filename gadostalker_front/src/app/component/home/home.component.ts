@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarUsuarioComponent } from './components/editar-usuario/editar-usuario.component';
+import { ApiService } from '../../services/api.service';
 
 const USER_ICON = `
 <svg style="width:36px;height:36px" viewBox="0 0 24 24">
@@ -30,14 +31,18 @@ const OUT_ICON = `
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  catalogo = ['Leite', 'Mel', 'Milho', 'Alface', 'Feijão', 'Soja', 'Vagem', 'Tomate'];
+  catalogo: any = [];
+  catalogoFiltrado: any = [];
   usuario :any;
+  filtroSelecionado: any = 'Todas';
+  categorias: string[] = ['Todas', 'Animal', 'Embalados', 'Frutas', 'Grãos', 'Vegetal'];
   constructor(
     private localStorage: LocalStorageService,
     private router: Router,
     public dialog: MatDialog,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
+    private api: ApiService,
   ) {
     iconRegistry.addSvgIconLiteral(
       'user',
@@ -55,6 +60,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuario = this.localStorage.get('credenciais');
+    this.getCatalogo();
   }
   
   redirecionar(){
@@ -82,6 +88,31 @@ export class HomeComponent implements OnInit {
        this.localStorage.set('credenciais', this.usuario)
       }
     });
+  }
+
+  getCatalogo() {
+    this.api.getAllTiposProdutos().subscribe(
+      ret => {
+        let values = Object.values(ret);
+        values.forEach(produto => { this.catalogo.push({ nome: produto, enabled: false }) });
+        this.catalogoFiltrado = this.catalogo;
+      }
+    );
+  }
+
+  filter(value: any){
+    this.catalogoFiltrado = this.catalogo;
+    if(value == 'Animal'){
+      this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Leite' || produto.nome == 'Ovo' || produto.nome == 'Mel');
+    } else if(value == 'Vegetal'){
+      this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Alface' || produto.nome == 'Milho' || produto.nome == 'Tomate');
+    } else if(value == 'Grãos'){
+      this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Vagem' || produto.nome == 'Soja' || produto.nome == 'Feijão' || produto.nome == 'Milho');
+    } else if(value == 'Frutas'){
+      this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Tomate');
+    } else if(value == 'Embalados'){
+      this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Mel');
+    }
   }
 
 }

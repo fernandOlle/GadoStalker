@@ -66,27 +66,25 @@
     <div class="container-filters">
       <mat-card class="result">
         <mat-card-content>
-          <h2 class="example-h2">Origem</h2>
+          <h2 class="example-h2">Filtrar categorias</h2>
 
-          <section class="example-section">
-            <mat-checkbox class="example-margin">
-              Animal
-            </mat-checkbox>
-          </section>
+          <mat-radio-group
+          aria-labelledby="example-radio-group-label"
+          class="example-radio-group"
+          [(ngModel)]="filtroSelecionado">
+          <mat-radio-button class="example-radio-button" *ngFor="let categoria of categorias" [value]="categoria" (click)="filter(categoria)">
+            {{categoria}}
+          </mat-radio-button>
+        </mat-radio-group>
 
-          <section class="example-section">
-            <mat-checkbox class="example-margin">
-              Vegetal
-            </mat-checkbox>
-          </section>
         </mat-card-content>
       </mat-card>
     </div>
     <div class="container-categorias">
       <div class="grid-categorias">
-        <mat-card class="card-produto" *ngFor="let produto of catalogo">
-          <img src="../../../assets/{{produto}}.png" alt="" width="200px" height="150px">
-          <h1>{{produto}}</h1>
+        <mat-card class="card-produto" *ngFor="let produto of catalogoFiltrado">
+          <img src="../../../assets/{{ produto.nome }}.png" alt="" width="200px" height="150px">
+          <h1>{{produto.nome}}</h1>
         </mat-card>
       </div>
     </div>
