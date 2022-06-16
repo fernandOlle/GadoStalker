@@ -7,6 +7,7 @@ import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entities.FazendasValidas;
 import com.ufpel.cs.gadostalker.rest.entities.Funcionario;
+import com.ufpel.cs.gadostalker.rest.entities.Produto.TipoProdutoEnum;
 import com.ufpel.cs.gadostalker.rest.entities.Proprietario;
 import com.ufpel.cs.gadostalker.rest.entities.Usuario;
 import com.ufpel.cs.gadostalker.rest.entities.UsuarioComum;
@@ -487,7 +488,7 @@ public class UsuarioController {
     public Response geraGraficoPizza(@PathParam("cpf") String cpf) {
         
         TypedQuery<Object[]> vendasPorTipoProdutoQuery =
-                em.createQuery("SELECT p.nome, SUM(t.quantidade) FROM Transacao t INNER JOIN t.anuncio.produto p WHERE p.fazenda.proprietario.cpf = :cpf GROUP BY p.nome", Object[].class)
+                em.createQuery("SELECT p.tipo, SUM(t.quantidade) FROM Transacao t INNER JOIN t.anuncio.produto p WHERE p.fazenda.proprietario.cpf = :cpf GROUP BY p.tipo", Object[].class)
                 .setParameter("cpf", cpf);
         
         ArrayList<GraficoPizzaDTO> grafico;
@@ -512,7 +513,7 @@ public class UsuarioController {
         
         
         o.forEach(obj -> {
-            grafico.add(new GraficoPizzaDTO((String) obj[0], (Long) obj[1]));
+            grafico.add(new GraficoPizzaDTO((TipoProdutoEnum) obj[0], (Long) obj[1]));
         });
         
         return Response

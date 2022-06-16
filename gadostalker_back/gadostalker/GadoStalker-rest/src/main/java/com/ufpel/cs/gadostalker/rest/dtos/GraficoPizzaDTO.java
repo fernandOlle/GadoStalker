@@ -1,5 +1,6 @@
 package com.ufpel.cs.gadostalker.rest.dtos;
 
+import com.ufpel.cs.gadostalker.rest.entities.Produto.TipoProdutoEnum;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -11,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class GraficoPizzaDTO {
     
     @XmlElement
-    public String produto;
+    public TipoProdutoEnum produto;
     
     @XmlElement
     public Long vendas;
@@ -19,7 +20,7 @@ public class GraficoPizzaDTO {
     public GraficoPizzaDTO() {
     }
     
-    public GraficoPizzaDTO(String p, Long v) {
+    public GraficoPizzaDTO(TipoProdutoEnum p, Long v) {
         produto = p;
         vendas = v;
     }
