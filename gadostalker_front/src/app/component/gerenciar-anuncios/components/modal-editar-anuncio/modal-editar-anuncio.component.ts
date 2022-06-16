@@ -49,6 +49,7 @@ export class ModalEditarAnuncioComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    debugger
     this.credenciais = this.localStorage.get('credenciais');
     this.getAllProdutosByCpf(this.credenciais.cpf);
   }
@@ -141,6 +142,28 @@ export class ModalEditarAnuncioComponent implements OnInit {
         this.dialogRef.close([id, 'excluir']);
       }
     });
+  }
+
+  fecharAbrirAnuncio(fechar: any, id: any){
+    if(fechar){
+      this.api.encerrarAnuncioById(id).subscribe((ret: any) => {
+        if (ret == 0){
+          this.openSnackBar('Erro ao encerrar o anúncio.', 'Fechar');
+          this.dialogRef.close();
+        }else{
+          this.dialogRef.close(ret);
+        }
+      });
+    } else{
+      this.api.reabrirAnuncioById(id).subscribe((ret: any) => {
+        if (ret == 0){
+          this.openSnackBar('Erro ao reabrir o anúncio.', 'Fechar');
+          this.dialogRef.close();
+        }else{
+          this.dialogRef.close(ret);
+        }
+      });
+    }
   }
 
 

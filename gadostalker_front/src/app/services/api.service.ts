@@ -218,4 +218,20 @@ export class ApiService {
       return of(0);
     }));
   }
+
+  encerrarAnuncioById(id: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/anuncio/encerra/${id}`;
+    return this.http.put(url, {}).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  reabrirAnuncioById(id: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/anuncio/reabre/${id}`;
+    return this.http.put(url, {}).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  
 }
