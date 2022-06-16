@@ -213,7 +213,7 @@ public class AnuncioController {
     }
 
     @GET
-    @Path("anunciosProprietario/{cpf}")
+    @Path("getAllAnunciosByProprietarioCPF/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response anunciosProprietario(@PathParam("cpf") String cpf) {
 

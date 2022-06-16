@@ -2,6 +2,7 @@ package com.ufpel.cs.gadostalker.rest.controllers;
 
 import com.ufpel.cs.gadostalker.rest.dtos.DashBoardDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
+import com.ufpel.cs.gadostalker.rest.dtos.GraficoPizzaDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entities.FazendasValidas;
@@ -80,7 +81,7 @@ public class UsuarioController {
     }
 
     @GET
-    @Path("/getFazendasProprietario/{cpf}")
+    @Path("/getAllFazendasByProprietarioCpf/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getFazendasProprietario(@PathParam("cpf") String cpf) {
 
@@ -128,7 +129,7 @@ public class UsuarioController {
     }
 
     @GET
-    @Path("cadastro/valida/{sncr}")
+    @Path("cadastro/validaSncr/{sncr}")
     public Response fazendaIsValida(@PathParam("sncr") String SNCR) {
         TypedQuery<FazendasValidas> fazendaQuery = em.createQuery("SELECT f FROM FazendasValidas f "
                 + "where f.SNCR = :sncr", FazendasValidas.class);
@@ -314,7 +315,7 @@ public class UsuarioController {
     }
 
     @GET
-    @Path("/listFuncionarios/{cpf}")
+    @Path("/getListaFuncionariosByProprietarioCpf/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response listaFuncionarios(@PathParam("cpf") String cpf) {
 
@@ -455,22 +456,67 @@ public class UsuarioController {
                 em.createQuery("SELECT COUNT(f) FROM Funcionario f WHERE f.fazenda.proprietario.cpf = :cpf", Long.class)
                 .setParameter("cpf", cpf);
         
-        Long totalAnuncios, totalVendas, totalFuncionarios;
+        TypedQuery<Long> totalProdutosCatalogoQuery =
+                em.createQuery("SELECT COUNT(DISTINCT(p.tipo)) From Produto p WHERE p.fazenda.proprietario.cpf = :cpf", Long.class)
+                .setParameter("cpf", cpf);
+        
+        Long totalAnuncios, totalVendas, totalFuncionarios, totalProdutosCatalogo;
         
         try {
             totalAnuncios = totalAnunciosQuery.getSingleResult();
             totalVendas = totalVendasQuery.getSingleResult();
             totalFuncionarios = totalFuncionariosQuery.getSingleResult();
+            totalProdutosCatalogo = totalProdutosCatalogoQuery.getSingleResult();
         } catch (Exception e) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
         
-        DashBoardDTO dashBoard = new DashBoardDTO(totalAnuncios, totalVendas, totalFuncionarios);
+        DashBoardDTO dashBoard = new DashBoardDTO(totalAnuncios, totalVendas, totalFuncionarios, totalProdutosCatalogo);
         
         return Response
                 .ok(dashBoard)
+                .status(Response.Status.ACCEPTED)
+                .build();
+    }
+    
+    @GET
+    @Path("/proprietario/geraGraficoPizza/{cpf}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response geraGraficoPizza(@PathParam("cpf") String cpf) {
+        
+        TypedQuery<Object[]> vendasPorTipoProdutoQuery =
+                em.createQuery("SELECT p.nome, SUM(t.quantidade) FROM Transacao t INNER JOIN t.anuncio.produto p WHERE p.fazenda.proprietario.cpf = :cpf GROUP BY p.nome", Object[].class)
+                .setParameter("cpf", cpf);
+        
+        ArrayList<GraficoPizzaDTO> grafico;
+        List<Object[]> o;
+        
+        try {
+            o = vendasPorTipoProdutoQuery.getResultList();
+        } catch(Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        if(o.isEmpty()) {
+            return Response
+                    .ok(o)
+                    .status(Response.Status.NO_CONTENT)
+                    .build();
+        }
+        
+        grafico = new ArrayList<>();
+        
+        
+        o.forEach(obj -> {
+            grafico.add(new GraficoPizzaDTO((String) obj[0], (Long) obj[1]));
+        });
+        
+        return Response
+                .ok(grafico)
                 .status(Response.Status.ACCEPTED)
                 .build();
     }

@@ -54,24 +54,24 @@ export class ApiService {
   }
 
   getAllFazendasByProprietarioCpf(cpf: String) {
-    let url = `http://localhost:8080/GadoStalker-rest/resources/usuario/getFazendasProprietario/${cpf}`;
+    let url = `http://localhost:8080/GadoStalker-rest/resources/usuario/getAllFazendasByProprietarioCpf/${cpf}`;
     return this.http.get(url);
   }
 
   getAllProdutosByFazendaSNCR(sncr: String) {
-    let url = `http://localhost:8080/GadoStalker-rest/resources/produto/getAllProdutosFazenda/${sncr}`;
+    let url = `http://localhost:8080/GadoStalker-rest/resources/produto/getAllProdutosByFazendaSNCR/${sncr}`;
     return this.http.get(url);
   }
 
   getAllProdutosByCPF(cpf: String) {
-    let url = `http://localhost:8080/GadoStalker-rest/resources/produto/getAllProdutosProprietario/${cpf}`;
+    let url = `http://localhost:8080/GadoStalker-rest/resources/produto/getAllProdutosByProprietarioCpf/${cpf}`;
     return this.http.get(url).pipe(take(1), catchError(error => {
       return of(0);
     }));;
   }
 
   getAllProdutosByTypeAndSncr(type: String, sncr: String) {
-    let url = `http://localhost:8080/GadoStalker-rest/resources/produto/consultarPorTipo/${type}/${sncr}`;
+    let url = `http://localhost:8080/GadoStalker-rest/resources/produto/getAllProdutosByTypeAndSncr/${type}/${sncr}`;
     return this.http.get(url);
   }
 
@@ -104,7 +104,7 @@ export class ApiService {
   }
 
   validaSncr(sncr: any){
-    let url = ` http://localhost:8080/GadoStalker-rest/resources/usuario/cadastro/valida/${sncr}`;
+    let url = ` http://localhost:8080/GadoStalker-rest/resources/usuario/cadastro/validaSncr/${sncr}`;
     return this.http.get(url).pipe(take(1), catchError(error => {
       return of(0);
     }));
@@ -137,7 +137,7 @@ export class ApiService {
   }
 
   getListaFuncionariosByCpf(cpf: any){
-    let url = `http://localhost:8080/GadoStalker-rest/resources/usuario/listFuncionarios/${cpf}`;
+    let url = `http://localhost:8080/GadoStalker-rest/resources/usuario/getListaFuncionariosByProprietarioCpf/${cpf}`;
     return this.http.get(url).pipe(take(1), catchError(error => {
       return of(0);
     }));
@@ -191,7 +191,7 @@ export class ApiService {
   }
 
   getAllAnunciosByCPF(cpf: String) {
-    let url = `http://localhost:8080/GadoStalker-rest/resources/anuncio/anunciosProprietario/${cpf}`;
+    let url = `http://localhost:8080/GadoStalker-rest/resources/anuncio/getAllAnunciosByProprietarioCPF/${cpf}`;
     return this.http.get(url).pipe(take(1), catchError(error => {
       return of(error);
     }));
@@ -218,4 +218,20 @@ export class ApiService {
       return of(0);
     }));
   }
+
+  encerrarAnuncioById(id: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/anuncio/encerra/${id}`;
+    return this.http.put(url, {}).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  reabrirAnuncioById(id: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/anuncio/reabre/${id}`;
+    return this.http.put(url, {}).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
+  
 }
