@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN" "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+<resources>
+    <jdbc-resource pool-name="GadoStalkerRemote" jndi-name="jdbc/GadoStalkerRemote">
+        <description/>
+    </jdbc-resource>
+    <jdbc-connection-pool datasource-classname="com.mysql.cj.jdbc.MysqlDataSource" name="GadoStalkerRemote" res-type="javax.sql.DataSource">
+      <property name="serverName" value="162.241.85.112"></property>
+      <property name="useSSL" value="false"></property>
+      <property name="portNumber" value="3306"></property>
+      <property name="user" value="aplicymb_ds"></property>
+      <property name="databaseName" value="aplicymb_ds"></property>
+      <property name="password" value="i4Tc5zdA&!0gB2"></property>
+    </jdbc-connection-pool>
+    
+    <jdbc-resource enabled="true" pool-name="GadoStalker" jndi-name="jdbc/GadoStalker">
+        <description/>
+    </jdbc-resource>
+    <jdbc-connection-pool datasource-classname="com.mysql.cj.jdbc.MysqlDataSource" name="GadoStalker" res-type="javax.sql.DataSource">
+      <property name="serverName" value="localhost"></property>
+      <property name="useSSL" value="false"></property>
+      <property name="portNumber" value="3306"></property>
+      <property name="user" value="root"></property>
+      <property name="databaseName" value="gadostalkerdb"></property>
+      <property name="password" value="toor"></property>
+    </jdbc-connection-pool>
+</resources>

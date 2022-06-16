@@ -51,7 +51,7 @@ public class AnuncioController {
                     .build();
         }
 
-        Anuncio a = new Anuncio(anuncio.titulo, anuncio.descricao, anuncio.preco, anuncio.desconto, p, new Date(), null);
+        Anuncio a = new Anuncio(anuncio.titulo, anuncio.descricao, anuncio.preco, anuncio.desconto, p, new Date(), null, false);
 
         try {
             em.persist(a);
@@ -175,7 +175,8 @@ public class AnuncioController {
         Anuncio a = em.find(Anuncio.class, id);
 
         try {
-            em.remove(a);
+            a.setIsExcluido(true);
+            em.merge(a);
             em.flush();
         } catch (Exception e) {
             return Response
@@ -216,7 +217,7 @@ public class AnuncioController {
     @Produces({MediaType.APPLICATION_JSON})
     public Response anunciosProprietario(@PathParam("cpf") String cpf) {
 
-        TypedQuery<Anuncio> anunciosQuery = em.createQuery("SELECT a FROM Anuncio a WHERE a.produto.fazenda.proprietario.cpf = :cpf",
+        TypedQuery<Anuncio> anunciosQuery = em.createQuery("SELECT a FROM Anuncio a WHERE a.produto.fazenda.proprietario.cpf = :cpf AND a.isExcluido = false",
                 Anuncio.class);
         anunciosQuery.setParameter("cpf", cpf);
 
@@ -288,7 +289,7 @@ public class AnuncioController {
 
         String query = "SELECT a FROM Anuncio a";
 
-        query += " WHERE a.dataFinal IS NULL";
+        query += " WHERE a.dataFinal IS NULL AND a.isExcluido = false";
 
         if (tipo != null) {
             query += " AND a.produto.tipo = :tipo";

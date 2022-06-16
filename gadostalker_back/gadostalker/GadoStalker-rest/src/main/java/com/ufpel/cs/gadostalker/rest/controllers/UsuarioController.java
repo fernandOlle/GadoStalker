@@ -1,5 +1,6 @@
 package com.ufpel.cs.gadostalker.rest.controllers;
 
+import com.ufpel.cs.gadostalker.rest.dtos.DashBoardDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
@@ -10,6 +11,8 @@ import com.ufpel.cs.gadostalker.rest.entities.Usuario;
 import com.ufpel.cs.gadostalker.rest.entities.UsuarioComum;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -80,7 +83,7 @@ public class UsuarioController {
     @Path("/getAllFazendasByProprietarioCpf/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getFazendasProprietario(@PathParam("cpf") String cpf) {
-        
+
         em.getEntityManagerFactory().getCache().evictAll();
         TypedQuery<Fazenda> fazendasQuery = em.createQuery("select f from Proprietario p "
                 + "inner join p.fazendas f where p.cpf = :cpf", Fazenda.class);
@@ -130,7 +133,7 @@ public class UsuarioController {
         TypedQuery<FazendasValidas> fazendaQuery = em.createQuery("SELECT f FROM FazendasValidas f "
                 + "where f.SNCR = :sncr", FazendasValidas.class);
         fazendaQuery.setParameter("sncr", SNCR);
-        
+
         try {
             fazendaQuery.getSingleResult();
         } catch (Exception e){
@@ -225,19 +228,19 @@ public class UsuarioController {
     public Response editarUsuario(UsuarioDTO usuario, @PathParam("cpf") String cpf) {
 
         Usuario u;
-        
+
         try {
             u = em.find(Usuario.class, cpf);
         } catch (Exception e) {
             return Response
-                .status(Response.Status.BAD_REQUEST)
-                .build();
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
         }
-        
+
         if (u == null) {
             return Response
-                .status(Response.Status.NO_CONTENT)
-                .build();
+                    .status(Response.Status.NO_CONTENT)
+                    .build();
         }
 
         u.setEmail(usuario.email);
@@ -352,57 +355,57 @@ public class UsuarioController {
                 .status(Response.Status.OK)
                 .build();
     }
-    
+
     @DELETE
     @Path("/remover/{cpf}")
     @Transactional
     public Response removerUsuario(@PathParam("cpf") String cpf) {
-        
+
         Usuario u;
-        
+
         try {
             u = em.find(Usuario.class, cpf);
         } catch (Exception e) {
             return Response
-                .status(Response.Status.BAD_REQUEST)
-                .build();
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
         }
-        
+
         if (u == null) {
             return Response
-                .status(Response.Status.NOT_FOUND)
-                .build();
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
         }
-        
+
         try {
             em.remove(u);
         } catch (Exception e) {
-        return Response
-                .status(Response.Status.BAD_REQUEST)
-                .build();
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
         }
 
         return Response
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
-  
+
     @PUT
     @Path("/funcionario/trocaFazenda")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     @Transactional
     public Response trocaFazendaFuncionario(UsuarioDTO usuario) {
-        
+
         Funcionario funcionario = em.find(Funcionario.class, usuario.cpf);
         Fazenda fazenda = em.find(Fazenda.class, usuario.fazendas.get(0).SNCR);
-        
+
         if (funcionario == null || fazenda == null) {
             return Response
                     .status(Response.Status.NOT_FOUND)
                     .build();
         }
-        
+
         funcionario.setFazenda(fazenda);
         try {
             funcionario = em.merge(funcionario);
@@ -414,16 +417,60 @@ public class UsuarioController {
         }
         //TODO: Trocar UsuarioDTO por FuncionarioDTO; parece facil mas tem um monte de coisa pra adaptar
         UsuarioDTO u = new UsuarioDTO();
-        
+
         u.cpf = funcionario.getCpf();
         u.email = funcionario.getEmail();
         u.addFazendaDTO(new FazendaDTO(funcionario.getFazenda()));
         u.nome = funcionario.getNome();
         u.telefone = funcionario.getTelefone();
         u.tipoUsuario = funcionario.getTipoUsuario();
-        
+
         return Response
                 .ok(u)
+                .status(Response.Status.ACCEPTED)
+                .build();
+    }
+    
+    @GET
+    @Path("/proprietario/getInfosDashboard/{cpf}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response infosDashBoard(@PathParam("cpf") String cpf) {
+        
+        TypedQuery<Long> totalAnunciosQuery = 
+                em.createQuery("SELECT COUNT(a) FROM Anuncio a WHERE a.produto.fazenda.proprietario.cpf = :cpf AND a.dataFinal IS NULL AND a.isExcluido = false", Long.class)
+                .setParameter("cpf", cpf);
+        
+        Date hoje = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(hoje);
+        c.add(Calendar.MONTH, -1);
+        Date mesAnterior = c.getTime();
+        TypedQuery<Long> totalVendasQuery = 
+                em.createQuery("SELECT COUNT(t) FROM Transacao t WHERE t.anuncio.produto.fazenda.proprietario.cpf = :cpf AND t.dataTransacao BETWEEN :mesAnterior AND :hoje", Long.class)
+                .setParameter("cpf", cpf)
+                .setParameter("mesAnterior", mesAnterior)
+                .setParameter("hoje", hoje);
+        
+        TypedQuery<Long> totalFuncionariosQuery =
+                em.createQuery("SELECT COUNT(f) FROM Funcionario f WHERE f.fazenda.proprietario.cpf = :cpf", Long.class)
+                .setParameter("cpf", cpf);
+        
+        Long totalAnuncios, totalVendas, totalFuncionarios;
+        
+        try {
+            totalAnuncios = totalAnunciosQuery.getSingleResult();
+            totalVendas = totalVendasQuery.getSingleResult();
+            totalFuncionarios = totalFuncionariosQuery.getSingleResult();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        DashBoardDTO dashBoard = new DashBoardDTO(totalAnuncios, totalVendas, totalFuncionarios);
+        
+        return Response
+                .ok(dashBoard)
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
