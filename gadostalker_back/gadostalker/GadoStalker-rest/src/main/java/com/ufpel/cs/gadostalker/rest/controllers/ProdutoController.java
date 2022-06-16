@@ -66,7 +66,7 @@ public class ProdutoController {
     }
     
     @GET
-    @Path("/getAllProdutosFazenda/{sncr}")
+    @Path("/getAllProdutosByFazendaSNCR/{sncr}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllProdutosFazenda(@PathParam("sncr") String sncr) {
         
@@ -103,7 +103,7 @@ public class ProdutoController {
     }
 
     @GET
-    @Path("/consultarPorTipo/{tipo}/{sncr}")
+    @Path("/getAllProdutosByTypeAndSncr/{tipo}/{sncr}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response consultarProdutoPorTipo(@PathParam("tipo") TipoProdutoEnum tipo, @PathParam("sncr") String sncr) {
         
@@ -251,7 +251,7 @@ public class ProdutoController {
     }
     
     @GET
-    @Path("/getAllProdutosProprietario/{cpf}")
+    @Path("/getAllProdutosByProprietarioCpf/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllProdutosProprietario(@PathParam("cpf") String cpf) {
         

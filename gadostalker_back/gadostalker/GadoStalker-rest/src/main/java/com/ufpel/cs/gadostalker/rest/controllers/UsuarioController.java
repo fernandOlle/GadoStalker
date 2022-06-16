@@ -77,7 +77,7 @@ public class UsuarioController {
     }
 
     @GET
-    @Path("/getFazendasProprietario/{cpf}")
+    @Path("/getAllFazendasByProprietarioCpf/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getFazendasProprietario(@PathParam("cpf") String cpf) {
         
@@ -125,7 +125,7 @@ public class UsuarioController {
     }
 
     @GET
-    @Path("cadastro/valida/{sncr}")
+    @Path("cadastro/validaSncr/{sncr}")
     public Response fazendaIsValida(@PathParam("sncr") String SNCR) {
         TypedQuery<FazendasValidas> fazendaQuery = em.createQuery("SELECT f FROM FazendasValidas f "
                 + "where f.SNCR = :sncr", FazendasValidas.class);
@@ -311,7 +311,7 @@ public class UsuarioController {
     }
 
     @GET
-    @Path("/listFuncionarios/{cpf}")
+    @Path("/getListaFuncionariosByProprietarioCpf/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response listaFuncionarios(@PathParam("cpf") String cpf) {
 
