@@ -148,7 +148,7 @@ public class TransacaoController {
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
-    
+
     @GET
     @Path("/lucroVendasUltimosMeses/{numMeses}/{cpf}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -193,6 +193,35 @@ public class TransacaoController {
 
         return Response
                 .ok(arrayVendas)
+                .status(Response.Status.ACCEPTED)
+                .build();
+    }
+
+    @GET
+    @Path("/lucroGeralByCpf/{cpf}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getLucroGeralByCpf(@PathParam("cpf") String cpf) {
+        TypedQuery<BigDecimal> query = em.createQuery("select sum(t.preco) from Transacao t "
+                + "inner join t.anuncio a "
+                + "inner join a.produto p "
+                + "inner join p.fazenda f "
+                + "inner join f.proprietario u "
+                + "where u.cpf = :cpf",
+                BigDecimal.class);
+        query.setParameter("cpf", cpf);
+
+        BigDecimal lucroGeral = BigDecimal.ZERO;
+
+        try {
+            lucroGeral = query.getSingleResult();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+
+        return Response
+                .ok(lucroGeral)
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
