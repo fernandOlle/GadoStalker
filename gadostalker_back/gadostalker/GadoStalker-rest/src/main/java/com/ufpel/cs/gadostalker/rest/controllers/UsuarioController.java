@@ -455,19 +455,24 @@ public class UsuarioController {
                 em.createQuery("SELECT COUNT(f) FROM Funcionario f WHERE f.fazenda.proprietario.cpf = :cpf", Long.class)
                 .setParameter("cpf", cpf);
         
-        Long totalAnuncios, totalVendas, totalFuncionarios;
+        TypedQuery<Long> totalProdutosCatalogoQuery =
+                em.createQuery("SELECT COUNT(DISTINCT(p.tipo)) From Produto p WHERE p.fazenda.proprietario.cpf = :cpf", Long.class)
+                .setParameter("cpf", cpf);
+        
+        Long totalAnuncios, totalVendas, totalFuncionarios, totalProdutosCatalogo;
         
         try {
             totalAnuncios = totalAnunciosQuery.getSingleResult();
             totalVendas = totalVendasQuery.getSingleResult();
             totalFuncionarios = totalFuncionariosQuery.getSingleResult();
+            totalProdutosCatalogo = totalProdutosCatalogoQuery.getSingleResult();
         } catch (Exception e) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
         
-        DashBoardDTO dashBoard = new DashBoardDTO(totalAnuncios, totalVendas, totalFuncionarios);
+        DashBoardDTO dashBoard = new DashBoardDTO(totalAnuncios, totalVendas, totalFuncionarios, totalProdutosCatalogo);
         
         return Response
                 .ok(dashBoard)

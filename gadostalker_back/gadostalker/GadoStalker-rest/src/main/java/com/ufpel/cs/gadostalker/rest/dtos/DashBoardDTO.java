@@ -19,12 +19,16 @@ public class DashBoardDTO {
     @XmlElement
     public Long totalFuncionarios;
     
+    @XmlElement
+    public Long totalProdutosCatalogo;
+    
     public DashBoardDTO(){
     }
     
-    public DashBoardDTO(Long anuncios, Long vendas, Long funcionarios) {
+    public DashBoardDTO(Long anuncios, Long vendas, Long funcionarios, Long produtos) {
         totalAnunciosAtivos = anuncios;
         totalVendasUltimoMes = vendas;
         totalFuncionarios = funcionarios;
+        totalProdutosCatalogo = produtos;
     }
 }
