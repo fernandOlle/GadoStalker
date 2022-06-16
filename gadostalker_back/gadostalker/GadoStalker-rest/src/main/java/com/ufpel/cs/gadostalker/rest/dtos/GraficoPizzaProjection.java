@@ -9,19 +9,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author thouta
  */
 @XmlRootElement
-public class GraficoPizzaDTO {
+public class GraficoPizzaProjection {
     
     @XmlElement
-    public TipoProdutoEnum produto;
+    public String produto;
     
     @XmlElement
     public Long vendas;
     
-    public GraficoPizzaDTO() {
+    public GraficoPizzaProjection() {
     }
     
-    public GraficoPizzaDTO(TipoProdutoEnum p, Long v) {
-        produto = p;
+    public GraficoPizzaProjection(TipoProdutoEnum p, Long v) {
+        produto = p.getTipo();
         vendas = v;
     }
 }
