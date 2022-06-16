@@ -47,7 +47,7 @@ public class Anuncio implements Serializable {
     private BigDecimal preco;
     
     @Column
-    private String desconto;
+    private int desconto;
     
     @ManyToOne(fetch = FetchType.LAZY)
     //@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -72,7 +72,7 @@ public class Anuncio implements Serializable {
     public Anuncio() {
     }
 
-    public Anuncio(String titulo, String descricao, BigDecimal preco, String desconto, Produto produto, Date dataInicial, Date dataFinal, boolean excluido) {
+    public Anuncio(String titulo, String descricao, BigDecimal preco, int desconto, Produto produto, Date dataInicial, Date dataFinal, boolean excluido) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.preco = preco;
@@ -111,11 +111,11 @@ public class Anuncio implements Serializable {
         this.preco = preco;
     }
 
-    public String getDesconto() {
+    public int getDesconto() {
         return desconto;
     }
 
-    public void setDesconto(String desconto) {
+    public void setDesconto(int desconto) {
         this.desconto = desconto;
     }
 

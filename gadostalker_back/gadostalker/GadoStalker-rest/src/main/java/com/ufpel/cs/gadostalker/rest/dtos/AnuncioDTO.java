@@ -30,7 +30,7 @@ public class AnuncioDTO {
     public BigDecimal preco;
     
     @XmlElement
-    public String desconto;
+    public int desconto;
     
     @XmlElement
     public ProdutoDTO produto;
