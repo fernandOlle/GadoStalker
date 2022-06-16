@@ -37,13 +37,14 @@
                 <textarea matInput formControlName="descricao"></textarea>
             </mat-form-field >
         </div>
-        <div style="display: flex;justify-content: center;align-items: center;cursor: pointer;">
+        <div style="display: flex;justify-content: center;align-items: center;cursor: pointer;margin-bottom: 20px;">
             <img [src]="localUrl" *ngIf="localUrl" class="imgPlaceholder" width="350px"  onclick="document.getElementById('file').click();">
             <input type="file" style="display:none;" id="file" name="file" (change)="selectFile($event)"/>
         </div>
 
-        <div style="width: 85%;margin: auto;">
+        <div style="width: 85%;margin: auto;display: flex;gap: 50px;justify-content: center;">
             <button mat-raised-button class="btn-cancelar" (click)="excluirAnuncio(anuncio.id)">Excluir Anúncio</button>
+            <button mat-raised-button class="btn-fechar" (click)="fecharAbrirAnuncio(!anuncio?.dataFinal, anuncio.id)">{{anuncio.dataFinal ? 'Reabrir Anúncio'  : 'Encerrar Anúncio'}}</button>
         </div>
     </form>
 </div>

@@ -66,6 +66,7 @@ export class GerenciarAnunciosComponent implements OnInit {
         this.anuncios.splice(this.anuncios.findIndex((anuncio: { id: number; }) => anuncio.id === anuncioEditado[0]), 1);
       }else{
       if(anuncioEditado){
+        if(anuncioEditado.imagemId){
         this.api.getImagemById(anuncioEditado.imagemId).subscribe(
           retImagem => {
             if(retImagem){
@@ -74,7 +75,9 @@ export class GerenciarAnunciosComponent implements OnInit {
             } else{
               //this.openSnackBar('Erro ao buscar imagem.', 'Fechar');
             }
-          });
+          });}else{
+            this.anuncios[this.anuncios.findIndex((anuncio: { id: any; }) => anuncio.id == anuncioEditado.id)] = anuncioEditado;
+          }
       }
     }
     });
