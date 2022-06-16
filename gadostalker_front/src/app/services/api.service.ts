@@ -233,5 +233,12 @@ export class ApiService {
     }));
   }
 
+  registrarTransacao(id: any, body: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/transacao/registrar/${id}`;
+    return this.http.post(url, body).pipe(take(1), catchError(error => {
+      return of(0);
+    }));
+  }
+
   
 }
