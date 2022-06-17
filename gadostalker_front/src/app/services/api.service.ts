@@ -370,5 +370,46 @@ export class ApiService {
     }));
   }
 
+  getAnuncios(tipo: any, page?: any, order?: any, quantidade?: any, search?: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/anuncio/pesquisa?tipo=${tipo}&page=${page}&order=${order}&quantity=${quantidade}&search=${search?search:''}`;
+    return this.http.get(url).pipe(
+      take(1),
+      catchError((error) => {
+        return of(0);
+      })
+    );
+  }
+
+  getAnunciosBySearchText(page?: any, order?: any, quantidade?: any, search?: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/anuncio/pesquisa?page=${page}&order=${order}&quantity=${quantidade}&search=${search}`;
+    return this.http.get(url).pipe(
+      take(1),
+      catchError((error) => {
+        return of(0);
+      })
+    );
+  }
+
+  
+  getAnuncioById(id: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/anuncio/getAnuncioID/${id}`;
+    return this.http.get(url).pipe(
+      take(1),
+      catchError((error) => {
+        return of(0);
+      })
+    );
+  }
+
+  getFazendaBySncr(sncr: any){
+    let url = `http://localhost:8080/GadoStalker-rest/resources/fazenda/getFazendaBySncr/${sncr}`;
+    return this.http.get(url).pipe(
+      take(1),
+      catchError((error) => {
+        return of(0);
+      })
+    );
+  }
+
   
 }

@@ -6,6 +6,12 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarUsuarioComponent } from './components/editar-usuario/editar-usuario.component';
 import { ApiService } from '../../services/api.service';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  FormControl,
+} from '@angular/forms';
 
 const USER_ICON = `
 <svg style="width:36px;height:36px" viewBox="0 0 24 24">
@@ -36,6 +42,7 @@ export class HomeComponent implements OnInit {
   usuario :any;
   filtroSelecionado: any = 'Todas';
   categorias: string[] = ['Todas', 'Animal', 'Embalados', 'Frutas', 'Grãos', 'Vegetal'];
+  textoPesquisa: any;
   constructor(
     private localStorage: LocalStorageService,
     private router: Router,
@@ -56,6 +63,7 @@ export class HomeComponent implements OnInit {
       'out',
       sanitizer.bypassSecurityTrustHtml(OUT_ICON)
     );
+    this.textoPesquisa = new FormControl('', );
    }
 
   ngOnInit(): void {
@@ -94,7 +102,10 @@ export class HomeComponent implements OnInit {
     this.api.getAllTiposProdutos().subscribe(
       ret => {
         let values = Object.values(ret);
-        values.forEach(produto => { this.catalogo.push({ nome: produto, enabled: false }) });
+        let keys = Object.keys(ret);
+        values.forEach(produto => { this.catalogo.push({ nome: produto, enabled: false}) });
+        for(let i = 0; i < this.catalogo.length; i++)
+          this.catalogo[i].tipo = keys[i];
         this.catalogoFiltrado = this.catalogo;
       }
     );
@@ -113,6 +124,15 @@ export class HomeComponent implements OnInit {
     } else if(value == 'Embalados'){
       this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Mel');
     }
+  }
+
+  openAnuncios(produto: any){
+    this.router.navigate(['/anuncios', { tipo: produto.tipo, nome: produto.nome }]);
+  }
+
+  pesquisar(){
+    if(this.textoPesquisa.value.length > 0)
+      this.router.navigate(['/anuncios', { search: this.textoPesquisa.value}]);
   }
 
 }

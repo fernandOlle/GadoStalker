@@ -1,12 +1,12 @@
 <div class="container-home">
   <div class="container-header">
     <div class="logo-container">
-      <a href="">GADO STALKER</a>
+      <a routerLink="/home">GADO STALKER</a>
     </div>
     <div class="search-container">
       <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="O que você procura hoje?" aria-label="Search">
-        <button mat-raised-button class="btn-pesquisa">Pesquisar</button>
+        <input class="form-control me-2" type="search" placeholder="O que você procura hoje?" aria-label="Search" [formControl]="textoPesquisa">
+        <button mat-raised-button class="btn-pesquisa" (click)="pesquisar()">Pesquisar</button>
       </form>
     </div>
 
@@ -82,7 +82,7 @@
     </div>
     <div class="container-categorias">
       <div class="grid-categorias">
-        <mat-card class="card-produto" *ngFor="let produto of catalogoFiltrado">
+        <mat-card class="card-produto" *ngFor="let produto of catalogoFiltrado" (click)="openAnuncios(produto)">
           <img src="../../../assets/{{ produto.nome }}.png" alt="" width="200px" height="150px">
           <h1>{{produto.nome}}</h1>
         </mat-card>
