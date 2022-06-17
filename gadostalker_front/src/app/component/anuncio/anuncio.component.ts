@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry} from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from '../../services/api.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 const CELL_ICON =
   `
@@ -21,17 +24,64 @@ const EMAIL_ICON =
   styleUrls: ['./anuncio.component.scss']
 })
 export class AnuncioComponent implements OnInit {
-
+  idAnuncio: any;
+  anuncio: any;
+  usuario: any;
+  fazenda: any;
   constructor(
-    iconRegistry: MatIconRegistry, 
+    iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
+    private route: ActivatedRoute,
+    private api: ApiService,
+    private localStorage: LocalStorageService,
   ) {
     iconRegistry.addSvgIconLiteral('cell', sanitizer.bypassSecurityTrustHtml(CELL_ICON));
     iconRegistry.addSvgIconLiteral('email', sanitizer.bypassSecurityTrustHtml(EMAIL_ICON));
-   }
-   panelOpenState = false;
+  }
+  panelOpenState = false;
 
   ngOnInit(): void {
+    this.idAnuncio = Number(this.route.snapshot.paramMap.get('id'));
+    this.usuario = this.localStorage.get('credenciais');
+    this.getAnuncioById(this.idAnuncio);
   }
 
+  getAnuncioById(id: any) {
+    this.api.getAnuncioById(id).subscribe(
+      ret => {
+        if (ret) {
+          this.anuncio = ret;
+          if (this.anuncio?.imagemId) {
+            this.api.getImagemById(this.anuncio.imagemId).subscribe(
+              retImagem => {
+                if (retImagem) {
+                  this.anuncio.imagem = retImagem;
+                }
+            });
+          }
+          this.getFazenda();
+          this.formatData();
+        }
+      }
+    );
+  }
+
+  formatData(){
+    let data = new Date(this.anuncio.dataInicial.split('[')[0]);
+    let dia = data.getDate() < 10 ? '0' + data.getDate() : data.getDate();
+    let mes =  data.getMonth() + 1 < 10 ? '0' + (data.getMonth() + 1) : data.getMonth() + 1;
+    let ano = data.getFullYear();
+    this.anuncio.dataFormatada = dia + '/' + mes + '/' + ano;
+  }
+
+  getFazenda(){
+    this.api.getFazendaBySncr(this.anuncio.produto.fazenda).subscribe(
+      ret => {
+        if (ret) {
+          this.fazenda = ret;
+          debugger
+        }
+      }
+    );
+  }
 }

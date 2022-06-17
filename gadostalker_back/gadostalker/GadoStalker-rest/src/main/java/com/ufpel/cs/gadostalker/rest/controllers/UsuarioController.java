@@ -2,11 +2,12 @@ package com.ufpel.cs.gadostalker.rest.controllers;
 
 import com.ufpel.cs.gadostalker.rest.dtos.DashBoardDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
-import com.ufpel.cs.gadostalker.rest.dtos.GraficoPizzaDTO;
+import com.ufpel.cs.gadostalker.rest.dtos.GraficoPizzaProjection;
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entities.FazendasValidas;
 import com.ufpel.cs.gadostalker.rest.entities.Funcionario;
+import com.ufpel.cs.gadostalker.rest.entities.Produto.TipoProdutoEnum;
 import com.ufpel.cs.gadostalker.rest.entities.Proprietario;
 import com.ufpel.cs.gadostalker.rest.entities.Usuario;
 import com.ufpel.cs.gadostalker.rest.entities.UsuarioComum;
@@ -486,34 +487,30 @@ public class UsuarioController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response geraGraficoPizza(@PathParam("cpf") String cpf) {
         
-        TypedQuery<Object[]> vendasPorTipoProdutoQuery =
-                em.createQuery("SELECT p.nome, SUM(t.quantidade) FROM Transacao t INNER JOIN t.anuncio.produto p WHERE p.fazenda.proprietario.cpf = :cpf GROUP BY p.nome", Object[].class)
+        TypedQuery<GraficoPizzaProjection[]> vendasPorTipoProdutoQuery =
+                em.createQuery("SELECT new com.ufpel.cs.gadostalker.rest.dtos.GraficoPizzaProjection(p.tipo, SUM(t.quantidade)) FROM Transacao t "
+                        + "INNER JOIN t.anuncio.produto p "
+                        + "WHERE p.fazenda.proprietario.cpf = :cpf "
+                        + "GROUP BY p.tipo", 
+                        GraficoPizzaProjection[].class)
                 .setParameter("cpf", cpf);
         
-        ArrayList<GraficoPizzaDTO> grafico;
-        List<Object[]> o;
+        List<GraficoPizzaProjection[]> grafico;
         
         try {
-            o = vendasPorTipoProdutoQuery.getResultList();
+            grafico = vendasPorTipoProdutoQuery.getResultList();
         } catch(Exception e) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
         
-        if(o.isEmpty()) {
+        if(grafico.isEmpty()) {
             return Response
-                    .ok(o)
+                    .ok(grafico)
                     .status(Response.Status.NO_CONTENT)
                     .build();
         }
-        
-        grafico = new ArrayList<>();
-        
-        
-        o.forEach(obj -> {
-            grafico.add(new GraficoPizzaDTO((String) obj[0], (Long) obj[1]));
-        });
         
         return Response
                 .ok(grafico)

@@ -1,7 +1,7 @@
 <div class="container-home">
     <div class="container-header">
         <div class="logo-container">
-            <a href="">GADO STALKER</a>
+            <a routerLink="/home">GADO STALKER</a>
         </div>
         <div class="search-container">
             <form class="d-flex">
@@ -12,7 +12,9 @@
         </div>
 
         <div class="fazendeiro-container">
-            <button mat-raised-button class="btn-produtor">Área do Produtor</button>
+            <button mat-raised-button class="btn-produtor"
+            (click)="redirecionar()" 
+            *ngIf="usuario.tipoUsuario == 'PROPRIETARIO' || usuario.tipoUsuario == 'FUNCIONARIO'">Área do Produtor</button>
         </div>
     </div>
 
@@ -42,7 +44,7 @@
         </div>
     </div>
     <div class="container-title">
-        <h1>Anúncios de Feijão</h1>
+        <h1>Anúncios de {{nomeCategoria}}</h1>
     </div>
     <div class="container-main">
         <div class="container-filters">
@@ -52,12 +54,18 @@
 
                     <section class="example-section">
                         <mat-form-field>
-                            <mat-select [(ngModel)]="selectedValue">
-                                <mat-option value="0">
+                            <mat-select [(ngModel)]="order">
+                                <mat-option value="precoasc" (click)="mudaOrdem()">
                                     Menor preço
                                 </mat-option>
-                                <mat-option value="1">
+                                <mat-option value="precodesc" (click)="mudaOrdem()">
                                     Maior preço
+                                </mat-option>
+                                <mat-option value="datadesc" (click)="mudaOrdem()">
+                                    Mais recentes
+                                </mat-option>
+                                <mat-option value="desconto" (click)="mudaOrdem()">
+                                    Maiores promoções
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -68,10 +76,10 @@
         </div>
         <div class="container-categorias">
             <div class="grid-categorias">
-                <mat-card class="card-produto" *ngFor="let produto of catalogo">
-                    <img src="../../../assets/{{produto.image}}.png" alt="" width="200px" height="150px">
-                    <h1>{{produto.title}}</h1>
-                    <h2>{{produto.preco}}</h2>
+                <mat-card class="card-produto" *ngFor="let produto of catalogo" (click)="abrirAnuncio(produto)">
+                    <img [src]="produto?.imagem" alt="{{produto.titulo}}" width="200px" height="150px">
+                    <h1>{{produto.titulo}}</h1>
+                    <h2>{{produto?.preco | currency:'BRL'}}</h2>
                 </mat-card>
             </div>
         </div>

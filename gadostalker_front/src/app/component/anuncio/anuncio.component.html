@@ -1,7 +1,7 @@
 <div class="container-anuncio">
     <div class="container-header">
         <div class="logo-container">
-            <a href="">GADO STALKER</a>
+            <a routerLink="/home">GADO STALKER</a>
         </div>
         <div class="search-container">
             <form class="d-flex">
@@ -12,30 +12,22 @@
         </div>
 
         <div class="fazendeiro-container">
-            <button mat-raised-button class="btn-anunciar">Anunciar</button>
+            <button mat-raised-button class="btn-anunciar" routerLink="/area-produtor" *ngIf="usuario.tipoUsuario == 'PROPRIETARIO' || usuario.tipoUsuario == 'FUNCIONARIO'">Anunciar</button>
         </div>
     </div>
     <div class="container-main">
         <div class="container-anuncio">
             <mat-card class="container-title">
-                <h1>Feijão Carioca</h1>
+                <h1>{{anuncio?.titulo}}</h1>
                 <span>
-                    Anúnciado em 30/04/2022 às 14:00 - Cód. 10260485
+                    Anúnciado em {{anuncio?.dataFormatada}} - Cód. {{anuncio?.id}}
                 </span>
             </mat-card>
             <div class="carousel-container">
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="../../../assets/Feijão-anuncio.png" class="d-block w-100" alt="..."
-                                height="426px">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="../../../assets/Feijão-anuncio2.png" class="d-block w-100" alt="..."
-                                height="426px">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="../../../assets/Feijão-anuncio3.png" class="d-block w-100" alt="..."
+                            <img [src]="anuncio?.imagem" alt="{{anuncio.titulo}}" class="d-block w-100"
                                 height="426px">
                         </div>
                     </div>
@@ -52,18 +44,18 @@
                 </div>
                 <div class="container-card">
                     <mat-card class="card-anuncio">
-                        <h1>Fazenda Santa Clara</h1>
+                        <h1>{{fazenda.nome}}</h1>
                         <h2>Dados para contato</h2>
                         <h3>
-                            <mat-icon [svgIcon]="'cell'"></mat-icon>(51)995124503
+                            <mat-icon [svgIcon]="'cell'"></mat-icon>{{fazenda.telefone | mask: '(00) 0000-0000'}}
                         </h3>
                         <h3>
-                            <mat-icon [svgIcon]="'email'"></mat-icon>santaclara@hotmail.com
+                            <mat-icon [svgIcon]="'email'"></mat-icon>{{fazenda.email}}
                         </h3>
                     </mat-card>
                 </div>
             </div>
-            <h1 class="preco">R$ 4,00/kg</h1>
+            <h1 class="preco">{{anuncio?.preco | currency:'BRL'}}</h1>
             <div class="descricao">
                 <mat-accordion>
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
@@ -73,9 +65,7 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <p>
-                            Feijão carioca da Fazenda Santa Clara, por apenas R$ 4,00/kg,
-                            Venha conferir o melhor feijão carioca da região.
-                            Agende a sua compra pelo nosso telefone: (51)995124503, ou pelo e-mail: santaclara@hotmail.com
+                            {{anuncio?.descricao}}
                         </p>
                     </mat-expansion-panel>
                 </mat-accordion>

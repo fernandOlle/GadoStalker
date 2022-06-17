@@ -4,7 +4,7 @@
 
 .container-home {
     background-color: #D9D48F;
-
+    min-height: 100%;
     .container-header {
         width: 80%;
         height: 100px;
@@ -93,7 +93,7 @@
         gap: 10px;
 
         .result {
-            height: 250px;
+            height: 300px;
         }
 
         .example-h2 {
@@ -113,9 +113,10 @@
 
         .grid-categorias {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(250px, auto));
             gap: 20px 10px;
             width: 90%;
+            margin: 0;
 
             .card-produto {
                 display: grid;
@@ -169,6 +170,16 @@
             box-shadow: none;
         }
     }
+    .example-radio-group {
+        display: flex;
+        flex-direction: column;
+        margin: 15px 0;
+        align-items: flex-start;
+      }
+      
+      .example-radio-button {
+        margin: 5px;
+      }
 
     .mat-radio-inner-circle {
         background-color: #594A3C !important;

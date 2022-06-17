@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ApiService } from '../../../../services/api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-modal-registrar-venda',
   templateUrl: './modal-registrar-venda.component.html',
@@ -10,9 +12,12 @@ export class ModalRegistrarVendaComponent implements OnInit {
   tipoProduto: any;
   medida: any;
   function: any;
+  quantidade: any;
   constructor(
     public dialogRef: MatDialogRef<ModalRegistrarVendaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private api: ApiService,
+    private _snackBar: MatSnackBar,
     ) { 
       this.anuncio = data.anuncio;
       this.tipoProduto = this.anuncio.produto.tipo;
@@ -74,6 +79,26 @@ export class ModalRegistrarVendaComponent implements OnInit {
     }
 
     return value;
+  }
+
+  registrarTransacao(id: any){
+    let preco = (this.anuncio.preco * Math.round(this.quantidade / 1000));
+    if(this.anuncio.desconto)
+      preco -= preco * (Number(this.anuncio.desconto) / 100);
+    let json = {preco: preco, quantidade: Math.round(this.quantidade / 1000)}
+    this.api.registrarTransacao(id, json).subscribe((ret: any) => {
+      if (ret == 0){
+        this.openSnackBar('Erro ao registrar a venda.', 'Fechar');
+        this.dialogRef.close();
+      }else{
+        this.openSnackBar('Venda registrada com sucesso.', 'Fechar');
+        this.dialogRef.close();
+      }
+    });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 
 }
