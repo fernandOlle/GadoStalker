@@ -37,7 +37,12 @@ public class Produto implements Serializable {
         MILHO("Milho"),
         SOJA("Soja"),
         TOMATE("Tomate"),
-        VAGEM("Vagem");
+        VAGEM("Vagem"),
+        ARROZ("Arroz"),
+        FRUTA("Fruta"),
+        QUEIJO("Queijo"),
+        GELEIA("Geleia");
+        
         private final String tipo;
 
         private TipoProdutoEnum(String tipo) {
