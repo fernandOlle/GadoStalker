@@ -4,6 +4,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { FormControl } from '@angular/forms';
 
 const CELL_ICON =
   `
@@ -28,15 +29,19 @@ export class AnuncioComponent implements OnInit {
   anuncio: any;
   usuario: any;
   fazenda: any;
+  textoPesquisa: any;
   constructor(
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     private api: ApiService,
     private localStorage: LocalStorageService,
+    private router: Router,
+    
   ) {
     iconRegistry.addSvgIconLiteral('cell', sanitizer.bypassSecurityTrustHtml(CELL_ICON));
     iconRegistry.addSvgIconLiteral('email', sanitizer.bypassSecurityTrustHtml(EMAIL_ICON));
+    this.textoPesquisa = new FormControl('', );
   }
   panelOpenState = false;
 
@@ -79,9 +84,16 @@ export class AnuncioComponent implements OnInit {
       ret => {
         if (ret) {
           this.fazenda = ret;
-          debugger
         }
       }
     );
   }
+
+  pesquisar(){
+    if(this.textoPesquisa.value.length > 0)
+      this.router.navigate(['/anuncios', { search: this.textoPesquisa.value}]);
+  }
+
+  
+
 }

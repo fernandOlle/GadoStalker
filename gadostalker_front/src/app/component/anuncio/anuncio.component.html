@@ -6,8 +6,8 @@
         <div class="search-container">
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Ainda não encontrou seu produto?"
-                    aria-label="Search">
-                <button mat-raised-button class="btn-pesquisa">Pesquisar</button>
+                    aria-label="Search" [formControl]="textoPesquisa">
+                <button mat-raised-button class="btn-pesquisa" (click)="pesquisar()">Pesquisar</button>
             </form>
         </div>
 

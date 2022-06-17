@@ -6,12 +6,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarUsuarioComponent } from './components/editar-usuario/editar-usuario.component';
 import { ApiService } from '../../services/api.service';
-import {
-  FormGroup,
-  Validators,
-  FormBuilder,
-  FormControl,
-} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 const USER_ICON = `
 <svg style="width:36px;height:36px" viewBox="0 0 24 24">
@@ -114,15 +109,15 @@ export class HomeComponent implements OnInit {
   filter(value: any){
     this.catalogoFiltrado = this.catalogo;
     if(value == 'Animal'){
-      this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Leite' || produto.nome == 'Ovo' || produto.nome == 'Mel');
+      this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Leite' || produto.nome == 'Ovo' || produto.nome == 'Mel' ||produto.nome == 'Queijo');
     } else if(value == 'Vegetal'){
       this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Alface' || produto.nome == 'Milho' || produto.nome == 'Tomate');
     } else if(value == 'Grãos'){
-      this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Vagem' || produto.nome == 'Soja' || produto.nome == 'Feijão' || produto.nome == 'Milho');
+      this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Vagem' || produto.nome == 'Soja' || produto.nome == 'Feijão' || produto.nome == 'Milho' || produto.nome == 'Arroz');
     } else if(value == 'Frutas'){
-      this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Tomate');
+      this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Tomate' || produto.nome == 'Laranja' || produto.nome == 'Uva' || produto.nome == 'Banana');
     } else if(value == 'Embalados'){
-      this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Mel');
+      this.catalogoFiltrado = this.catalogoFiltrado.filter((produto: { nome: string; }) => produto.nome == 'Mel' || produto.nome == 'Geleia');
     }
   }
 

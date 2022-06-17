@@ -6,8 +6,8 @@
         <div class="search-container">
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="O que você procura hoje?"
-                    aria-label="Search">
-                <button mat-raised-button class="btn-pesquisa">Pesquisar</button>
+                    aria-label="Search" [formControl]="textoPesquisa">
+                <button mat-raised-button class="btn-pesquisa" (click)="pesquisar()">Pesquisar</button>
             </form>
         </div>
 
@@ -74,7 +74,12 @@
                 </mat-card-content>
             </mat-card>
         </div>
-        <div class="container-categorias">
+        <div class="container-categorias" style="width: 88%">
+            <div *ngIf="catalogo?.length === 0" style="width: 45%;margin: 25px auto;">
+                <mat-card class="card-sem-dados">
+                    <p style="text-align: center;font-size: 16px;"> <mat-icon [svgIcon]="'no-database'" style="margin-right: 10px;"></mat-icon>Nenhum anúncio foi encontrado.</p>
+                 </mat-card>
+            </div>
             <div class="grid-categorias">
                 <mat-card class="card-produto" *ngFor="let produto of catalogo" (click)="abrirAnuncio(produto)">
                     <img [src]="produto?.imagem" alt="{{produto.titulo}}" width="200px" height="150px">
