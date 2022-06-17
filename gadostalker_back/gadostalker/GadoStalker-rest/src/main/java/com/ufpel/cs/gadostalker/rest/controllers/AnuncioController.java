@@ -254,7 +254,7 @@ public class AnuncioController {
     @Produces({MediaType.APPLICATION_JSON})
     public Response pesquisaAnuncios(@QueryParam("tipo") String tipo,
             @DefaultValue("1") @QueryParam("page") Integer page,
-            @DefaultValue("desc") @QueryParam("order") String order,
+            @DefaultValue("datadesc") @QueryParam("order") String order,
             @DefaultValue("8") @QueryParam("qnt") Integer quantity,
             @QueryParam("search") String search) {
 
@@ -263,10 +263,27 @@ public class AnuncioController {
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
+        
+        String orderBy;
 
         switch (order) {
-            case "desc":
-            case "asc":
+            case "tituloasc":
+                orderBy = "a.titulo asc, ";
+                break;
+            case "titulodesc":
+                orderBy = "a.titulo desc, ";
+                break;
+            case "precoasc":
+                orderBy = "a.preco asc, ";
+                break;
+            case "precodesc":
+                orderBy = "a.preco desc, ";
+                break;
+            case "datadesc":
+                orderBy = "a.dataInicial desc, ";
+                break;
+            case "desconto":
+                orderBy = "a.desconto desc, ";
                 break;
 
             default:
@@ -274,6 +291,8 @@ public class AnuncioController {
                         .status(Response.Status.BAD_REQUEST)
                         .build();
         }
+        
+        orderBy += "a.id asc";
 
         switch (quantity) {
             case 8:
@@ -299,7 +318,7 @@ public class AnuncioController {
             query += " AND UPPER(a.titulo) LIKE CONCAT('%',UPPER(:search),'%')";
         }
 
-        query += (" ORDER BY a.titulo, a.id " + order);
+        query += " ORDER BY " + orderBy;
 
         TypedQuery<Anuncio> anunciosQuery = em.createQuery(query, Anuncio.class);
 
