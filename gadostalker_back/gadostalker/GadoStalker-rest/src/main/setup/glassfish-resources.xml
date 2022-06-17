@@ -10,7 +10,7 @@
       <property name="portNumber" value="3306"></property>
       <property name="user" value="aplicymb_ds"></property>
       <property name="databaseName" value="aplicymb_ds"></property>
-      <property name="password" value="i4Tc5zdA&!0gB2"></property>
+      <property name="password" value="i4Tc5zdA&amp;!0gB2"></property>
     </jdbc-connection-pool>
     
     <jdbc-resource enabled="true" pool-name="GadoStalker" jndi-name="jdbc/GadoStalker">
