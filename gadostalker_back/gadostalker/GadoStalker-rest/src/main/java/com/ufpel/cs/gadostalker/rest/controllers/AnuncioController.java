@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
@@ -61,9 +62,9 @@ public class AnuncioController {
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
-        
+
         anuncio.produto = new ProdutoDTO(p);
-        
+
         anuncio.id = a.getId();
         anuncio.dataInicial = a.getDataInicial();
 
@@ -82,18 +83,17 @@ public class AnuncioController {
 
         Anuncio a;
         Produto p;
-        
 
         try {
             a = em.find(Anuncio.class, id);
             p = em.find(Produto.class, anuncio.produto.id);
-            
+
             a.setTitulo(anuncio.titulo);
             a.setDescricao(anuncio.descricao);
             a.setPreco(anuncio.preco);
             a.setDesconto(anuncio.desconto);
             a.setProduto(p);
-            
+
             a = em.merge(a);
             em.flush();
         } catch (Exception e) {
@@ -188,14 +188,14 @@ public class AnuncioController {
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
-    
+
     @GET
     @Path("getAnuncioID/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response anunciosProprietario(@PathParam("id") Long id) {
-        
+
         Anuncio u;
-        
+
         try {
             u = em.find(Anuncio.class, id);
         } catch (Exception e) {
@@ -203,9 +203,9 @@ public class AnuncioController {
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
-        
+
         AnuncioDTO anuncioDTO = new AnuncioDTO(u);
-        
+
         return Response
                 .ok(anuncioDTO)
                 .status(Response.Status.OK)
@@ -256,14 +256,15 @@ public class AnuncioController {
             @DefaultValue("1") @QueryParam("page") Integer page,
             @DefaultValue("datadesc") @QueryParam("order") String order,
             @DefaultValue("8") @QueryParam("qnt") Integer quantity,
-            @QueryParam("search") String search) {
+            @QueryParam("search") String search,
+            @DefaultValue("false") @QueryParam("count") Boolean count) {
 
         if (page < 1) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
-        
+
         String orderBy;
 
         switch (order) {
@@ -291,7 +292,7 @@ public class AnuncioController {
                         .status(Response.Status.BAD_REQUEST)
                         .build();
         }
-        
+
         orderBy += "a.id asc";
 
         switch (quantity) {
@@ -306,9 +307,13 @@ public class AnuncioController {
                         .build();
         }
 
-        String query = "SELECT a FROM Anuncio a";
-
-        query += " WHERE a.dataFinal IS NULL AND a.isExcluido = false";
+        String query = "Select ";
+        if (count) {
+            query += "count(a)";
+        } else {
+            query += "a";
+        }
+        query += " FROM Anuncio a WHERE a.dataFinal IS NULL AND a.isExcluido = false";
 
         if (tipo != null) {
             query += " AND a.produto.tipo = :tipo";
@@ -320,20 +325,48 @@ public class AnuncioController {
 
         query += " ORDER BY " + orderBy;
 
-        TypedQuery<Anuncio> anunciosQuery = em.createQuery(query, Anuncio.class);
-
+        Query anunciosQuery = em.createQuery(query);
+        
         if (tipo != null) {
-            anunciosQuery.setParameter("tipo", Produto.TipoProdutoEnum.valueOf(tipo));
+            try {
+                anunciosQuery.setParameter("tipo", Produto.TipoProdutoEnum.valueOf(tipo));
+            } catch (Exception e) {
+                return Response
+                        .status(Response.Status.BAD_REQUEST)
+                        .build();
+            }
         }
 
         if (search != null) {
             anunciosQuery.setParameter("search", search);
         }
 
+        if (count) {
+            Long countReturn;
+            try {
+                countReturn = (Long) anunciosQuery.getSingleResult();
+            } catch (Exception e) {
+                return Response
+                        .status(Response.Status.BAD_REQUEST)
+                        .build();
+            }
+            return Response
+                    .ok(countReturn)
+                    .status(Response.Status.ACCEPTED)
+                    .build();
+        }
+
         anunciosQuery.setFirstResult(quantity * (page - 1));
         anunciosQuery.setMaxResults(quantity);
 
-        List<Anuncio> anuncios = anunciosQuery.getResultList();
+        List<Anuncio> anuncios;
+        try {        
+            anuncios = (List<Anuncio>) anunciosQuery.getResultList();
+        } catch (Exception e) {
+            return Response
+                        .status(Response.Status.BAD_REQUEST)
+                        .build();
+        }
 
         if (anuncios.isEmpty()) {
             return Response
@@ -365,7 +398,7 @@ public class AnuncioController {
             a.setImagem(i);
             a = em.merge(a);
             em.flush();
-        } catch(Exception e) {
+        } catch (Exception e) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .build();
@@ -377,6 +410,6 @@ public class AnuncioController {
                 .ok(anuncio)
                 .status(Response.Status.ACCEPTED)
                 .build();
-        
+
     }
 }
