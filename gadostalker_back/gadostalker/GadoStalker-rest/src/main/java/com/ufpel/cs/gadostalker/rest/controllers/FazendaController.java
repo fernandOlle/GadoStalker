@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -53,7 +54,28 @@ public class FazendaController {
                 .build();
 
     }
-
+    
+    @GET
+    @Path("/getFazendaBySncr/{sncr}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response consultarFazenda(@PathParam("sncr") String sncr) {
+        Fazenda f;
+        
+        try {
+            f = em.find(Fazenda.class, sncr);
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+        
+        return Response
+                .ok(new FazendaDTO(f))
+                .status(Response.Status.ACCEPTED)
+                .build();
+    }
+    
+    
     @POST
     @Path("/modificar/{sncr}")
     @Consumes({MediaType.APPLICATION_JSON})
