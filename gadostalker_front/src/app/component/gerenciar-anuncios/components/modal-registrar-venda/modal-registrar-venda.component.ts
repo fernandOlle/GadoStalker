@@ -82,10 +82,13 @@ export class ModalRegistrarVendaComponent implements OnInit {
   }
 
   registrarTransacao(id: any){
-    let json = {preco: this.anuncio.preco, quantidade: Math.round(this.quantidade / 1000)}
+    let preco = (this.anuncio.preco * Math.round(this.quantidade / 1000));
+    if(this.anuncio.desconto)
+      preco -= preco * (Number(this.anuncio.desconto) / 100);
+    let json = {preco: preco, quantidade: Math.round(this.quantidade / 1000)}
     this.api.registrarTransacao(id, json).subscribe((ret: any) => {
       if (ret == 0){
-        this.openSnackBar('Erro ao reabrir o anúncio.', 'Fechar');
+        this.openSnackBar('Erro ao registrar a venda.', 'Fechar');
         this.dialogRef.close();
       }else{
         this.openSnackBar('Venda registrada com sucesso.', 'Fechar');
