@@ -7,6 +7,7 @@ import com.ufpel.cs.gadostalker.rest.entities.Anuncio;
 import com.ufpel.cs.gadostalker.rest.entities.Transacao;
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Collections;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -122,7 +123,6 @@ public class TransacaoController {
         Calendar c = Calendar.getInstance();
         c.setTime(hoje);
         for (int i = 0; i < numMeses; i++) {
-            c.add(Calendar.MONTH, -1);
             int lastDay = c.getActualMaximum(Calendar.DATE);
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
@@ -141,7 +141,10 @@ public class TransacaoController {
                         .build();
             }
             arrayVendas.add(numVendasMesAtual);
+            c.add(Calendar.MONTH, -1);
         }
+        
+        Collections.reverse(arrayVendas);
 
         return Response
                 .ok(arrayVendas)
@@ -170,7 +173,6 @@ public class TransacaoController {
         Calendar c = Calendar.getInstance();
         c.setTime(hoje);
         for (int i = 0; i < numMeses; i++) {
-            c.add(Calendar.MONTH, -1);
             int lastDay = c.getActualMaximum(Calendar.DATE);
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
@@ -189,8 +191,11 @@ public class TransacaoController {
                         .build();
             }
             arrayVendas.add(lucroMesAtual != null ? lucroMesAtual : BigDecimal.ZERO);
+            c.add(Calendar.MONTH, -1);
         }
 
+        Collections.reverse(arrayVendas);
+        
         return Response
                 .ok(arrayVendas)
                 .status(Response.Status.ACCEPTED)
