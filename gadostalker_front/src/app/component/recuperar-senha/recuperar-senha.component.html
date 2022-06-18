@@ -1,5 +1,5 @@
 <div class="container-title-login">
-  <h1>Gado Stalker</h1>
+  <h1 routerLink="/login" style="cursor: pointer;">Gado Stalker</h1>
 </div>
 <div class="container-login">
   <div class="container-img-login"></div>
@@ -26,21 +26,15 @@
         <div class="field">
           <mat-form-field>
             <mat-label>Nova Senha</mat-label>
-            <input
-              matInput
-              required
-              [type]="hide ? 'password' : 'text'"
-              formControlName="senha"
-            />
-            <button
-              mat-icon-button
-              matSuffix
-              (click)="hide = !hide"
-              [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide"
-            >
-              <mat-icon [svgIcon]="hide ? 'eye' : 'eye-off'"></mat-icon>
-            </button>
+            <div style="display: flex;">
+              <input
+                matInput
+                required
+                [type]="hide ? 'password' : 'text'"
+                formControlName="senha"
+              />
+                <mat-icon (click)="hide = !hide" [svgIcon]="hide ? 'eye' : 'eye-off'" style="cursor: pointer;"></mat-icon>
+            </div>
             <mat-error
               *ngIf="formRecuperarSenha.get('senha').hasError('required')"
               >Insira a nova senha!</mat-error
