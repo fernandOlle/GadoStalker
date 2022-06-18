@@ -53,7 +53,7 @@
                             <mat-icon [svgIcon]="'email'"></mat-icon>{{fazenda.email}}
                         </h3>
                         <div class="container-whats-btn">
-                            <a href="https://wa.me/55{{fazenda.telefone}}" target="_blank">
+                            <a href="https://wa.me/55{{fazenda.telefone}}" target="_blank" *ngIf="fazenda.isZapZap">
                                 <button mat-raised-button class="btn-whats">
                                     <div style="display: flex;">
                                         <mat-icon [svgIcon]="'whats'" style="margin-right: 5px;"></mat-icon><span>Iniciar conversa</span>
