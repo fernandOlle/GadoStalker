@@ -24,6 +24,4 @@ Instalar Payara Server ou GlassFish. Plataforma ```Jakarta EE 8``` com a ```JDK 
 Construir o projeto e rodar. Irá fazer download das dependencias.
 
 # Populando o banco de dados
-Na pasta ```src/main/resources/db``` existe um script SQL ```gadostalkerdb.sql``` para popular o banco de dados. Tal script deve ser executado primeiro.
-
-Executar ```pip install -r requirements.txt``` e depois rodar o script ```gadostalkerdb_imageupload.py``` para popular o banco de dados com as imagens dos anuncios.
+Na pasta ```src/main/resources/db``` existe um script SQL ```gadostalkerdb.sql``` e um script script Python ```gadostalkerdb.py``` para popular o banco de dados com as informações e as imagens. O script Python já executa o script SQL, basta apenas executar ```pip install -r requirements.txt``` para instalar as dependências e depois rodar o script ```gadostalkerdb.py``` dentro do diretório para popular o banco de dados.
