@@ -22,3 +22,8 @@ Outros: ```ng s```
 Instalar Payara Server ou GlassFish. Plataforma ```Jakarta EE 8``` com a ```JDK 8```.
 
 Construir o projeto e rodar. Irá fazer download das dependencias.
+
+# Populando o banco de dados
+Na pasta ```src/main/resources/db``` existe um script SQL ```gadostalkerdb.sql``` para popular o banco de dados. Tal script deve ser executado primeiro.
+
+Rodar o script ```gadostalkerdb_imageupload.py``` para popular o banco de dados com as imagens dos anuncios. É necessario instalar a biblioteca usando ```pip``` a biblioteca ```mysql-connector-python```
