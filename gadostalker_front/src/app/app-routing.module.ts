@@ -7,16 +7,18 @@ import { HomeComponent } from '../app/component/home/home.component';
 import { AnunciosComponent } from '../app/component/anuncios/anuncios.component';
 import { AnuncioComponent } from '../app/component/anuncio/anuncio.component';
 import { AreaProdutorComponent } from '../app/component/area-produtor/area-produtor.component';
+import { AuthGuard } from 'src/app/guards/auth-guard.service';
+import { FunctionGuard } from 'src/app/guards/function-guard.service';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent, pathMatch: 'full' },
+  { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent },
   { path: 'criar-conta', component: CriarContaComponent },
   { path: 'recuperar-senha', component: RecuperarSenhaComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'anuncios', component: AnunciosComponent },
-  { path: 'anuncio', component: AnuncioComponent },
-  { path: 'area-produtor', component: AreaProdutorComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'anuncios', component: AnunciosComponent,canActivate: [AuthGuard] },
+  { path: 'anuncio', component: AnuncioComponent,canActivate: [AuthGuard] },
+  { path: 'area-produtor', component: AreaProdutorComponent, canActivate: [AuthGuard, FunctionGuard] },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
