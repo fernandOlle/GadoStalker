@@ -80,6 +80,16 @@ public class TransacaoController {
     @Transactional
     public Response registraTransacao(TransacaoDTO transacaoDTO, @PathParam("id") Long id) {
         Anuncio a = em.find(Anuncio.class, id);
+        
+        if (a.getProduto().getQuantidade().doubleValue() < (double) transacaoDTO.quantidade) {
+            return Response
+                    .ok(null)
+                    .status(Response.Status.OK)
+                    .build();
+        }
+        
+        a.getProduto().setQuantidade(new BigDecimal(a.getProduto().getQuantidade().doubleValue() - (double) transacaoDTO.quantidade));
+        
         Transacao t = new Transacao(transacaoDTO);
         t.setAnuncio(a);
         t.setDataTransacao(new Date());
