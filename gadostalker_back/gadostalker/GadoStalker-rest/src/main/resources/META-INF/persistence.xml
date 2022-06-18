@@ -3,7 +3,7 @@
   <!-- Define Persistence Unit -->
   <persistence-unit name="gadostalker" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <jta-data-source>jdbc/GadoStalker</jta-data-source>
+    <jta-data-source>jdbc/GadoStalkerRemote</jta-data-source>
     <class>com.ufpel.cs.gadostalker.rest.entities.Funcionario</class>
     <class>com.ufpel.cs.gadostalker.rest.entities.Usuario</class>
     <class>com.ufpel.cs.gadostalker.rest.entities.Proprietario</class>
@@ -17,7 +17,7 @@
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.logging.connection" value="true"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create-or-extend-tables"/>
+      <property name="javax.persistence.schema-generation.database.action" value="none"/>
     </properties>
   </persistence-unit>
 </persistence>
