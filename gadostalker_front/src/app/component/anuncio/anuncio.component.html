@@ -47,11 +47,20 @@
                         <h1>{{fazenda.nome}}</h1>
                         <h2>Dados para contato</h2>
                         <h3>
-                            <mat-icon [svgIcon]="'cell'"></mat-icon>{{fazenda.telefone | mask: '(00) 0000-0000'}}
+                            <mat-icon [svgIcon]="'cell'"></mat-icon>{{fazenda.telefone | mask: '(00) 00000-0000'}}
                         </h3>
                         <h3>
                             <mat-icon [svgIcon]="'email'"></mat-icon>{{fazenda.email}}
                         </h3>
+                        <div class="container-whats-btn">
+                            <a href="https://wa.me/55{{fazenda.telefone}}" target="_blank">
+                                <button mat-raised-button class="btn-whats">
+                                    <div style="display: flex;">
+                                        <mat-icon [svgIcon]="'whats'" style="margin-right: 5px;"></mat-icon><span>Iniciar conversa</span>
+                                    </div>
+                                </button>
+                            </a>
+                        </div>
                     </mat-card>
                 </div>
             </div>

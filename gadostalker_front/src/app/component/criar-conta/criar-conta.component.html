@@ -144,6 +144,9 @@
               <mat-error *ngIf="formUsuario.get('email').hasError('email')">E-mail inválido!</mat-error>
             </mat-form-field>
           </div>
+          <div class="field" style="justify-content: left;margin-left: 30px;">
+            <mat-slide-toggle formControlName="isZapZap">WhatsApp</mat-slide-toggle>
+          </div>
           <div class="field">
             <mat-form-field>
               <mat-label>Telefone</mat-label>

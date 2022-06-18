@@ -35,6 +35,7 @@
                 <mat-error *ngIf="formFazenda.get('telefone').hasError('required')">Insira o telefone!</mat-error>
                 <mat-error *ngIf="formFazenda.get('telefone').hasError('pattern')">Telefone inválido!</mat-error>
             </mat-form-field>
+            <mat-slide-toggle formControlName="isZapZap" style="margin-left: 100px;">WhatsApp</mat-slide-toggle>
         </div>
     </form>
 </div>

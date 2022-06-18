@@ -24,14 +24,16 @@
                             <mat-label>Nome</mat-label>
                             <input matInput [(ngModel)]="fazenda.nome" name="nome" (change)="change()">
                         </mat-form-field>
-                        <mat-form-field class="inputs-form fonts-sizes col-xl-6">
+                        <mat-form-field class="inputs-form fonts-sizes col-xl-5">
                             <mat-label>E-mail</mat-label>
                             <input matInput [(ngModel)]="fazenda.email" name="email" (change)="change()">
                         </mat-form-field>
-                        <mat-form-field class="inputs-form fonts-sizes col-xl-4">
+                        <mat-slide-toggle  class="inputs-form fonts-sizes col-xl-2"[(ngModel)]="fazenda.isZapZap" style="margin-top: 15px;">WhatsApp</mat-slide-toggle>
+                        <mat-form-field class="inputs-form fonts-sizes col-xl-3">
                             <mat-label>Telefone</mat-label>
                             <input matInput [(ngModel)]="fazenda.telefone" name="telefone" mask="(00) 00000-0000" (change)="change()">
                         </mat-form-field>
+                        
                     </form>
                     <mat-accordion>
                         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" style="width: 80%; margin: auto;">

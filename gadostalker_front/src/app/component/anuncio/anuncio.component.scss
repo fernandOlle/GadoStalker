@@ -114,3 +114,14 @@
         }
     }
 }
+.container-whats-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .btn-whats{
+        border-radius: 20px;
+        background: #2BB201;
+        color: white;
+    }
+}
+

@@ -141,6 +141,7 @@ export class CriarContaComponent implements OnInit {
       ]),
       email: new FormControl('', [Validators.required, Validators.email]),
       telefone: new FormControl('', [Validators.required]),
+      isZapZap: new FormControl(false, [Validators.required]),
     });
   }
 

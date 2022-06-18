@@ -189,4 +189,17 @@
     background-color: rgba(0, 0, 0, 0.12) !important;
     color: rgba(0, 0, 0, 0.26) !important;
   }
+
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: #8DA633;
+  }
+
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: #8da633ad;
+  }
+  .mat-slide-toggle-content{
+    color: #6A6955;
+    font-weight: 500;
+  }
+
 }
