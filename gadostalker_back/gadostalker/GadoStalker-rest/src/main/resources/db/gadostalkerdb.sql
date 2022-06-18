@@ -1,4 +1,4 @@
-﻿set foreign_key_checks = 0;
+set foreign_key_checks = 0;
 
 
 INSERT INTO `fazendas_validas` (`ID`, `SNCR`) VALUES

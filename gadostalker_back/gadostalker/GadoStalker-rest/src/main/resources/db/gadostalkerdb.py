@@ -5,8 +5,11 @@ import zipfile
 import shutil
 
 images_zip = "./imagens_anuncios.zip"
+images_dir = "./tmp/"
 
-images_dir = "./imagens_anuncios/"
+sql_script = open("gadostalkerdb.sql", "r", encoding="utf-8")
+queries = sql_script.read().split(';')
+sql_script.close()
 
 with zipfile.ZipFile(images_zip, 'r') as zip_ref:
     zip_ref.extractall("./")
@@ -37,6 +40,9 @@ for path in Path(images_dir).iterdir():
     mycursor.execute(insert_imagem_query, it_content_insert)
 
     img.close()
+
+for query in queries:
+    mycursor.execute(query)
 
 mydb.commit()
 
