@@ -42,7 +42,8 @@ for path in Path(images_dir).iterdir():
     img.close()
 
 for query in queries:
-    mycursor.execute(query)
+    if not query.isspace():
+        mycursor.execute(query)
 
 mydb.commit()
 
