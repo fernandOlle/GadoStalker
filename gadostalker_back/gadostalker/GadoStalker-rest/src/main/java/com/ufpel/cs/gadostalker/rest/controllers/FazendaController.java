@@ -101,9 +101,11 @@ public class FazendaController {
         fazenda.setNome(fazendaDTO.nome);
         fazenda.setEmail(fazendaDTO.email);
         fazenda.setTelefone(fazendaDTO.telefone);
+        fazenda.setIsZapZap(fazendaDTO.isZapZap);
 
         em.merge(fazenda);
-
+        em.flush();
+        
         return Response
                 .ok(new FazendaDTO(fazenda))
                 .status(Response.Status.ACCEPTED)
