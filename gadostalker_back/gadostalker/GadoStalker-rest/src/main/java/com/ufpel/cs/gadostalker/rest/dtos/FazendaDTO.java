@@ -23,11 +23,14 @@ public class FazendaDTO {
     public String telefone;
     @XmlElement
     public List<UsuarioDTO> funcionarios;
-
+    @XmlElement
+    public Boolean isZapZap;
+    
     public FazendaDTO() {
     }
     
     public FazendaDTO(Fazenda fazenda) {
+        this.isZapZap = fazenda.isZapZap();
         this.SNCR = fazenda.getSNCR();
         this.nome = fazenda.getNome();
         this.email = fazenda.getEmail();

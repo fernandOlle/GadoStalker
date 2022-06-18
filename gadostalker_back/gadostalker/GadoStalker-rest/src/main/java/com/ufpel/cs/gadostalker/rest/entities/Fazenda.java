@@ -44,6 +44,9 @@ public class Fazenda implements Serializable {
     @Column
     private String telefone;
     
+    @Column
+    private Boolean isZapZap;
+    
     @OneToMany(mappedBy = "fazenda", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "FAZENDA_SNCR")
     private List<Produto> produtos;
@@ -59,17 +62,19 @@ public class Fazenda implements Serializable {
     }
     
     public Fazenda(FazendaDTO fazendaDTO) {
+        this.isZapZap = fazendaDTO.isZapZap;
         this.SNCR = fazendaDTO.SNCR;
         this.nome = fazendaDTO.nome;
         this.email = fazendaDTO.email;
         this.telefone = fazendaDTO.telefone;
     }
 
-    public Fazenda(String SNCR, String nome, String email, String telefone) {
+    public Fazenda(String SNCR, String nome, String email, String telefone, Boolean isZapZap) {
         this.SNCR = SNCR;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
+        this.isZapZap = isZapZap;
     }
 
     public String getSNCR() {
@@ -114,6 +119,14 @@ public class Fazenda implements Serializable {
     
     public List<Produto> getProdutos() {
         return produtos;
+    }
+
+    public Boolean isZapZap() {
+        return isZapZap;
+    }
+
+    public void setIsZapZap(Boolean isZapZap) {
+        this.isZapZap = isZapZap;
     }
     
     public void addProduto(Produto produto) {

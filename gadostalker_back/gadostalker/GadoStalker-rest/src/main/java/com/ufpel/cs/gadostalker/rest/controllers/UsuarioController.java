@@ -3,6 +3,7 @@ package com.ufpel.cs.gadostalker.rest.controllers;
 import com.ufpel.cs.gadostalker.rest.dtos.DashBoardDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.FazendaDTO;
 import com.ufpel.cs.gadostalker.rest.dtos.GraficoPizzaProjection;
+import com.ufpel.cs.gadostalker.rest.dtos.RelatorioXlsProjection;
 import com.ufpel.cs.gadostalker.rest.dtos.UsuarioDTO;
 import com.ufpel.cs.gadostalker.rest.entities.Fazenda;
 import com.ufpel.cs.gadostalker.rest.entities.FazendasValidas;
@@ -138,7 +139,7 @@ public class UsuarioController {
 
         try {
             fazendaQuery.getSingleResult();
-        } catch (Exception e){
+        } catch (Exception e) {
             return Response
                     .ok(false)
                     .status(Response.Status.NO_CONTENT)
@@ -432,37 +433,37 @@ public class UsuarioController {
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
-    
+
     @GET
     @Path("/proprietario/getInfosDashboard/{cpf}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response infosDashBoard(@PathParam("cpf") String cpf) {
-        
-        TypedQuery<Long> totalAnunciosQuery = 
-                em.createQuery("SELECT COUNT(a) FROM Anuncio a WHERE a.produto.fazenda.proprietario.cpf = :cpf AND a.dataFinal IS NULL AND a.isExcluido = false", Long.class)
-                .setParameter("cpf", cpf);
-        
+
+        TypedQuery<Long> totalAnunciosQuery
+                = em.createQuery("SELECT COUNT(a) FROM Anuncio a WHERE a.produto.fazenda.proprietario.cpf = :cpf AND a.dataFinal IS NULL AND a.isExcluido = false", Long.class)
+                        .setParameter("cpf", cpf);
+
         Date hoje = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(hoje);
         c.add(Calendar.MONTH, -1);
         Date mesAnterior = c.getTime();
-        TypedQuery<Long> totalVendasQuery = 
-                em.createQuery("SELECT COUNT(t) FROM Transacao t WHERE t.anuncio.produto.fazenda.proprietario.cpf = :cpf AND t.dataTransacao BETWEEN :mesAnterior AND :hoje", Long.class)
-                .setParameter("cpf", cpf)
-                .setParameter("mesAnterior", mesAnterior)
-                .setParameter("hoje", hoje);
-        
-        TypedQuery<Long> totalFuncionariosQuery =
-                em.createQuery("SELECT COUNT(f) FROM Funcionario f WHERE f.fazenda.proprietario.cpf = :cpf", Long.class)
-                .setParameter("cpf", cpf);
-        
-        TypedQuery<Long> totalProdutosCatalogoQuery =
-                em.createQuery("SELECT COUNT(DISTINCT(p.tipo)) From Produto p WHERE p.fazenda.proprietario.cpf = :cpf", Long.class)
-                .setParameter("cpf", cpf);
-        
+        TypedQuery<Long> totalVendasQuery
+                = em.createQuery("SELECT COUNT(t) FROM Transacao t WHERE t.anuncio.produto.fazenda.proprietario.cpf = :cpf AND t.dataTransacao BETWEEN :mesAnterior AND :hoje", Long.class)
+                        .setParameter("cpf", cpf)
+                        .setParameter("mesAnterior", mesAnterior)
+                        .setParameter("hoje", hoje);
+
+        TypedQuery<Long> totalFuncionariosQuery
+                = em.createQuery("SELECT COUNT(f) FROM Funcionario f WHERE f.fazenda.proprietario.cpf = :cpf", Long.class)
+                        .setParameter("cpf", cpf);
+
+        TypedQuery<Long> totalProdutosCatalogoQuery
+                = em.createQuery("SELECT COUNT(DISTINCT(p.tipo)) From Produto p WHERE p.fazenda.proprietario.cpf = :cpf", Long.class)
+                        .setParameter("cpf", cpf);
+
         Long totalAnuncios, totalVendas, totalFuncionarios, totalProdutosCatalogo;
-        
+
         try {
             totalAnuncios = totalAnunciosQuery.getSingleResult();
             totalVendas = totalVendasQuery.getSingleResult();
@@ -473,47 +474,82 @@ public class UsuarioController {
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
-        
+
         DashBoardDTO dashBoard = new DashBoardDTO(totalAnuncios, totalVendas, totalFuncionarios, totalProdutosCatalogo);
-        
+
         return Response
                 .ok(dashBoard)
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
-    
+
     @GET
     @Path("/proprietario/geraGraficoPizza/{cpf}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response geraGraficoPizza(@PathParam("cpf") String cpf) {
-        
-        TypedQuery<GraficoPizzaProjection[]> vendasPorTipoProdutoQuery =
-                em.createQuery("SELECT new com.ufpel.cs.gadostalker.rest.dtos.GraficoPizzaProjection(p.tipo, SUM(t.quantidade)) FROM Transacao t "
+
+        TypedQuery<GraficoPizzaProjection[]> vendasPorTipoProdutoQuery
+                = em.createQuery("SELECT new com.ufpel.cs.gadostalker.rest.dtos.GraficoPizzaProjection(p.tipo, SUM(t.quantidade)) FROM Transacao t "
                         + "INNER JOIN t.anuncio.produto p "
                         + "WHERE p.fazenda.proprietario.cpf = :cpf "
-                        + "GROUP BY p.tipo", 
+                        + "GROUP BY p.tipo",
                         GraficoPizzaProjection[].class)
-                .setParameter("cpf", cpf);
-        
+                        .setParameter("cpf", cpf);
+
         List<GraficoPizzaProjection[]> grafico;
-        
+
         try {
             grafico = vendasPorTipoProdutoQuery.getResultList();
-        } catch(Exception e) {
+        } catch (Exception e) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
-        
-        if(grafico.isEmpty()) {
+
+        if (grafico.isEmpty()) {
             return Response
                     .ok(grafico)
                     .status(Response.Status.NO_CONTENT)
                     .build();
         }
-        
+
         return Response
                 .ok(grafico)
+                .status(Response.Status.ACCEPTED)
+                .build();
+    }
+
+    @GET
+    @Path("/proprietario/geraRelatorioXls/{cpf}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response geraRelatorioXls(@PathParam("cpf") String cpf) {
+        TypedQuery<RelatorioXlsProjection[]> relatorioVendasQuery
+                = em.createQuery("SELECT new com.ufpel.cs.gadostalker.rest.dtos.RelatorioXlsProjection(t.id, a.titulo, t.preco, t.quantidade, t.dataTransacao) from Transacao t "
+                        + "INNER JOIN t.anuncio a "
+                        + "INNER JOIN a.produto p "
+                        + "WHERE p.fazenda.proprietario.cpf = :cpf ",
+                        RelatorioXlsProjection[].class)
+                        .setParameter("cpf", cpf);
+
+        List<RelatorioXlsProjection[]> relatorio;
+
+        try {
+            relatorio = relatorioVendasQuery.getResultList();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+
+        if (relatorio.isEmpty()) {
+            return Response
+                    .ok(relatorio)
+                    .status(Response.Status.NO_CONTENT)
+                    .build();
+        }
+
+        return Response
+                .ok(relatorio)
                 .status(Response.Status.ACCEPTED)
                 .build();
     }
