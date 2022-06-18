@@ -39,9 +39,11 @@ public class Produto implements Serializable {
         TOMATE("Tomate"),
         VAGEM("Vagem"),
         ARROZ("Arroz"),
-        FRUTA("Fruta"),
+        BANANA("Banana"),
         QUEIJO("Queijo"),
-        GELEIA("Geleia");
+        GELEIA("Geleia"),
+        LARANJA("Laranja"),
+        UVA("Uva");
         
         private final String tipo;
 
