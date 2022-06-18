@@ -37,6 +37,7 @@ export class ModalFuncionariosComponent implements OnInit {
   ];
   formUsuario: any;
   cpfProdutor: any;
+  hide = true;
   constructor(
     public dialogRef: MatDialogRef<ModalFuncionariosComponent>,
     iconRegistry: MatIconRegistry, 

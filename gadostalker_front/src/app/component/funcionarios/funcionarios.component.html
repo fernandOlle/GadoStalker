@@ -1,13 +1,13 @@
 <mat-card class="list-funcionarios">
     <mat-card-title>
-        Funcionários {{this.fazendas[pageIndex].nome}}
+        Funcionários {{this.fazendas[pageIndex]?.nome}}
     </mat-card-title>
     <mat-selection-list #funcionario [multiple]="false" *ngIf="fazendas[pageIndex].funcionarios.length > 0">
         <mat-list-option *ngFor="let funcionario of this.fazendas[pageIndex].funcionarios" [value]="funcionario">
           <div class="content" (click)="openModalEditar(funcionario)">
               <div class="nome-email">
-                  <h1 class="nome" style="text-transform: capitalize;">{{funcionario.nome}}</h1>
-                  <span class="email">{{funcionario.email}}</span>
+                  <h1 class="nome" style="text-transform: capitalize;">{{funcionario?.nome}}</h1>
+                  <span class="email">{{funcionario?.email}}</span>
               </div>
               <div class="cargo-container">
                   <h1 class="cargo">Funcionário</h1>
@@ -32,7 +32,7 @@
             [matTooltipDisabled]="pageIndex == 0"
             [ngClass]="pageIndex == 0 ? 'disabled' : 'arrow'">
           </mat-icon>
-          <span>Quantidade de funcionários: {{fazendas[pageIndex].funcionarios.length}}</span>
+          <span>Quantidade de funcionários: {{fazendas[pageIndex]?.funcionarios?.length}}</span>
           <mat-icon 
             [svgIcon]="'arrow-right'" 
             (click)="changePage('proxima')" 

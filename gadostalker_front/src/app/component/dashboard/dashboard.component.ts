@@ -136,6 +136,8 @@ export class DashboardComponent implements OnInit {
         this.arrayLG = [...this.arrayLG, ret];
         console.log(this.arrayLG);
         this.montaGraficoLucroGeral(this.arrayLG);
+      } else{
+        this.arrayLG = [];
       }
     });
   }

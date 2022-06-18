@@ -59,7 +59,9 @@ export class CatalogoComponent implements OnInit {
     this.api.getAllFazendasByProprietarioCpf(cpf).subscribe(
       ret => {
         this.fazendas = ret;
-        this.getAllProdutosByFazendaSNCR(this.fazendas[0].SNCR);
+        this.fazendas.forEach((fazenda: any) => {
+          this.getAllProdutosByFazendaSNCR(fazenda.SNCR);
+        })
       }
     )
   }
@@ -69,8 +71,6 @@ export class CatalogoComponent implements OnInit {
       ret => {
         if(ret)
           this.produtosFazenda = ret;
-        else 
-          this.produtosFazenda = [];
         this.setProdutosEnable();
       }
     )

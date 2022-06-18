@@ -37,10 +37,10 @@
         </mat-form-field>
         <mat-form-field class="inputs-form fonts-sizes col-xl-3">
             <mat-label>Senha</mat-label>
-            <input matInput type="password" formControlName="senha">
-            <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'">
-                <mat-icon [svgIcon]="'eye'"></mat-icon>
-            </button>
+            <div style="display: flex;">
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha">
+                <mat-icon [svgIcon]="hide ? 'eye' : 'eye-off'" (click)="hide = !hide" style="cursor: pointer;"></mat-icon>
+              </div>
         </mat-form-field>
         <mat-form-field class="inputs-form fonts-sizes col-xl-3">
             <mat-label>Confirma Senha</mat-label>
