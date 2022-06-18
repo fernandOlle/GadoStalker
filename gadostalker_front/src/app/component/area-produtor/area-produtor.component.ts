@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry} from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
 import { ModalCriarAnuncioComponent } from '../gerenciar-anuncios/components/modal-criar-anuncio/modal-criar-anuncio.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -8,6 +8,8 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { EditarUsuarioComponent } from '../../component/home/components/editar-usuario/editar-usuario.component';
 import { ApiService } from '../../services/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileSaverOptions, saveAs } from 'file-saver';
+import * as XLSX from 'xlsx';
 
 const MENU_ICON =
   `
@@ -81,11 +83,11 @@ interface Anuncio {
   desconto: any,
   descricao: any,
   id: any,
-  produtos:any,
+  produtos: any,
   preco: any,
   titulo: any,
   imagem: any,
-  imagemId:any,
+  imagemId: any,
 }
 
 @Component({
@@ -100,15 +102,16 @@ export class AreaProdutorComponent implements OnInit {
   usuario: any;
   anuncios: any = [];
   credenciais: any;
+  vendas: any = [];
   constructor(
-    iconRegistry: MatIconRegistry, 
+    iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
     public dialog: MatDialog,
     private router: Router,
     private api: ApiService,
     private _snackBar: MatSnackBar,
     private localStorage: LocalStorageService,
-  ) { 
+  ) {
     iconRegistry.addSvgIconLiteral('menu', sanitizer.bypassSecurityTrustHtml(MENU_ICON));
     iconRegistry.addSvgIconLiteral('Dashboard', sanitizer.bypassSecurityTrustHtml(DASHBOARD_ICON));
     iconRegistry.addSvgIconLiteral('Anúncios', sanitizer.bypassSecurityTrustHtml(ANUNCIO_ICON));
@@ -116,11 +119,11 @@ export class AreaProdutorComponent implements OnInit {
     iconRegistry.addSvgIconLiteral('Fazendas', sanitizer.bypassSecurityTrustHtml(FAZENDA_ICON));
     iconRegistry.addSvgIconLiteral('Funcionários', sanitizer.bypassSecurityTrustHtml(FUNCIONARIO_ICON));
     iconRegistry.addSvgIconLiteral('download', sanitizer.bypassSecurityTrustHtml(DOWNLOAD_ICON));
-    iconRegistry.addSvgIconLiteral('user',sanitizer.bypassSecurityTrustHtml(USER_ICON));
-    iconRegistry.addSvgIconLiteral('edit',sanitizer.bypassSecurityTrustHtml(EDIT_ICON));
-    iconRegistry.addSvgIconLiteral('out',sanitizer.bypassSecurityTrustHtml(OUT_ICON));
+    iconRegistry.addSvgIconLiteral('user', sanitizer.bypassSecurityTrustHtml(USER_ICON));
+    iconRegistry.addSvgIconLiteral('edit', sanitizer.bypassSecurityTrustHtml(EDIT_ICON));
+    iconRegistry.addSvgIconLiteral('out', sanitizer.bypassSecurityTrustHtml(OUT_ICON));
     this.usuario = this.localStorage.get('credenciais');
-    if(this.usuario.tipoUsuario == 'PROPRIETARIO')
+    if (this.usuario.tipoUsuario == 'PROPRIETARIO')
       this.Options = ['Dashboard', 'Anúncios', 'Catálogo de Produtos', 'Fazendas', 'Funcionários'];
     else
       this.Options = ['Dashboard', 'Anúncios', 'Catálogo de Produtos'];
@@ -130,77 +133,78 @@ export class AreaProdutorComponent implements OnInit {
     this.credenciais = this.localStorage.get('credenciais');
     this.anuncios = [];
     this.getAnunciosProprietario(this.credenciais.cpf);
+    this.getVendas();
   }
   anuncio: any;
   openModal() {
     const dialog = this.dialog.open(ModalCriarAnuncioComponent, {
-      data: {  },
+      data: {},
       autoFocus: false,
       restoreFocus: false
     });
     dialog.afterClosed().subscribe(ret => {
-      if(ret){
+      if (ret) {
         this.anuncio = ret;
         this.api.getImagemById(this.anuncio.imagemId).subscribe(
           retImagem => {
-            if(retImagem){
+            if (retImagem) {
               this.anuncio.imagem = retImagem;
               this.anuncios.push(this.anuncio);
-            } else{
+            } else {
               this.openSnackBar('Erro ao buscar imagem.', 'Fechar');
             }
           });
       }
     });
   }
-  
-  voltarHome(){
+
+  voltarHome() {
     this.router.navigate(['/home'])
   }
 
-  changePageSelected(pageSelected: any){
+  changePageSelected(pageSelected: any) {
     this.pageAtual = pageSelected;
   }
 
-  logout(){
+  logout() {
     this.localStorage.remove('credenciais');
     this.router.navigate(['/login'])
   }
 
-  openModalEditarUser(usuario: any){
+  openModalEditarUser(usuario: any) {
     const dialog = this.dialog.open(EditarUsuarioComponent, {
-      data: {usuario},
+      data: { usuario },
       autoFocus: false,
       maxHeight: 700,
       maxWidth: 800,
       restoreFocus: false,
     });
     dialog.afterClosed().subscribe(ret => {
-      if(ret){
-       this.usuario.nome = ret.nome;
-       this.usuario.email = ret.email;
-       this.usuario.telefone = ret.telefone;
-       this.localStorage.set('credenciais', this.usuario)
+      if (ret) {
+        this.usuario.nome = ret.nome;
+        this.usuario.email = ret.email;
+        this.usuario.telefone = ret.telefone;
+        this.localStorage.set('credenciais', this.usuario)
       }
     });
   }
 
-  
+
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
   }
 
-  getAnunciosProprietario(cpf: any){
+  getAnunciosProprietario(cpf: any) {
     this.api.getAllAnunciosByCPF(cpf).subscribe(
       ret => {
-        if(ret){
+        if (ret) {
           ret.forEach((a: Anuncio) => {
             this.api.getImagemById(a.imagemId).subscribe(
               retImagem => {
-                if(retImagem){
+                if (retImagem) {
                   a.imagem = retImagem;
                   this.anuncios.push(a);
-                } else{
+                } else {
                   //this.openSnackBar('Erro ao buscar imagem.', 'Fechar');
                   this.anuncios.push(a);
                 }
@@ -208,6 +212,45 @@ export class AreaProdutorComponent implements OnInit {
           });
         }
       }
+    );
+  }
+
+  async ExportTable() {
+    if (this.vendas.length > 0) {
+      var Heading = [
+        ["Data da Venda", "Código", "Título anúncio", "Preço da Venda", "Quantidade"],
+      ];
+      const ws = XLSX.utils.book_new();
+      XLSX.utils.sheet_add_aoa(ws, Heading);
+      XLSX.utils.sheet_add_json(ws, this.vendas, { origin: 'A2', skipHeader: true });
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Vendas');
+
+      var wbout = XLSX.write(wb, { type: 'binary', bookType: 'xlsx' });
+      saveAs(new Blob([this.s2ab(wbout)], { type: "application/octet-stream" }), 'Relatório-GadoStalker.xlsx');
+    }
+  }
+
+  s2ab(s: any) {
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+  }
+
+  getVendas() {
+    this.api.getJsonRelatorio(this.credenciais.cpf).subscribe(
+      ret => {
+        this.vendas = ret;
+        if (ret) {
+          this.formataPreco();
+        }
+      });
+  }
+
+  formataPreco() {
+    this.vendas.forEach((venda: { precoTransacao: { toLocaleString: (arg0: string, arg1: { style: string; currency: string; }) => any; }; }) => 
+    venda.precoTransacao = venda.precoTransacao.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
     );
   }
 

@@ -1,7 +1,7 @@
 .container-anuncios{
     margin: 20px 10px 0 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(330px, auto));
+    grid-template-columns: repeat(auto-fit, minmax(330px, 330px));
     gap: 10px;
     mat-card-header{
         justify-content: center;
