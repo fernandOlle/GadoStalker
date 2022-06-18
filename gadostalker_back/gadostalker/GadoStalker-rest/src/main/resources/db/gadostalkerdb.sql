@@ -2,23 +2,23 @@ set foreign_key_checks = 0;
 
 INSERT INTO `fazendas_validas` (`ID`, `SNCR`) VALUES
 (1,    '111111111111'),
-(2,    '426857489292'),
-(3,    '005174701845'),
-(4,    '322351696849'),
-(5,    '175354788209'),
-(6,    '515154364251'),
-(7,    '839202533352'),
-(8,    '297534786450'),
-(9,    '272416646997'),
-(10,   '075467890361'),
-(11,   '114961639253'),
-(12,   '063084795825'),
-(13,   '008824768959'),
-(14,   '453550014237'),
-(15,   '377229313699'),
-(16,   '123123123123'),
-(17,   '172394817289'),
-(28,   '172394817289');
+(2,    '426854892923'),
+(3,    '005174718456'),
+(4,    '322316968490'),
+(5,    '175354782098'),
+(6,    '515154642512'),
+(7,    '839202333523'),
+(8,    '297547864503'),
+(9,    '272416469978'),
+(10,   '075467803612'),
+(11,   '114966392534'),
+(12,   '063084958256'),
+(13,   '008824689590'),
+(14,   '453550142378'),
+(15,   '377229136990'),
+(16,   '123123231234'),
+(17,   '172394172893'),
+(28,   '172398172895');
 
 -- proprietários
 INSERT INTO `usuario` (`CPF`, `TIPO_USUARIO`, `EMAIL`, `NOME`, `PERGUNTA`, `RESPOSTA`, `SENHA`, `TELEFONE`, `FAZENDA_SNCR`) VALUES
@@ -27,22 +27,22 @@ INSERT INTO `usuario` (`CPF`, `TIPO_USUARIO`, `EMAIL`, `NOME`, `PERGUNTA`, `RESP
 
 INSERT INTO `fazenda` (`SNCR`, `EMAIL`, `NOME`, `TELEFONE`, `PROPRIETARIO_CPF`, `ISZAPZAP`) VALUES
 -- fazendas do Alexandre
-('1723948172893',	'fazendadovale@email.com',	'Fazenda do Vale',	'5384670840',	'12312312345', 1),
-('4268574892923',	'fazendadopico@email.com',	'Fazenda do Pico',	'5399542123',	'12312312345', 1),
-('0051747018456',	'fazendadoplanalto@email.com','Fazenda do Planalto',	'5199602939',	'12312312345', 1),
+('172394172893',	'fazendadovale@email.com',	'Fazenda do Vale',	'5384670840',	'12312312345', 1),
+('426854892923',	'fazendadopico@email.com',	'Fazenda do Pico',	'5399542123',	'12312312345', 1),
+('005174718456',	'fazendadoplanalto@email.com','Fazenda do Planalto',	'5199602939',	'12312312345', 1),
 -- fazendas do Adolfo
-('3223516968490',	'fazendadonorte@email.com',	'Fazenda do Norte',	'5391244357',	'79285518028', 1),
-('1753547882098',	'fazendacentral@email.com',	'Fazenda Central',	'5391410792',	'79285518028', 1),
-('5151543642512',	'fazendadosul@email.com',	'Fazenda do Sul',		'5391509636',	'79285518028', 1);
+('322316968490',	'fazendadonorte@email.com',	'Fazenda do Norte',	'5391244357',	'79285518028', 1),
+('175354782098',	'fazendacentral@email.com',	'Fazenda Central',	'5391410792',	'79285518028', 1),
+('515154642512',	'fazendadosul@email.com',	'Fazenda do Sul',		'5391509636',	'79285518028', 1);
 
 -- funcionários. Estão distribuídos entre as fazendas do proprietário Alexandre.
 INSERT INTO `usuario` (`CPF`, `TIPO_USUARIO`, `EMAIL`, `NOME`, `PERGUNTA`, `RESPOSTA`, `SENHA`, `TELEFONE`, `FAZENDA_SNCR`) VALUES
-('01334896046', 'FUNCIONARIO', 'thouta@gmail.com',	'Thomazio Giacobbe', 0, 'Lisane', 	'senha123', '53123457497',	'1723948172893'),
-('18337236000', 'FUNCIONARIO', 'alejandro@gmail.com',	'Alejandro Pereira', 0, 'Lisane', 	'senha123', '53123457494',	'1723948172893'),
-('26496138079', 'FUNCIONARIO', 'kevin@gmail.com',	'Kevin Pereira', 0, 'Lisane', 	'senha123', '53123456789',	'4268574892923'),
-('57879409033', 'FUNCIONARIO', 'jesus@gmail.com',	'Gustavo Fernandes', 0, 'Lisane', 	'senha123', '53123457496',	'4268574892923'),
-('78230236011', 'FUNCIONARIO', 'fefa@gmail.com',	'Fernando Olle', 0, 'Lisane', 	'senha123', '53123457495',	'0051747018456'),
-('93086669071', 'FUNCIONARIO', 'joao@gmail.com', 	'Joao Rezende', 0, 'Lisane', 		'senha123', '53123457493', 	'0051747018456');
+('01334896046', 'FUNCIONARIO', 'thouta@gmail.com',	'Thomazio Giacobbe', 0, 'Lisane', 	'senha123', '53123457497',	'172394172893'),
+('18337236000', 'FUNCIONARIO', 'alejandro@gmail.com',	'Alejandro Pereira', 0, 'Lisane', 	'senha123', '53123457494',	'172394172893'),
+('26496138079', 'FUNCIONARIO', 'kevin@gmail.com',	'Kevin Pereira', 0, 'Lisane', 	'senha123', '53123456789',	'426854892923'),
+('57879409033', 'FUNCIONARIO', 'jesus@gmail.com',	'Gustavo Fernandes', 0, 'Lisane', 	'senha123', '53123457496',	'426854892923'),
+('78230236011', 'FUNCIONARIO', 'fefa@gmail.com',	'Fernando Olle', 0, 'Lisane', 	'senha123', '53123457495',	'005174718456'),
+('93086669071', 'FUNCIONARIO', 'joao@gmail.com', 	'Joao Rezende', 0, 'Lisane', 		'senha123', '53123457493', 	'005174718456');
 
 -- compradores
 INSERT INTO `usuario` (`CPF`, `TIPO_USUARIO`, `EMAIL`, `NOME`, `PERGUNTA`, `RESPOSTA`, `SENHA`, `TELEFONE`, `FAZENDA_SNCR`) VALUES
@@ -51,49 +51,49 @@ INSERT INTO `usuario` (`CPF`, `TIPO_USUARIO`, `EMAIL`, `NOME`, `PERGUNTA`, `RESP
 
 INSERT INTO `produto` (`ID`, `NOME`, `QUANTIDADE`, `TIPO`, `FAZENDA_SNCR`) VALUES
 -- Fazenda do Vale
-(1,	'Feijão Tropeiro',	50,	3,	'1723948172893'),
-(2,	'Feijão Preto',		45,	3,	'1723948172893'),
-(3,	'Feijão Vermelho',	32,	3,	'1723948172893'),
-(4,	'Milho Verde',		32,	5,	'1723948172893'),
-(33,	'Arroz branco',		56,	9,	'1723948172893'),
-(35,	'Geleia de morango',	27,	12,	'1723948172893'),
-(41,	'Laranja-pera',		22,	13,	'1723948172893'),
-(42,	'Laranja-lima',		15,	13,	'1723948172893'),
+(1,	'Feijão Tropeiro',	50,	3,	'172394172893'),
+(2,	'Feijão Preto',		45,	3,	'172394172893'),
+(3,	'Feijão Vermelho',	32,	3,	'172394172893'),
+(4,	'Milho Verde',		32,	5,	'172394172893'),
+(33,	'Arroz branco',		56,	9,	'172394172893'),
+(35,	'Geleia de morango',	27,	12,	'172394172893'),
+(41,	'Laranja-pera',		22,	13,	'172394172893'),
+(42,	'Laranja-lima',		15,	13,	'172394172893'),
 -- Fazenda do Pico
-(5,	'Milho pipoca,		32,	5,	'4268574892923'),
-(6,	'Mel de Abelha',		32,	0,	'4268574892923'),
-(7,	'Mel de Zangão',		65,	0,	'4268574892923'),
-(8,	'Leite de Vaca',		44,	4,	'4268574892923'),
-(36,	'Arroz integral',		33,	9,	'4268574892923'),
-(37,	'Queijo colonial',	19,	11,	'4268574892923'),
-(38,	'Geleia de amora',	27,	12,	'1723948172893'),
-(43,	'Uva merlot',		25,	14,	'1723948172893'),
-(44,	'Uva malbec',		17,	14,	'1723948172893'),
+(5,	'Milho pipoca',		32,	5,	'426854892923'),
+(6,	'Mel de Abelha',		32,	0,	'426854892923'),
+(7,	'Mel de Zangão',		65,	0,	'426854892923'),
+(8,	'Leite de Vaca',		44,	4,	'426854892923'),
+(36,	'Arroz integral',		33,	9,	'426854892923'),
+(37,	'Queijo colonial',	19,	11,	'426854892923'),
+(38,	'Geleia de amora',	27,	12,	'426854892923'),
+(43,	'Uva merlot',		25,	14,	'426854892923'),
+(44,	'Uva malbec',		17,	14,	'426854892923'),
 -- Fazenda do Planalto
-(9,	'Leite de Cabra',		48,	4,	'0051747018456'),
-(10,	'Feijão Branco',		49,	3,	'0051747018456'),
-(11,	'Feijão Carioca',		30,	3,	'0051747018456'),
-(12,	'Ovo de galinha',		20,	1,	'0051747018456'),
-(13,	'Ovo de codorna',		30,	1,	'0051747018456'),
-(40,	'Queijo canastra',	12,	11,	'4268574892923'),
-(45,	'Banana-ouro',		9,	10,	'4268574892923'),
-(46,	'Banana-prata',		5,	10,	'4268574892923'),
+(9,	'Leite de Cabra',		48,	4,	'005174718456'),
+(10,	'Feijão Branco',		49,	3,	'005174718456'),
+(11,	'Feijão Carioca',		30,	3,	'005174718456'),
+(12,	'Ovo de galinha',		20,	1,	'005174718456'),
+(13,	'Ovo de codorna',		30,	1,	'005174718456'),
+(40,	'Queijo canastra',	12,	11,	'005174718456'),
+(45,	'Banana-ouro',		9,	10,	'005174718456'),
+(46,	'Banana-prata',		5,	10,	'005174718456'),
 -- Fazenda do Norte
-(14, 	'Alface americana',	15,	2,	'3223516968490'),
-(15, 	'Alface crespa',		12,	2,	'3223516968490'),
-(16, 	'Alface frisée',		3,	2,	'3223516968490'),
-(17, 	'Alface lisa',		6,	2,	'3223516968490'),
+(14, 	'Alface americana',	15,	2,	'322316968490'),
+(15, 	'Alface crespa',		12,	2,	'322316968490'),
+(16, 	'Alface frisée',		3,	2,	'322316968490'),
+(17, 	'Alface lisa',		6,	2,	'322316968490'),
 -- Fazenda Central
-(18, 	'Alface mimosa',		10,	2,	'1753547882098'),
-(19, 	'Alface romana',		23,	2,	'1753547882098'),
-(20, 	'Alface roxa',		20,	2,	'1753547882098'),
-(21, 	'Soja amarela',		36,	6,	'1753547882098'),
+(18, 	'Alface mimosa',		10,	2,	'175354782098'),
+(19, 	'Alface romana',		23,	2,	'175354782098'),
+(20, 	'Alface roxa',		20,	2,	'175354782098'),
+(21, 	'Soja amarela',		36,	6,	'175354782098'),
 -- Fazenda do Sul
-(22, 	'Soja preta',		16,	6,	'5151543642512'),
-(23, 	'Tomate Longa Vida',	20,	7,	'5151543642512'),
-(24, 	'Tomate Cereja',		15,	7,	'5151543642512'),
-(25, 	'Vagem Macarrão',		11,	8,	'5151543642512'),
-(26, 	'Vagem holandesa',	8,	8,	'5151543642512');
+(22, 	'Soja preta',		16,	6,	'515154642512'),
+(23, 	'Tomate Longa Vida',	20,	7,	'515154642512'),
+(24, 	'Tomate Cereja',		15,	7,	'515154642512'),
+(25, 	'Vagem Macarrão',		11,	8,	'515154642512'),
+(26, 	'Vagem holandesa',	8,	8,	'515154642512');
 
 -- anúncios. A data inicial de todos é '2021-06-01' porque esse é o mês de início das transações (inseridas mais abaixo).
 INSERT INTO anuncio (id, datafinal, datainicial, desconto, descricao, preco, titulo, produtoid, imagemid)
