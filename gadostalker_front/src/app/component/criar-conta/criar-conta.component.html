@@ -1,5 +1,5 @@
 <div class="container-title-login">
-  <h1>Gado Stalker</h1>
+  <h1 routerLink="/login" style="cursor: pointer;">Gado Stalker</h1>
 </div>
 <div class="container-criar-conta">
   <div class="container-img-login">
@@ -67,10 +67,10 @@
           <div class="field">
             <mat-form-field>
               <mat-label>Senha</mat-label>
-              <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha">
-              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon [svgIcon]="hide ? 'eye' : 'eye-off'"></mat-icon>
-              </button>
+              <div style="display: flex;">
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha">
+                <mat-icon [svgIcon]="hide ? 'eye' : 'eye-off'" (click)="hide = !hide" style="cursor: pointer;"></mat-icon>
+              </div>
               <mat-error *ngIf="formUsuario.get('senha').hasError('required')">Insira a senha!</mat-error>
               <mat-error *ngIf="formUsuario.get('senha').hasError('minlength')">A senha deve ter mais que 6 caracteres</mat-error>
             </mat-form-field>
