@@ -26,4 +26,4 @@ Construir o projeto e rodar. Irá fazer download das dependencias.
 # Populando o banco de dados
 Na pasta ```src/main/resources/db``` existe um script SQL ```gadostalkerdb.sql``` para popular o banco de dados. Tal script deve ser executado primeiro.
 
-Rodar o script ```gadostalkerdb_imageupload.py``` para popular o banco de dados com as imagens dos anuncios. É necessario instalar a biblioteca usando ```pip``` a biblioteca ```mysql-connector-python```
+Executar ```pip install -r requirements.txt``` e depois rodar o script ```gadostalkerdb_imageupload.py``` para popular o banco de dados com as imagens dos anuncios.
