@@ -61,15 +61,12 @@ export class AnunciosComponent implements OnInit {
     this.api.getAnuncios(this.tipoAnuncio, 1, this.order, 8, this.search).subscribe(
       ret => {
         if (ret) {
-          let array: any = ret;
-          array.forEach((a: any) => {
+          this.catalogo = ret;
+          this.catalogo.forEach((a: any) => {
             this.api.getImagemById(a.imagemId).subscribe(
               retImagem => {
                 if (retImagem) {
                   a.imagem = retImagem;
-                  this.catalogo.push(a);
-                } else {
-                  this.catalogo.push(a);
                 }
               });
           });

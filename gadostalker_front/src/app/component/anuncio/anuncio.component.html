@@ -27,7 +27,7 @@
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img [src]="anuncio?.imagem" alt="{{anuncio.titulo}}" class="d-block w-100"
+                            <img [src]="anuncio?.imagem" alt="{{anuncio?.titulo}}" class="d-block w-100"
                                 height="426px">
                         </div>
                     </div>
@@ -44,16 +44,16 @@
                 </div>
                 <div class="container-card">
                     <mat-card class="card-anuncio">
-                        <h1>{{fazenda.nome}}</h1>
+                        <h1>{{fazenda?.nome}}</h1>
                         <h2>Dados para contato</h2>
                         <h3>
-                            <mat-icon [svgIcon]="'cell'"></mat-icon>{{fazenda.telefone | mask: '(00) 00000-0000'}}
+                            <mat-icon [svgIcon]="'cell'"></mat-icon>{{fazenda?.telefone | mask: '(00) 00000-0000'}}
                         </h3>
                         <h3>
-                            <mat-icon [svgIcon]="'email'"></mat-icon>{{fazenda.email}}
+                            <mat-icon [svgIcon]="'email'"></mat-icon>{{fazenda?.email}}
                         </h3>
                         <div class="container-whats-btn">
-                            <a href="https://wa.me/55{{fazenda.telefone}}" target="_blank" *ngIf="fazenda.isZapZap">
+                            <a href="https://wa.me/55{{fazenda?.telefone}}" target="_blank" *ngIf="fazenda?.isZapZap">
                                 <button mat-raised-button class="btn-whats">
                                     <div style="display: flex;">
                                         <mat-icon [svgIcon]="'whats'" style="margin-right: 5px;"></mat-icon><span>Iniciar conversa</span>
