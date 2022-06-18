@@ -48,6 +48,9 @@
                 border-radius: 20px;
                 background-color: #8DA633;
                 color: white;
+                justify-content: center;
+                align-items: center;
+                display: flex;
             }
         }
     }
@@ -97,7 +100,7 @@
 
         .grid-categorias {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(300px, auto));
             gap: 20px 10px;
             width: 90%;
             margin: 25px auto;

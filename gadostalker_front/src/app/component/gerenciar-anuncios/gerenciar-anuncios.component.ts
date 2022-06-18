@@ -7,7 +7,12 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
-
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  FormControl,
+} from '@angular/forms';
 const SEM_DADOS_ICON =
   `
   <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -34,7 +39,12 @@ interface Anuncio {
 
 export class GerenciarAnunciosComponent implements OnInit {
   @Input() anuncios: any = [];
-  credenciais: any;
+  anunciosFiltrados: any = [];
+  cpf: any;
+  fazendas: any;
+  tiposDeProdutos: any = [];
+  fazendaSelected: any;
+  categoriaSelected: any;
   constructor(
     public dialog: MatDialog,
     private api: ApiService,
@@ -44,9 +54,15 @@ export class GerenciarAnunciosComponent implements OnInit {
     sanitizer: DomSanitizer,
   ) {
     iconRegistry.addSvgIconLiteral('no-database', sanitizer.bypassSecurityTrustHtml(SEM_DADOS_ICON));
+    this.cpf = this.localStorage.get('credenciais').cpf;
+    this.getFazendas();
+    this.getTiposDeProdutos();
+    this.fazendaSelected = new FormControl('00000000000');
+    this.categoriaSelected = new FormControl('TODOS');
    }
 
   ngOnInit(): void {
+    this.anunciosFiltrados = this.anuncios;
   }
   openModalRegistrarVenda(anuncio: any) {
     const dialog = this.dialog.open(ModalRegistrarVendaComponent, {
@@ -83,8 +99,43 @@ export class GerenciarAnunciosComponent implements OnInit {
     });
   }
 
+  getFazendas(){
+    this.api.getAllFazendasByProprietarioCpf(this.cpf).subscribe((resposta) => {
+      resposta != 0 ? (this.fazendas = resposta, this.fazendas.push({SNCR: "00000000000", nome: 'Todas'})) : null
+      
+    });
+  }
+
+  getTiposDeProdutos() {
+    this.api.getAllTiposProdutos().subscribe(
+      ret => {
+        let values = Object.values(ret);
+        let keys = Object.keys(ret);
+        values.forEach(produto => { this.tiposDeProdutos.push({ nome: produto}) });
+        for(let i = 0; i < this.tiposDeProdutos.length; i++)
+          this.tiposDeProdutos[i].tipo = keys[i];
+         this.tiposDeProdutos.push({nome: 'Todos', tipo: 'TODOS'});
+      }
+    );
+  }
+
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
+  }
+
+  filtrar(){
+    if(this.fazendaSelected.value != '00000000000'){
+      this.anunciosFiltrados = this.anuncios.filter((anuncio: { produto: { fazenda: any; }; }) => anuncio.produto.fazenda == this.fazendaSelected.value);
+      if(this.categoriaSelected.value != 'TODOS'){
+        this.anunciosFiltrados = this.anunciosFiltrados.filter((anuncio: { produto: { tipo: any; }; }) => anuncio.produto.tipo == this.categoriaSelected.value);
+      }
+    }else{
+      if(this.categoriaSelected.value != 'TODOS'){
+        this.anunciosFiltrados = this.anuncios.filter((anuncio: { produto: { tipo: any; }; }) => anuncio.produto.tipo == this.categoriaSelected.value);
+      }else{
+        this.anunciosFiltrados = this.anuncios;
+      }
+    }
   }
 
 }

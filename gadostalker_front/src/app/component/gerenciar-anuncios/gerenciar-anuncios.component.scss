@@ -1,7 +1,7 @@
 .container-anuncios{
-    margin: 20px;
+    margin: 20px 10px 0 20px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(330px, auto));
     gap: 10px;
     mat-card-header{
         justify-content: center;
@@ -40,3 +40,87 @@
     align-items: center;
     justify-content: center;
 }
+
+.card-filtros{
+    margin: 20px 0 0 10px;
+    text-align: center;
+}
+.container-btn-filtro{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .btn-filtro {
+        background-color: #594a3c;
+        color: white;
+        border-radius: 20px;
+    }
+}
+
+.container-geral{
+    display: grid;
+    grid-template-columns: 8fr 1fr;
+}
+
+::ng-deep  {
+
+    .mat-button-wrapper{
+      display: flex !important;
+    }
+    .mat-radio-inner-circle{
+        background-color: #594A3C !important;
+    }
+  
+    .mat-radio-outer-circle{
+        border-color: #594A3C !important;
+    }
+  
+    .mat-form-field.mat-focused .mat-form-field-label {
+        color: #594A3C !important;
+    }
+  
+    .mat-form-field.mat-focused .mat-form-field-ripple {
+        background-color: #594A3C !important;
+    }
+  
+    .mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
+        background-color: #f44336 !important;
+    }
+  
+    .mat-for
+    m-field.mat-form-field-invalid .mat-form-field-label {
+        color: #f44336 !important;
+    }
+  
+   .mat-checkbox-checked .mat-checkbox-background{
+        background-color: #594A3C !important;
+    }
+  
+    .mat-ink-bar{
+        background-color: #594A3C !important;
+    }
+  
+    .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+        color: #594A3C !important;
+    }
+    .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+        color: #594A3C !important;
+    }
+    .mat-button-disabled{
+      background-color: rgba(0, 0, 0, 0.12) !important;
+      color: rgba(0, 0, 0, 0.26) !important;
+    }
+    .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+        background-color: #8DA633;
+    }
+    
+    .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+        background-color: #8da633ad;
+    }
+    
+      .mat-slide-toggle-content{
+        color: #5e5d5a;
+      }
+      .mat-slide-toggle-label{
+        justify-content: center;
+      }
+  }
