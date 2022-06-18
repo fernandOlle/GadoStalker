@@ -116,6 +116,7 @@ public class UsuarioController {
             fdtos.nome = f.getNome();
             fdtos.email = f.getEmail();
             fdtos.telefone = f.getTelefone();
+            fdtos.isZapZap = f.isZapZap();
             fdtos.funcionarios = new ArrayList<>();
             f.getFuncionarios().forEach(func -> {
                 UsuarioDTO funcDto = new UsuarioDTO(func);

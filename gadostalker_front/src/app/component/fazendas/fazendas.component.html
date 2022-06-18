@@ -28,7 +28,7 @@
                             <mat-label>E-mail</mat-label>
                             <input matInput [(ngModel)]="fazenda.email" name="email" (change)="change()">
                         </mat-form-field>
-                        <mat-slide-toggle  class="inputs-form fonts-sizes col-xl-2"[(ngModel)]="fazenda.isZapZap" style="margin-top: 15px;">WhatsApp</mat-slide-toggle>
+                        <mat-slide-toggle  class="inputs-form fonts-sizes col-xl-2"[(ngModel)]="fazenda.isZapZap" name="isZapZap" style="margin-top: 15px;" (change)="change()">WhatsApp</mat-slide-toggle>
                         <mat-form-field class="inputs-form fonts-sizes col-xl-3">
                             <mat-label>Telefone</mat-label>
                             <input matInput [(ngModel)]="fazenda.telefone" name="telefone" mask="(00) 00000-0000" (change)="change()">
