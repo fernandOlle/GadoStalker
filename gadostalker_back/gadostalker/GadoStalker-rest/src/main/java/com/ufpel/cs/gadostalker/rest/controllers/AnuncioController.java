@@ -255,7 +255,7 @@ public class AnuncioController {
     public Response pesquisaAnuncios(@QueryParam("tipo") String tipo,
             @DefaultValue("1") @QueryParam("page") Integer page,
             @DefaultValue("datadesc") @QueryParam("order") String order,
-            @DefaultValue("8") @QueryParam("qnt") Integer quantity,
+            @DefaultValue("0") @QueryParam("qnt") Integer quantity,
             @QueryParam("search") String search,
             @DefaultValue("false") @QueryParam("count") Boolean count) {
 
@@ -296,6 +296,7 @@ public class AnuncioController {
         orderBy += "a.id asc";
 
         switch (quantity) {
+            case 0:
             case 8:
             case 12:
             case 24:
@@ -326,7 +327,7 @@ public class AnuncioController {
         query += " ORDER BY " + orderBy;
 
         Query anunciosQuery = em.createQuery(query);
-        
+
         if (tipo != null) {
             try {
                 anunciosQuery.setParameter("tipo", Produto.TipoProdutoEnum.valueOf(tipo));
@@ -357,15 +358,18 @@ public class AnuncioController {
         }
 
         anunciosQuery.setFirstResult(quantity * (page - 1));
-        anunciosQuery.setMaxResults(quantity);
+
+        if (quantity != 0) {
+            anunciosQuery.setMaxResults(quantity);
+        }
 
         List<Anuncio> anuncios;
-        try {        
+        try {
             anuncios = (List<Anuncio>) anunciosQuery.getResultList();
         } catch (Exception e) {
             return Response
-                        .status(Response.Status.BAD_REQUEST)
-                        .build();
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
         }
 
         if (anuncios.isEmpty()) {
