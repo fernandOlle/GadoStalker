@@ -12,6 +12,20 @@
         </div>
 
         <div class="fazendeiro-container">
+            <mat-icon [svgIcon]="'user'" class="icon-user" [matMenuTriggerFor]="menu"></mat-icon>
+            <mat-menu #menu="matMenu" xPosition="before" class="icon-container">
+              <p class="text-capitalize" style="text-align: center;">Olá, {{usuario.nome}}</p>
+              <p class="sub-title">{{usuario.email}}</p>
+              <p class="sub-title">{{usuario.tipoUsuario == 'PROPRIETARIO' ? 'Proprietário' : usuario.tipoUsuario == 'FUNCIONARIO' ?  'Funcionário' : 'Usuário Comum'}}</p>
+              <div class="container-btns">
+                <button mat-raised-button class="btn-login" (click)="openModalEditarUser(usuario)">
+                  <mat-icon [svgIcon]="'edit'" class="edit-icon" style="margin-bottom: 12px;"></mat-icon>Editar Perfil
+                </button>
+                <button mat-raised-button class="btn-login" (click)="logout()">
+                  <mat-icon [svgIcon]="'out'" class="edit-icon" style="margin-bottom: 12px;"></mat-icon>Sair
+                </button>
+              </div>
+            </mat-menu>
             <button mat-raised-button class="btn-anunciar" routerLink="/area-produtor" *ngIf="usuario.tipoUsuario == 'PROPRIETARIO' || usuario.tipoUsuario == 'FUNCIONARIO'">Anunciar</button>
         </div>
     </div>

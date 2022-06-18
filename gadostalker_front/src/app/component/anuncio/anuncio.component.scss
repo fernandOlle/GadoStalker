@@ -50,10 +50,25 @@
                 border-radius: 20px;
                 background-color: #8DA633;
                 color: white;
-                justify-content: center;
                 display: flex;
-                font-size: 18px;
+                justify-content: center;
+                align-items: center;
+
             }
+
+            .icon-user {
+                color: white;
+                width: 36px;
+                height: 36px;
+                cursor: pointer;
+                margin-right: 15px;
+            }
+
+            .edit-icon{
+                width: 24px;
+                height: 24px;
+            }
+
         }
     }
     .container-main{
@@ -127,4 +142,78 @@
         color: white;
     }
 }
+::ng-deep {
+    .mat-menu-panel {
+        width: 250px;
+        margin-top: 10px;
+        p {
+            width: 60%;
+            margin: auto;
 
+        }
+
+        .sub-title {
+            font-size: 11px;
+            white-space: pre-line;
+            color: rgba(0, 0, 0, .6);
+            height: 15px;
+        }
+
+        .container-btns {
+            justify-content: center;
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .btn-login {
+            color: inherit;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+    }
+    .mat-radio-inner-circle {
+        background-color: #594A3C !important;
+    }
+
+    .mat-radio-outer-circle {
+        border-color: #594A3C !important;
+    }
+
+    .mat-form-field.mat-focused .mat-form-field-label {
+        color: #594A3C !important;
+    }
+
+    .mat-form-field.mat-focused .mat-form-field-ripple {
+        background-color: #594A3C !important;
+    }
+
+    .mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
+        background-color: #f44336 !important;
+    }
+
+    .mat-for m-field.mat-form-field-invalid .mat-form-field-label {
+        color: #f44336 !important;
+    }
+
+    .mat-checkbox-checked .mat-checkbox-background {
+        background-color: #594A3C !important;
+    }
+
+    .mat-ink-bar {
+        background-color: #594A3C !important;
+    }
+
+    .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+        color: #594A3C !important;
+    }
+
+    .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+        color: #594A3C !important;
+    }
+
+    .mat-button-disabled {
+        background-color: rgba(0, 0, 0, 0.12) !important;
+        color: rgba(0, 0, 0, 0.26) !important;
+    }
+}

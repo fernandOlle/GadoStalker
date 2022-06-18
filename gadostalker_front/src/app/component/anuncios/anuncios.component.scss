@@ -48,10 +48,25 @@
                 border-radius: 20px;
                 background-color: #8DA633;
                 color: white;
+                display: flex;
                 justify-content: center;
                 align-items: center;
-                display: flex;
+
             }
+
+            .icon-user {
+                color: white;
+                width: 36px;
+                height: 36px;
+                cursor: pointer;
+                margin-right: 15px;
+            }
+
+            .edit-icon{
+                width: 24px;
+                height: 24px;
+            }
+
         }
     }
 
@@ -101,9 +116,9 @@
         .grid-categorias {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, auto));
-            gap: 20px 10px;
-            width: 90%;
-            margin: 25px auto;
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
             .card-produto {
                 display: grid;
                 grid-template-columns: 1fr;
@@ -132,7 +147,40 @@
     }
 }
 
+.container-filters{
+    margin-top: 20px;
+}
+
 ::ng-deep {
+    .mat-menu-panel {
+        width: 250px;
+        margin-top: 10px;
+        p {
+            width: 60%;
+            margin: auto;
+
+        }
+
+        .sub-title {
+            font-size: 11px;
+            white-space: pre-line;
+            color: rgba(0, 0, 0, .6);
+            height: 15px;
+        }
+
+        .container-btns {
+            justify-content: center;
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .btn-login {
+            color: inherit;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+    }
     .mat-radio-inner-circle {
         background-color: #594A3C !important;
     }
