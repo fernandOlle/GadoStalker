@@ -99,7 +99,8 @@
                 <mat-card class="card-produto" *ngFor="let produto of catalogo" (click)="abrirAnuncio(produto)">
                     <img [src]="produto?.imagem" alt="{{produto.titulo}}" width="200px" height="150px">
                     <h1>{{produto.titulo}}</h1>
-                    <h2>{{produto?.preco | currency:'BRL'}}</h2>
+                    <h2 class="preco" [ngClass]="produto?.desconto ? '' : 'sem-desconto'">{{produto?.desconto ? (produto?.preco - (produto?.preco * (produto?.desconto / 100)) | currency:'BRL') : produto?.preco | currency:'BRL'}}</h2>
+                    <h3 *ngIf="produto?.desconto" class="preco-original">De: {{produto?.preco | currency:'BRL'}}</h3>
                 </mat-card>
             </div>
         </div>

@@ -137,6 +137,7 @@
                     text-align: center;
                     color: #8DA633;
                     font-weight: 900;
+                    margin-bottom: 0;
                 }
 
                 img {
@@ -149,6 +150,14 @@
 
 .container-filters{
     margin-top: 20px;
+}
+
+.preco-original{
+    text-align: center;
+    font-size: 16px;
+    text-decoration: line-through;
+    font-weight: 500;
+    color: #594A3C;
 }
 
 ::ng-deep {

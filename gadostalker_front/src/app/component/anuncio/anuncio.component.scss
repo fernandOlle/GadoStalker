@@ -120,11 +120,23 @@
                     }
                 }
             }
+            
             .preco{
                 color: #8DA633;
                 font-size: 30px;
                 font-weight: 700;
-                margin: 20px 0;
+                margin: 20px 0 10px 0;
+            }
+            .preco-original{
+                font-size: 26px;
+                text-decoration: line-through;
+                font-weight: 500;
+                color: #594A3C;
+                margin-bottom: 10px;
+            }
+        
+            .sem-desconto{
+                margin-bottom: 25px;
             }
             .descricao{
                 width: 65%;

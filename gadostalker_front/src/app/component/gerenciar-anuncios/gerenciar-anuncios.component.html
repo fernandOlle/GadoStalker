@@ -7,7 +7,8 @@
                 </mat-card-header>
                 <img mat-card-image [src]="anuncio.imagem" alt="{{anuncio.titulo}}" height="200px">
                 <mat-card-content>
-                    <h1 class="preco">{{anuncio?.preco | currency:'BRL'}}</h1>
+                    <h1 class="preco" [ngClass]="anuncio?.desconto ? '' : 'sem-desconto'">{{anuncio?.desconto ? (anuncio?.preco - (anuncio?.preco * (anuncio?.desconto / 100)) | currency:'BRL') : anuncio?.preco | currency:'BRL'}}</h1>
+                    <h2 *ngIf="anuncio?.desconto" class="preco-original">De: {{anuncio?.preco | currency:'BRL'}}</h2>
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-raised-button class="btn-anuncio" (click)="openModalEditarAnuncio(anuncio)">EDITAR ANÚNCIO</button>

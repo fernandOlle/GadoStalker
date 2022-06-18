@@ -13,9 +13,22 @@
         color: #8DA633;
         font-size: 26px;
         font-weight: 700;
-        margin: 20px auto;
+        margin: 20px auto 0 auto;
         text-align: center;
 
+    }
+
+    .preco-original{
+        text-align: center;
+        font-size: 16px;
+        text-decoration: line-through;
+        font-weight: 500;
+        color: #594A3C;
+        height: 15px;
+    }
+
+    .sem-desconto{
+        margin-bottom: 25px;
     }
     mat-card-actions{
         justify-content: center;
