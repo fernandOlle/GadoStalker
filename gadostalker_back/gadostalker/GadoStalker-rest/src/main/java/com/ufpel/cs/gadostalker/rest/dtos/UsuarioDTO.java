@@ -32,6 +32,8 @@ public class UsuarioDTO {
     public List<FazendaDTO> fazendas;
     @XmlElement
     public Usuario.TipoUsuario tipoUsuario;
+    @XmlElement
+    public String cpfPatrao;
     
     public UsuarioDTO(){
     }
