@@ -90,7 +90,10 @@ export class ModalRegistrarVendaComponent implements OnInit {
       if (ret == 0){
         this.openSnackBar('Erro ao registrar a venda.', 'Fechar');
         this.dialogRef.close();
-      }else{
+      } else if(ret == null){
+        this.openSnackBar('Erro ao registrar a venda. Quantidade no estoque insuficiente.', 'Fechar');
+        this.dialogRef.close();
+      } else{
         this.openSnackBar('Venda registrada com sucesso.', 'Fechar');
         this.dialogRef.close();
       }
