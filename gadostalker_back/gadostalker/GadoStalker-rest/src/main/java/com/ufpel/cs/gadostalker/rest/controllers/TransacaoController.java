@@ -79,22 +79,32 @@ public class TransacaoController {
     @Produces({MediaType.APPLICATION_JSON})
     @Transactional
     public Response registraTransacao(TransacaoDTO transacaoDTO, @PathParam("id") Long id) {
-        Anuncio a = em.find(Anuncio.class, id);
         
-        if (a.getProduto().getQuantidade().doubleValue() < (double) transacaoDTO.quantidade) {
+        Anuncio a;
+        
+        try {
+            a = em.find(Anuncio.class, id);
+        } catch (Exception e) {
             return Response
-                    .ok(null)
-                    .status(Response.Status.OK)
+                    .status(Response.Status.BAD_REQUEST)
                     .build();
         }
         
-        a.getProduto().setQuantidade(new BigDecimal(a.getProduto().getQuantidade().doubleValue() - (double) transacaoDTO.quantidade));
+        if (a.getProduto().getQuantidade().compareTo(new BigDecimal(transacaoDTO.quantidade)) == -1) {
+            return Response
+                    .ok(null)
+                    .status(Response.Status.PARTIAL_CONTENT)
+                    .build();
+        }
+        
+        a.getProduto().setQuantidade(a.getProduto().getQuantidade().subtract(new BigDecimal(transacaoDTO.quantidade)));
         
         Transacao t = new Transacao(transacaoDTO);
         t.setAnuncio(a);
         t.setDataTransacao(new Date());
 
         try {
+            em.merge(a);
             em.persist(t);
             em.flush();
         } catch (Exception e) {
