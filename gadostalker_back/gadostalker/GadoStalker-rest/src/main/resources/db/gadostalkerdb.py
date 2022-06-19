@@ -22,6 +22,14 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 
+mycursor.execute("Show tables;")
+myresult = mycursor.fetchall()
+
+mycursor.execute("SET FOREIGN_KEY_CHECKS = 0;")
+
+for x in myresult:
+    mycursor.execute("TRUNCATE {};".format(x[0]))
+
 insert_imagem_query = """INSERT INTO `imagem` (`ID`, `CONTENT`, `FILEEXTENSION`, `FILENAME`) VALUES
 (%s,%s,%s,%s);"""
 
@@ -46,6 +54,8 @@ for query in queries:
         mycursor.execute(query)
 
 mydb.commit()
+
+mycursor.execute("SET FOREIGN_KEY_CHECKS = 1;")
 
 shutil.rmtree(images_dir)
 
