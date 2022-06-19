@@ -76,13 +76,3 @@
     }
   }
 }
-
-::ng-deep {
-  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-    background-color: #594a3c;
-  }
-
-  .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-    background-color: rgba(89, 74, 60, 0.8);
-  }
-}
