@@ -26,6 +26,7 @@ export class ModalEditarAnuncioComponent implements OnInit {
   localUrl: any;
   imageBase64: any;
   anuncio: any;
+  cpf: any;
   constructor(
     public dialogRef: MatDialogRef<ModalEditarAnuncioComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -49,9 +50,13 @@ export class ModalEditarAnuncioComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    debugger
     this.credenciais = this.localStorage.get('credenciais');
-    this.getAllProdutosByCpf(this.credenciais.cpf);
+    if(this.credenciais.tipoUsuario == 'FUNCIONARIO'){
+      this.cpf = this.credenciais.cpfPatrao;
+    }else{
+      this.cpf = this.credenciais.cpf;
+    }
+    this.getAllProdutosByCpf(this.cpf);
   }
 
   closeModal(): void {

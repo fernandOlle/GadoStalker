@@ -29,6 +29,7 @@ export class ModalCriarAnuncioComponent implements OnInit {
   formAnuncio: any;
   anuncioCadastrado: any;
   imageBase64: any;
+  cpf: any;
   constructor(
     public dialogRef: MatDialogRef<ModalCriarAnuncioComponent>,
     iconRegistry: MatIconRegistry,
@@ -51,8 +52,13 @@ export class ModalCriarAnuncioComponent implements OnInit {
   localUrl = '../../../assets/upload.png';
   ngOnInit(): void {
     this.credenciais = this.localStorage.get('credenciais');
-    this.getAllFazendas(this.credenciais.cpf);
-    this.getAllProdutosByCpf(this.credenciais.cpf);
+    if(this.credenciais.tipoUsuario == 'FUNCIONARIO'){
+      this.cpf = this.credenciais.cpfPatrao;
+    }else{
+      this.cpf = this.credenciais.cpf;
+    }
+    this.getAllFazendas(this.cpf);
+    this.getAllProdutosByCpf(this.cpf);
   }
 
   selectFile(event: any) {

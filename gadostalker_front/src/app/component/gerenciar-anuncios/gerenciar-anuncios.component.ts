@@ -40,6 +40,7 @@ interface Anuncio {
 export class GerenciarAnunciosComponent implements OnInit {
   @Input() anuncios: any = [];
   anunciosFiltrados: any = [];
+  credenciais: any;
   cpf: any;
   fazendas: any;
   tiposDeProdutos: any = [];
@@ -54,7 +55,12 @@ export class GerenciarAnunciosComponent implements OnInit {
     sanitizer: DomSanitizer,
   ) {
     iconRegistry.addSvgIconLiteral('no-database', sanitizer.bypassSecurityTrustHtml(SEM_DADOS_ICON));
-    this.cpf = this.localStorage.get('credenciais').cpf;
+    this.credenciais = this.localStorage.get('credenciais');
+    if(this.credenciais.tipoUsuario == 'FUNCIONARIO'){
+      this.cpf = this.credenciais.cpfPatrao;
+    }else{
+      this.cpf = this.credenciais.cpf;
+    }
     this.getFazendas();
     this.getTiposDeProdutos();
     this.fazendaSelected = new FormControl('00000000000');

@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
   totals: any = {}; //topZter
   salesPercentage: any = [];
   salesPercentageResult: any = [];
-
+  cpf: any;
   constructor(
     private api: ApiService,
     iconRegistry: MatIconRegistry,
@@ -68,13 +68,18 @@ export class DashboardComponent implements OnInit {
     this.consoleFunc();
 
     this.credenciais = this.localStorage.get('credenciais');
-    this.getInfosDashboard(this.credenciais.cpf);
-    this.geraGraficoPizza(this.credenciais.cpf);
+    if(this.credenciais.tipoUsuario == 'FUNCIONARIO'){
+      this.cpf = this.credenciais.cpfPatrao;
+    }else{
+      this.cpf = this.credenciais.cpf;
+    }
+    this.getInfosDashboard(this.cpf);
+    this.geraGraficoPizza(this.cpf);
     this.montaGraficoNF(this.year, this.arrayNf);
-    this.numVendasUltimosMeses(this.credenciais.cpf, 12);
-    this.lucroVendasUltimosMeses(this.credenciais.cpf, 12);
+    this.numVendasUltimosMeses(this.cpf, 12);
+    this.lucroVendasUltimosMeses(this.cpf, 12);
     this.montaGraficoQuantidadeVendas(this.year, this.arrayQtd);
-    this.lucroGeralByCpf(this.credenciais.cpf);
+    this.lucroGeralByCpf(this.cpf);
   }
 
   getInfosDashboard(cpf: any) {

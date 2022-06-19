@@ -11,6 +11,7 @@ import { ApiService } from '../../services/api.service';
 })
 export class CatalogoComponent implements OnInit {
   credenciais: any;
+  cpf: any;
   constructor(
     public dialog: MatDialog,
     private api: ApiService,
@@ -20,7 +21,12 @@ export class CatalogoComponent implements OnInit {
   ngOnInit(): void {
     this.getCatalogo();
     this.credenciais = this.localStorage.get('credenciais');
-    this.getAllFazendas(this.credenciais.cpf);
+    if(this.credenciais.tipoUsuario == 'FUNCIONARIO'){
+      this.cpf = this.credenciais.cpfPatrao;
+    }else{
+      this.cpf = this.credenciais.cpf;
+    }
+    this.getAllFazendas(this.cpf);
 
   }
 

@@ -103,6 +103,7 @@ export class AreaProdutorComponent implements OnInit {
   anuncios: any = [];
   credenciais: any;
   vendas: any = [];
+  cpf: any;
   constructor(
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
@@ -132,7 +133,12 @@ export class AreaProdutorComponent implements OnInit {
   ngOnInit(): void {
     this.credenciais = this.localStorage.get('credenciais');
     this.anuncios = [];
-    this.getAnunciosProprietario(this.credenciais.cpf);
+    if(this.credenciais.tipoUsuario == 'FUNCIONARIO'){
+      this.cpf = this.credenciais.cpfPatrao;
+    }else{
+      this.cpf = this.credenciais.cpf;
+    }
+    this.getAnunciosProprietario(this.cpf);
     this.getVendas();
   }
   anuncio: any;
@@ -239,7 +245,7 @@ export class AreaProdutorComponent implements OnInit {
   }
 
   getVendas() {
-    this.api.getJsonRelatorio(this.credenciais.cpf).subscribe(
+    this.api.getJsonRelatorio(this.cpf).subscribe(
       ret => {
         this.vendas = ret;
         if (ret) {
