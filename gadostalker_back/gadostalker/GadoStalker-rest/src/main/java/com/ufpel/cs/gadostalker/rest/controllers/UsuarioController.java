@@ -76,6 +76,11 @@ public class UsuarioController {
         usuarioDto.nome = usuarioLogado.getNome();
         usuarioDto.email = usuarioLogado.getEmail();
         usuarioDto.telefone = usuarioLogado.getTelefone();
+        
+        if (usuarioLogado instanceof Funcionario) {
+            usuarioDto.cpfPatrao = ((Funcionario) usuarioLogado).getFazenda().getProprietario().getCpf();
+        }
+        
         return Response
                 .ok(usuarioDto)
                 .status(Response.Status.ACCEPTED)
