@@ -129,7 +129,10 @@ export class AnunciosComponent implements OnInit {
   }
 
   mudaOrdem(){
-    this.getAnunciosByTipo();
+    if(this.tipoAnuncio)
+      this.getAnunciosByTipo();
+    else
+      this.getAnunciosBySearchText();
   }
 
   pesquisar(){
