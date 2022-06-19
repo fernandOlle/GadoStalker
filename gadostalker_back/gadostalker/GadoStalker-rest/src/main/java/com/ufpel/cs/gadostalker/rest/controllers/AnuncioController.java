@@ -275,10 +275,10 @@ public class AnuncioController {
                 orderBy = "a.titulo desc, ";
                 break;
             case "precoasc":
-                orderBy = "a.preco asc, ";
+                orderBy = "a.preco - ((a.preco * a.desconto) / 100) asc, ";
                 break;
             case "precodesc":
-                orderBy = "a.preco desc, ";
+                orderBy = "a.preco - ((a.preco * a.desconto) / 100) desc, ";
                 break;
             case "datadesc":
                 orderBy = "a.dataInicial desc, ";
