@@ -134,7 +134,6 @@ export class AnunciosComponent implements OnInit {
 
   pesquisar(){
     this.search = this.textoPesquisa.value;
-    debugger
     if(this.tipoAnuncio)
       this.getAnunciosByTipo();
     else
