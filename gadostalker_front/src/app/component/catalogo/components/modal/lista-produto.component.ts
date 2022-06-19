@@ -63,13 +63,16 @@ export class ListaProdutoComponent implements OnInit {
     this.api.getAllTiposProdutos().subscribe(
       ret => {
         this.setValue(ret);
-        this.api.getAllProdutosByTypeAndSncr(this.productKey, this.fazendas[0].SNCR)
-        .subscribe(ret => {
-          if(ret)
-            this.produtos = ret;
-          else
-            this.produtos = [];
-        });
+        this.fazendas.forEach((fazenda: any) => {
+          this.api.getAllProdutosByTypeAndSncr(this.productKey, fazenda.SNCR)
+          .subscribe(ret => {
+            if(ret){
+              let array: any = ret;
+              this.produtos = [...this.produtos, ...array];
+            }
+          });
+        })
+
       }
     );
   }
