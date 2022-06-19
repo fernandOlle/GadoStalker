@@ -134,7 +134,10 @@ export class AnunciosComponent implements OnInit {
 
   pesquisar(){
     this.search = this.textoPesquisa.value;
-    this.getAnunciosByTipo();
+    if(this.tipoAnuncio)
+      this.getAnunciosByTipo();
+    else
+      this.getAnunciosBySearchText();
   }
 
   openModalEditarUser(usuario: any){
