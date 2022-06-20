@@ -4,7 +4,7 @@ import os
 import zipfile
 import shutil
 
-images_zip = "./imagens_anuncios.zip"
+images_zip = "./img.zip"
 images_dir = "./tmp/"
 
 sql_script = open("gadostalkerdb.sql", "r", encoding="utf-8")
@@ -37,7 +37,6 @@ for path in Path(images_dir).iterdir():
     if not path.is_file():
         continue
     img = open(path, "rb")
-    #print(Path(path).stem)
     it_id = int(''.join(x for x in Path(path).stem if x.isdigit()))
     it_content = img.read()
     it_extension = os.path.splitext(path)[1].split(".")[-1].upper()
