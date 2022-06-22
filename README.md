@@ -13,7 +13,7 @@ Instalar Node
 
 [Node.js website](https://nodejs.org/en/)
 
-E logo após o Angular/CLI
+Logo após instale Angular/CLI
 
 ```npm install -g @angular/cli```
 
