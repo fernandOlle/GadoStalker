@@ -9,7 +9,11 @@ Utilizando docker compose para o SGBD e o banco de dados MySQL8.
 ```docker-compose up -d``` na pasta do arquivo ```docker-compose```
 
 # Para rodar o front-end
-Instalar Node e o Angular/CLI
+Instalar Node 
+
+[Node.js website](https://nodejs.org/en/)
+
+E logo após o Angular/CLI
 
 ```npm install -g @angular/cli```
 
