@@ -1,7 +1,7 @@
 # GadoStalker
 Projeto para cadeira de Desenvolvimento de Software na UFPel ( Universidade Federal de Pelotas )
 
-Desenvolvido usando front-end em Angular e back-end em Java.
+Desenvolvido usando front-end em Angular e back-end em Java EE (Jakarta EE).
 
 Utilizando docker compose para o SGBD e o banco de dados MySQL8.
 
@@ -26,7 +26,7 @@ Windows: ```npx ng s```
 Outros: ```ng s```
 
 # Para rodar back-end
-Instalar Payara Server ou GlassFish. Plataforma ```Jakarta EE 8``` com a ```JDK 8```.
+Instalar ```Payara Server``` ou ```GlassFish```. Plataforma ```Jakarta EE 8``` com a ```JDK 8```.
 
 Construir o projeto e rodar. Irá fazer download das dependencias.
 
