@@ -9,7 +9,10 @@ Utilizando docker compose para o SGBD e o banco de dados MySQL8.
 ```docker-compose up -d``` na pasta do arquivo ```docker-compose```
 
 # Para rodar o front-end
-Instalar Node.
+Instalar Node e o Angular/CLI
+
+```npm install -g @angular/cli```
+
 Rodar os seguintes comandos na pasta ```gadostalker_front```
 
 ```npm i```
